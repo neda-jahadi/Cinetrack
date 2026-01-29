@@ -24,7 +24,7 @@ const JobCard = ({ job, className, variant = "tint" }: JobCardProps) => {
       <h3 className="mt-2 text-xl font-bold text-gray-900">
         <Link
           to={detailsPath}
-          className="focus:outline-none focus-visible:ring-2 focus-visible:ring.indigo-600 focus-visible:ring-offset-2 rounden-sm "
+          className="focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600 focus-visible:ring-offset-2 rounden-sm hover:underline focus-visible:underline"
         >
           {job.title}
         </Link>
@@ -37,16 +37,6 @@ const JobCard = ({ job, className, variant = "tint" }: JobCardProps) => {
         <i className="fa-solid fa-location-dot text-lg"></i>
         {job.location}
       </p>
-
-      <div className="flex flex-col lg:flex-row justify-between mb-4">
-        <ButtonLink
-          to={detailsPath}
-          aria-label={`Read More about: ${job.title}`}
-          variant={variant === "tint" ? "primary" : "dark"}
-        >
-          Read more
-        </ButtonLink>
-      </div>
     </article>
   );
 };
