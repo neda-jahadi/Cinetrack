@@ -1,8 +1,23 @@
+export type Company = {
+  name: string;
+  description: string;
+  contactEmail: string;
+  contactPhone: string;
+}
+
+export type JobType =
+  | "Full-Time"
+  | "Part-Time"
+  | "Contract"
+  | "Internship";
+
+
 export type Job = {
   id: string;
   title: string;
-  type: string; 
+  type: JobType; 
   description: string; 
   salary: string;      
-  location: string;   
+  location: string;  
+  company: Company; 
 };

@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import ButtonLink from "../../../components/ui/ButtonLink";
 import { cn } from "../../../lib/cn";
 import type { Job } from "../../../types";
 
@@ -15,7 +14,7 @@ const JobCard = ({ job, className, variant = "tint" }: JobCardProps) => {
   return (
     <article
       className={cn(
-        "rounded-xl bg-white p-6 shadow-sm ring-1 ring-black/5",
+        "h-full rounded-xl bg-white p-6 shadow-sm ring-1 ring-black/5",
         cardClasses,
         className,
       )}
@@ -30,7 +29,9 @@ const JobCard = ({ job, className, variant = "tint" }: JobCardProps) => {
         </Link>
       </h3>
 
-      <p className="mb-3 text-gray-700">{job.description}</p>
+      <p className="mb-3 text-gray-700">
+        {job.description.substring(0, 100) + "..."}
+      </p>
 
       <p className="text-indigo-500 mb-2">{job.salary}</p>
       <p className="text-orange-700 mt-5 mb-3 border-t border-gray-100">

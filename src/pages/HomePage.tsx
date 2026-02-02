@@ -1,38 +1,9 @@
 import Hero from "../components/sections/Hero";
 import CtaCard from "../components/sections/HomeCTAs/CtaCard";
-import JobPreview from "../components/sections/JobPreview/JobPreview";
+import JobPreview from "../components/sections/Job/JobPreview";
 import Container from "../components/ui/Container";
-import type { Job } from "../types";
-
-const mockJobs: Job[] = [
-  {
-    id: "1",
-    title: "Senior React Developer",
-    type: "Full-Time",
-    description:
-      "We are seeking a talented Front-End Developer to join our team and build modern web apps.",
-    salary: "$70K - $80K / Year",
-    location: "Boston, MA",
-  },
-  {
-    id: "2",
-    title: "Front-End Engineer (React)",
-    type: "Part-Time",
-    description:
-      "Help us improve performance and accessibility across our component library and product UI.",
-    salary: "$60K - $70K / Year",
-    location: "Remote",
-  },
-  {
-    id: "3",
-    title: "Junior React Developer",
-    type: "Contract",
-    description:
-      "Great opportunity for a junior developer to grow with mentorship and modern tooling.",
-    salary: "$40K - $50K / Year",
-    location: "New York, NY",
-  },
-];
+import { mockJobs } from "../components/sections/Job/JobListing";
+import ButtonLink from "../components/ui/ButtonLink";
 
 const HomePage = () => {
   return (
@@ -49,7 +20,7 @@ const HomePage = () => {
               description="Browse our React jobs and start your career today"
               to="/browse-job"
               ctaLabel="Browse Jobs"
-              variant="light"
+              variant="tint"
             />
             <CtaCard
               title="For Employers"
@@ -67,7 +38,23 @@ const HomePage = () => {
           <h2 className="text-3xl font-bold text-indigo-500 mb-6 text-center">
             Browse Jobs
           </h2>
-          <JobPreview jobs={mockJobs} />
+          <JobPreview jobs={mockJobs} limit={3} />
+        </Container>
+      </section>
+
+      <section className="px-4 py-10 text-center">
+        <Container>
+          <div>
+            <ButtonLink
+              variant="dark"
+              size="lg"
+              to="/jobs"
+              aria-label="View All Jobs"
+              className="w-full max-w-md"
+            >
+              View All Jobs
+            </ButtonLink>
+          </div>
         </Container>
       </section>
     </>

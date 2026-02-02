@@ -5,7 +5,7 @@ type ButtonLinkVariant = "primary" | "secondary" | "dark";
 
 type ButtonLinkProps = LinkProps & {
   variant?: ButtonLinkVariant;
-  size?: "sm" | "md";
+  size?: "sm" | "md" | "lg";
   className?: string;
 };
 
@@ -16,12 +16,13 @@ const base =
 const variants: Record<ButtonLinkVariant, string> = {
   primary: "bg-indigo-600 text-white hover:bg-indigo-700",
   secondary: "bg-indigo-100 text-indigo-900 hover:bg-indigo-200",
-  dark: "bg-black text-white hover:bg-gray-900",
+  dark: "bg-black text-white hover:bg-gray-700",
 };
 
 const sizes = {
   sm: "px-3 py-2 text-sm",
   md: "px-4 py-2 text-sm",
+  lg: "py-4 px-6 text-sm",
 };
 
 export default function ButtonLink({

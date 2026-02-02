@@ -16,12 +16,10 @@ const CtaCard = ({
   ctaLabel,
   variant = "light",
 }: CtaCardProps) => {
-  const cardClasses = variant === "tint" ? "bg-indigo-100" : "bg-gray-50";
+  const cardClasses = variant === "tint" ? "bg-indigo-100" : "bg-gray-100";
 
   return (
-    <article
-      className={cn("bg-indigo-100 p-6 rounded-lg shadow-md", cardClasses)}
-    >
+    <article className={cn("p-6 rounded-lg shadow-md", cardClasses)}>
       <h3 className="text-2xl font-bold">{title}</h3>
       <p className="mt-2 mb-4">{description}</p>
       <ButtonLink
