@@ -10,7 +10,7 @@ const Header = () => {
     { label: "Add Job", to: "/add-job" },
   ];
   return (
-    <header className="bg-indigo-700 border-b border-indigo-500">
+    <header className="bg-brand border-b border-brand-500">
       <Container className="flex h-20 items-center justify-between">
         <Link className="flex items-center mr-4" to="/">
           <img className="h-10 w-auto" src={logo} alt="React Jobs" />

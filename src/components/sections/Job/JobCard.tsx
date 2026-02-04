@@ -26,13 +26,13 @@ const JobCard = ({ job, className, variant = "tint" }: JobCardProps) => {
   return (
     <article
       className={cn(
-        "h-full rounded-xl bg-white p-6 shadow-sm ring-1 ring-black/5",
+        "h-full rounded-xl p-6 shadow-sm ring-1 ring-black/5",
         cardClasses,
         className,
       )}
     >
-      <p className="text-sm font-medium text-gray-600">{job.type}</p>
-      <h3 className="mt-2 text-xl font-bold text-gray-900">
+      <p className="text-sm font-medium text-muted">{job.type}</p>
+      <h3 className="mt-2 text-xl font-bold">
         <Link
           to={detailsPath}
           className="focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600 focus-visible:ring-offset-2 rounden-sm hover:underline focus-visible:underline"
@@ -42,7 +42,7 @@ const JobCard = ({ job, className, variant = "tint" }: JobCardProps) => {
       </h3>
 
       <p
-        className={cn("mb-3 text-gray-700", !expanded && "line-clamp-3")}
+        className={cn("mb-3 text-muted", !expanded && "line-clamp-3")}
         id={descId}
       >
         {description}
@@ -67,7 +67,7 @@ const JobCard = ({ job, className, variant = "tint" }: JobCardProps) => {
       )}
 
       <p className="text-indigo-500 mb-2">{job.salary}</p>
-      <p className="text-orange-700 mt-5 mb-3 pt-2 border-t border-gray-100 inline-flex items-center">
+      <p className="text-accent mt-5 mb-3 pt-2 border-t border-border inline-flex items-center">
         <FaMapMarker aria-hidden="true" className="mr-2 h-4 w-4" />
         <span className="sr-only">Location</span>
         {job.location}

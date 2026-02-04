@@ -12,7 +12,7 @@ const HomePage = () => {
         title="Become a React Dev"
         subtitle="Find the React job that fits your skills and needs"
       />
-      <section className="py-4">
+      <section className="py-12">
         <Container>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 rounded-lg">
             <CtaCard
@@ -33,16 +33,16 @@ const HomePage = () => {
         </Container>
       </section>
 
-      <section className="bg-blue-50 px-4 py-10">
+      <section className="bg-blue-50 px-4 py-12">
         <Container size="full">
-          <h2 className="text-3xl font-bold text-indigo-500 mb-6 text-center">
-            Browse Jobs
+          <h2 className="text-3xl font-bold text-brand mb-6 text-center">
+            Recent Jobs
           </h2>
           <JobPreview jobs={mockJobs} limit={3} />
         </Container>
       </section>
 
-      <section className="px-4 py-10 text-center">
+      <section className="px-4 py-12 text-center">
         <Container>
           <div>
             <ButtonLink

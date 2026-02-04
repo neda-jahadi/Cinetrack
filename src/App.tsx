@@ -36,6 +36,7 @@ const router = createBrowserRouter(
           }}
         />
       </Route>
+      <Route path="*" element={<NotFound />} />
     </Route>,
   ),
 );
@@ -44,7 +45,6 @@ function App() {
   return (
     <>
       <RouterProvider router={router} />
-      <p>App</p>
     </>
   );
 }

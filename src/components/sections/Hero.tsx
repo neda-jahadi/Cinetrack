@@ -7,8 +7,8 @@ type HeroProps = {
 
 const Hero = ({ title, subtitle, children }: HeroProps) => {
   return (
-    <section className="bg-indigo-700 py-20 mb-4">
-      <Container className="flex-col items-center">
+    <section className="bg-indigo-700">
+      <Container className="flex-col items-center py-16">
         <div className="text-center">
           <h1 className="text-4xl font-extrabold text-white sm:text-5xl md:text-6xl">
             {title}
