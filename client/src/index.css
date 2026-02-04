@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -27,7 +28,7 @@
   --color-danger-hover: theme(colors.red.700);
 
   /* Typography */
-  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+  --font: Outfit;
 
   /* Radius */
   --radius-sm: 0.375rem; /* ~rounded-md */
@@ -39,7 +40,7 @@
 }
 
 @layer base {
-  html { font-family: var(--font-sans); }
+  html { font-family: var(--font); }
   body { color: var(--color-default); background: var(--color-surface); }
 }
 
