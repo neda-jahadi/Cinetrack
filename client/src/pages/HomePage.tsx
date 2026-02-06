@@ -4,6 +4,7 @@ import JobPreview from "../components/sections/Job/JobPreview";
 import Container from "../components/ui/Container";
 import ButtonLink from "../components/ui/ButtonLink";
 import { useJobs } from "../features/jobs/jobData";
+import Spinner from "../components/ui/Spinner";
 
 const HomePage = () => {
   const { data: jobs = [], isLoading, isError } = useJobs();
@@ -39,7 +40,7 @@ const HomePage = () => {
           <h2 className="text-3xl font-bold text-brand mb-6 text-center">
             Recent Jobs
           </h2>
-          {isLoading && <p>Loading jobs ...</p>}
+          {isLoading && <Spinner loading={true} />}
           {isError && <p>Could not load jobs</p>}
           {!isLoading && !isError && <JobPreview jobs={jobs} limit={3} />}
         </Container>

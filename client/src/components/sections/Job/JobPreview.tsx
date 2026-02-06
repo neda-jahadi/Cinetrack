@@ -16,7 +16,6 @@ const JobPreview = ({ jobs, limit }: JobPreviewProps) => {
   }
 
   const displayedJobs = limit ? jobs.slice(0, limit) : jobs;
-  console.log(displayedJobs);
   return (
     <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {displayedJobs.map((job) => (
