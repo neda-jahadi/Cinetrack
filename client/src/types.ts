@@ -13,7 +13,7 @@ export type JobType =
 
 
 export type Job = {
-  id: string;
+  _id: string;
   title: string;
   type: JobType; 
   description: string; 

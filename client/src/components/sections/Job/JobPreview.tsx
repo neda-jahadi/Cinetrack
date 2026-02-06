@@ -1,14 +1,13 @@
 import type { Job } from "../../../types";
 import JobCard from "./JobCard";
 
-type JobProps = {
+type JobPreviewProps = {
   jobs: Job[];
   limit?: number;
 };
 
-const JobPreview = ({ jobs, limit }: JobProps) => {
-  const visibleJobs = limit ? jobs.slice(0, limit) : jobs;
-  if (!visibleJobs?.length) {
+const JobPreview = ({ jobs, limit }: JobPreviewProps) => {
+  if (!jobs?.length) {
     return (
       <div className="text-center">
         <p className="mt-4 text-gray-700">No Jobs found right now.</p>
@@ -16,10 +15,12 @@ const JobPreview = ({ jobs, limit }: JobProps) => {
     );
   }
 
+  const displayedJobs = limit ? jobs.slice(0, limit) : jobs;
+  console.log(displayedJobs);
   return (
     <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {visibleJobs.map((job) => (
-        <li key={job.id}>
+      {displayedJobs.map((job) => (
+        <li key={job._id}>
           <JobCard job={job} />
         </li>
       ))}

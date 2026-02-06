@@ -2,10 +2,11 @@ import Hero from "../components/sections/Hero";
 import CtaCard from "../components/sections/HomeCTAs/CtaCard";
 import JobPreview from "../components/sections/Job/JobPreview";
 import Container from "../components/ui/Container";
-import { mockJobs } from "../components/sections/Job/JobListing";
 import ButtonLink from "../components/ui/ButtonLink";
+import { useJobs } from "../features/jobs/jobData";
 
 const HomePage = () => {
+  const { data: jobs = [], isLoading, isError } = useJobs();
   return (
     <>
       <Hero
@@ -38,7 +39,9 @@ const HomePage = () => {
           <h2 className="text-3xl font-bold text-brand mb-6 text-center">
             Recent Jobs
           </h2>
-          <JobPreview jobs={mockJobs} limit={3} />
+          {isLoading && <p>Loading jobs ...</p>}
+          {isError && <p>Could not load jobs</p>}
+          {!isLoading && !isError && <JobPreview jobs={jobs} limit={3} />}
         </Container>
       </section>
 
