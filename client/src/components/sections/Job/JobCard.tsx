@@ -14,7 +14,7 @@ const FALLBACK_MAX_CHARS = 100;
 
 const JobCard = ({ job, className, variant = "tint" }: JobCardProps) => {
   const cardClasses = variant === "tint" ? "bg-white" : "bg-gray-50";
-  const detailsPath = `/jobs/${job.id}`;
+  const detailsPath = `/jobs/${job._id}`;
   const descId = useId();
   const description = job.description?.trim() ?? "";
   const canToggle = useMemo(

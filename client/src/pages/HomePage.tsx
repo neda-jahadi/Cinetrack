@@ -5,9 +5,16 @@ import Container from "../components/ui/Container";
 import ButtonLink from "../components/ui/ButtonLink";
 import { useJobs } from "../features/jobs/jobData";
 import Spinner from "../components/ui/Spinner";
+import { JOB_SORT } from "../features/jobs/constants";
 
 const HomePage = () => {
-  const { data: jobs = [], isLoading, isError } = useJobs();
+  const {
+    data: jobs = [],
+    isLoading,
+    isError,
+  } = useJobs({ limit: 3, sort: JOB_SORT.SALARY_ASC });
+  console.log(jobs);
+
   return (
     <>
       <Hero
@@ -42,7 +49,7 @@ const HomePage = () => {
           </h2>
           {isLoading && <Spinner loading={true} />}
           {isError && <p>Could not load jobs</p>}
-          {!isLoading && !isError && <JobPreview jobs={jobs} limit={3} />}
+          {!isLoading && !isError && <JobPreview jobs={jobs} />}
         </Container>
       </section>
 

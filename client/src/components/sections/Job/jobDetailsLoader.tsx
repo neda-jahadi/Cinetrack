@@ -1,13 +1,12 @@
 import type { LoaderFunctionArgs } from "react-router-dom";
-import { mockJobs } from "./JobListing";
 
-const jobDetailsLoader = ({ params }: LoaderFunctionArgs) => {
-  const jobId = params.id;
-  const job = mockJobs.find((job) => job.id === jobId);
-  if (!job) {
-    throw new Response("Job not found", { status: 404 });
-  }
-  return { job };
+const jobDetailsLoader = async ({ params }: LoaderFunctionArgs) => {
+  const id = params.id;
+  if (!id) throw new Response("Missing job id", { status: 400 });
+  const res = await fetch(`/api/jobs/${id}`);
+  if (!res.ok) throw new Response("Job not found", { status: 404 });
+  const json = await res.json();
+  return json.data;
 };
 
 export default jobDetailsLoader;
