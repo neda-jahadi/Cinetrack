@@ -2,9 +2,9 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
-} from "react-router";
+  RouterProvider,
+} from "react-router-dom";
 import RootLayout from "./layout/RootLayout";
-import { RouterProvider } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import JobsPage from "./pages/JobsPage";
 import JobDetailsPage from "./pages/JobDetailsPage";

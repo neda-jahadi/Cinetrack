@@ -11,7 +11,7 @@ type ButtonLinkProps = LinkProps & {
 
 const base =
   "inline-flex items-center justify-center rounded-md font-medium transition " +
-  "focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-indigo-700";
+  "focus:shadow-outline focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-indigo-700";
 
 const variants: Record<ButtonLinkVariant, string> = {
   primary: "bg-indigo-600 text-white hover:bg-indigo-700",

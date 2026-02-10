@@ -3,12 +3,15 @@ import type { Job } from "../types";
 import Container from "../components/ui/Container";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import Card from "../components/ui/Card";
+import { FaMapMarker } from "react-icons/fa";
+import ButtonLink from "../components/ui/ButtonLink";
+import Button from "../components/ui/Button";
 
 const JobDetailsPage = () => {
   const job = useLoaderData() as Job;
   return (
     <>
-      <section>
+      <section aria-label="Back navigation">
         <Container className="py-4">
           <Link
             to="/jobs"
@@ -30,16 +33,17 @@ const JobDetailsPage = () => {
               <Card className="bg-white text-center md:text-left">
                 <div className="text-gray-500 mb-4">{job.type}</div>
                 <h1 className="text-3xl font-bold mb-4">{job.title}</h1>
-                <div className="text-gray-500 mb-4 flex align-middle justify-center md:justify-start">
-                  <i className="fa-solid fa-location-dot text-lg text-orange-700 mr-2"></i>
-                  <p className="text-orange-700">{job.location}</p>
-                </div>
+                <p className="text-accent mt-5 mb-3 pt-2 border-t border-border inline-flex items-center">
+                  <FaMapMarker aria-hidden="true" className="mr-2 h-4 w-4" />
+                  <span className="sr-only">Location</span>
+                  {job.location}
+                </p>
               </Card>
 
               <Card className="bg-white mt-6">
-                <h3 className="text-indigo-800 text-lg font-bold mb-6">
+                <h2 className="text-indigo-800 text-lg font-bold mb-6">
                   Job Description
-                </h3>
+                </h2>
 
                 <p className="mb-4">{job.description}</p>
 
@@ -51,11 +55,11 @@ const JobDetailsPage = () => {
               </Card>
             </article>
 
-            <aside>
+            <aside aria-label="Company and actions">
               <Card className="bg-white">
-                <h3 className="text-xl font-bold mb-6">Company Info</h3>
+                <h2 className="text-xl font-bold mb-6">Company Info</h2>
 
-                <h2 className="text-2xl">{job.company.name}</h2>
+                <h3 className="text-2xl">{job.company.name}</h3>
 
                 <p className="my-2">{job.company.description}</p>
 
@@ -63,28 +67,31 @@ const JobDetailsPage = () => {
 
                 <h3 className="text-xl">Contact Email:</h3>
 
-                <p className="my-2 bg-indigo-100 p-2 font-bold">
+                <a
+                  href={`mailto:${job.company.contactEmail}`}
+                  className="mt-1 block rounded bg-indigo-100 p-2 font-bold underline-offset-2 hover:underline focus-visible:ring-2 focus-visible:ring-indigo-600 focus-visible:ring-offset-2"
+                >
                   {job.company.contactEmail}
-                </p>
+                </a>
 
-                <h3 className="text-xl">Contact Phone:</h3>
+                <h3 className="text-xl mt-4">Contact Phone:</h3>
 
-                <p className="my-2 bg-indigo-100 p-2 font-bold">
+                <a
+                  href={`tel:${job.company.contactPhone}`}
+                  className="mt-1 block rounded bg-indigo-100 p-2 font-bold underline-offset-2 hover:underline focus-visible:ring-2 focus-visible:ring-indigo-600 focus-visible:ring-offset-2"
+                >
                   {job.company.contactPhone}
-                </p>
+                </a>
               </Card>
 
               <Card className="bg-white mt-6">
-                <h3 className="text-xl font-bold mb-6">Manage Job</h3>
-                <a
-                  href="/add-job.html"
-                  className="bg-indigo-500 hover:bg-indigo-600 text-white text-center font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block"
-                >
+                <h2 className="text-xl font-bold mb-6">Manage Job</h2>
+                <ButtonLink to={`/jobs/${job._id}/edit`} className="w-full">
                   Edit Job
-                </a>
-                <button className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block">
+                </ButtonLink>
+                <Button variant="danger" className="w-full rounded-full my-2">
                   Delete Job
-                </button>
+                </Button>
               </Card>
             </aside>
           </div>
