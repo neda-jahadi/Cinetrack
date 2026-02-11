@@ -10,6 +10,7 @@ import JobsPage from "./pages/JobsPage";
 import JobDetailsPage from "./pages/JobDetailsPage";
 import jobDetailsLoader from "./components/sections/Job/jobDetailsLoader";
 import NotFound from "./components/sections/Job/NotFound";
+import AddJobPage from "./pages/AddJobPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -36,6 +37,7 @@ const router = createBrowserRouter(
           }}
         />
       </Route>
+      <Route path="add-job" element={<AddJobPage />} />
       <Route path="*" element={<NotFound />} />
     </Route>,
   ),
