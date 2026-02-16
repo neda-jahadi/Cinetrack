@@ -22,7 +22,14 @@ const FormField = ({
         className={cn("block text-gray-700 font-bold mb-2", className)}
       >
         {label}
-        {required && <span className="text-red-500 ml-1">*</span>}
+        {required && (
+          <>
+            <span aria-hidden="true" className="text-red-500 ml-1">
+              *
+            </span>
+            <span className="sr-only">(required)</span>
+          </>
+        )}
       </label>
       {children}
     </div>

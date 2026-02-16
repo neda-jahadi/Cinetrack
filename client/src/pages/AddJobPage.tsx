@@ -3,24 +3,35 @@ import Button from "../components/ui/Button";
 import FormField from "../components/ui/FormField";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { z } from "zod";
+import { useId } from "react";
 
 const schema = z.object({
-  type: z.string().min(1, "This field is required"),
-  title: z.string().min(1, "This field is required"),
+  type: z.string().min(1, "Please select a job type"),
+  title: z.string().min(1, "Please add a job title"),
   description: z
     .string()
-    .min(30, "This field shuold have at least 30 characters"),
-  salary: z.string().min(1, "This field is required"),
-  location: z.string().min(1, "This field is required"),
-  company: z.string().min(1, "This field is required"),
-  company_description: z.string().min(1, "This field is required"),
+    .min(30, "Description must be at least 30 characters long"),
+  salary: z.string().min(1, "Please select a salary"),
+  location: z.string().min(1, "Please add a location"),
+  company: z.string().min(1, "Please add a company location"),
+  company_description: z
+    .string()
+    .min(30, "Company description must be at least 30 characters long"),
   contact_email: z.email(),
-  contact_phone: z.string().min(1, "This field is required"),
+  contact_phone: z
+    .string()
+    .trim()
+    .optional()
+    .refine((v) => !v || v.length >= 6, {
+      message: "Phone number must be at least 6 characters",
+    }),
 });
 
 type JobFormFields = z.infer<typeof schema>;
 
 const AddJobPage = () => {
+  const formId = useId();
+
   const {
     register,
     handleSubmit,
@@ -43,23 +54,30 @@ const AddJobPage = () => {
     }
   };
 
+  const errId = (name: string) => `${formId}-${name}-error`;
+
   return (
     <>
       <section className="bg-indigo-50">
         <div className="container m-auto max-w-2xl py-24">
           <div className="bg-white px-6 py-8 mb-4 shadow-md rounded-md border m-4 md:m-0">
-            <form onSubmit={handleSubmit(onSubmitJobForm)}>
+            <form onSubmit={handleSubmit(onSubmitJobForm)} noValidate>
               <h2 className="text-3xl text-center font-semibold mb-6">
                 Add Job
               </h2>
+              <p role="alert" className="text-danger text-sm min-h-1.5 mb-4">
+                {errors.root?.message ?? ""}
+              </p>
 
               <div className="mb-4">
                 <FormField id="type" label="Job Type" required>
                   <select
                     {...register("type")}
                     id="type"
-                    name="type"
-                    className="border rounded w-full py-2 px-3"
+                    required
+                    aria-invalid={!!errors.type}
+                    aria-describedby={errors.type ? errId("type") : undefined}
+                    className="border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand"
                   >
                     <option value="">Select job type</option>
                     <option value="Full-Time">Full-Time</option>
@@ -68,7 +86,14 @@ const AddJobPage = () => {
                     <option value="Internship">Internship</option>
                   </select>
                   {errors.type && (
-                    <p className="text-danger">{errors.type.message}</p>
+                    <p
+                      id={errId("type")}
+                      aria-live="polite"
+                      aria-hidden="false"
+                      className="text-danger"
+                    >
+                      {errors.type.message}
+                    </p>
                   )}
                 </FormField>
               </div>
@@ -79,12 +104,21 @@ const AddJobPage = () => {
                     {...register("title")}
                     type="text"
                     id="title"
-                    name="title"
-                    className="border rounded w-full py-2 px-3"
-                    placeholder="eg. Beautiful Apartment In Miami"
+                    required
+                    aria-invalid={!!errors.title}
+                    aria-describedby={errors.title ? errId("title") : undefined}
+                    className="border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand"
+                    placeholder="e.g. Senior Frontend Developer"
                   />
                   {errors.title && (
-                    <p className="text-danger">{errors.title.message}</p>
+                    <p
+                      id={errId("title")}
+                      aria-live="polite"
+                      aria-hidden="false"
+                      className="text-danger"
+                    >
+                      {errors.title.message}
+                    </p>
                   )}
                 </FormField>
               </div>
@@ -93,13 +127,24 @@ const AddJobPage = () => {
                   <textarea
                     {...register("description")}
                     id="description"
-                    name="description"
-                    className="border rounded w-full py-2 px-3"
+                    required
+                    aria-invalid={!!errors.description}
+                    aria-describedby={
+                      errors.description ? errId("description") : undefined
+                    }
+                    className="border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand"
                     rows={4}
                     placeholder="Add any job duties, expectations, requirements, etc"
                   ></textarea>
                   {errors.description && (
-                    <p className="text-danger">{errors.description.message}</p>
+                    <p
+                      id={errId("description")}
+                      aria-live="polite"
+                      aria-hidden="false"
+                      className="text-danger"
+                    >
+                      {errors.description.message}
+                    </p>
                   )}
                 </FormField>
               </div>
@@ -109,8 +154,12 @@ const AddJobPage = () => {
                   <select
                     {...register("salary")}
                     id="salary"
-                    name="salary"
-                    className="border rounded w-full py-2 px-3"
+                    required
+                    aria-invalid={!!errors.salary}
+                    aria-describedby={
+                      errors.salary ? errId("salary") : undefined
+                    }
+                    className="border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand"
                   >
                     <option value="">Select Salary</option>
                     <option value="Under $50K">Under $50K</option>
@@ -126,7 +175,14 @@ const AddJobPage = () => {
                     <option value="Over $200K">Over $200K</option>
                   </select>
                   {errors.salary && (
-                    <p className="text-danger">{errors.salary.message}</p>
+                    <p
+                      id={errId("salary")}
+                      aria-live="polite"
+                      aria-hidden="false"
+                      className="text-danger"
+                    >
+                      {errors.salary.message}
+                    </p>
                   )}
                 </FormField>
               </div>
@@ -137,12 +193,18 @@ const AddJobPage = () => {
                     {...register("location")}
                     type="text"
                     id="location"
-                    name="location"
-                    className="border rounded w-full py-2 px-3"
+                    required
+                    aria-invalid={!!errors.location}
+                    aria-describedby={
+                      errors.location ? errId("location") : undefined
+                    }
+                    className="border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand"
                     placeholder="Company Location"
                   />
                   {errors.location && (
-                    <p className="text-danger">{errors.location.message}</p>
+                    <p id={errId("location")} className="text-danger">
+                      {errors.location.message}
+                    </p>
                   )}
                 </FormField>
               </div>
@@ -155,12 +217,18 @@ const AddJobPage = () => {
                     {...register("company")}
                     type="text"
                     id="company"
-                    name="company"
-                    className="border rounded w-full py-2 px-3"
+                    required
+                    aria-invalid={!!errors.company}
+                    aria-describedby={
+                      errors.company ? errId("company") : undefined
+                    }
+                    className="border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand"
                     placeholder="Company Name"
                   />
                   {errors.company && (
-                    <p className="text-danger">{errors.company.message}</p>
+                    <p id={errId("company")} className="text-danger">
+                      {errors.company.message}
+                    </p>
                   )}
                 </FormField>
               </div>
@@ -174,13 +242,22 @@ const AddJobPage = () => {
                   <textarea
                     {...register("company_description")}
                     id="company_description"
-                    name="company_description"
-                    className="border rounded w-full py-2 px-3"
+                    required
+                    aria-invalid={!!errors.company_description}
+                    aria-describedby={
+                      errors.company_description
+                        ? errId("company_description")
+                        : undefined
+                    }
+                    className="border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand"
                     rows={4}
                     placeholder="What does your company do?"
                   ></textarea>
                   {errors.company_description && (
-                    <p className="text-danger">
+                    <p
+                      id={errId("company_description")}
+                      className="text-danger"
+                    >
                       {errors.company_description.message}
                     </p>
                   )}
@@ -194,30 +271,37 @@ const AddJobPage = () => {
                     type="email"
                     autoComplete="email"
                     id="contact_email"
-                    name="contact_email"
-                    className="border rounded w-full py-2 px-3"
+                    required
+                    aria-invalid={!!errors.contact_email}
+                    aria-describedby={
+                      errors.contact_email ? errId("contact_email") : undefined
+                    }
+                    className="border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand"
                     placeholder="Email address htmlFor applicants"
                   />
                   {errors.contact_email && (
-                    <p className="text-danger">
+                    <p id={errId("contact_email")} className="text-danger">
                       {errors.contact_email.message}
                     </p>
                   )}
                 </FormField>
               </div>
               <div className="mb-4">
-                <FormField id="contact_phone" label="Contact Phone" required>
+                <FormField id="contact_phone" label="Contact Phone">
                   <input
                     {...register("contact_phone")}
                     type="tel"
                     autoComplete="tel"
                     id="contact_phone"
-                    name="contact_phone"
-                    className="border rounded w-full py-2 px-3"
+                    aria-invalid={!!errors.contact_phone}
+                    aria-describedby={
+                      errors.contact_phone ? errId("contact_phone") : undefined
+                    }
+                    className="border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand"
                     placeholder="Optional phone htmlFor applicants"
                   />
                   {errors.contact_phone && (
-                    <p className="text-danger">
+                    <p id={errId("contact_phone")} className="text-danger">
                       {errors.contact_phone.message}
                     </p>
                   )}
