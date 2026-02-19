@@ -4,6 +4,7 @@ import FormField from "../components/ui/FormField";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { useId } from "react";
+import Input from "../components/ui/Input";
 
 const schema = z.object({
   type: z.string().min(1, "Please select a job type"),
@@ -82,7 +83,7 @@ const AddJobPage = () => {
                     required
                     aria-invalid={!!errors.type}
                     aria-describedby={errors.type ? errId("type") : undefined}
-                    className="border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand"
+                    className={`border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand ${errors.type && "border-danger"}`}
                   >
                     <option value="">Select job type</option>
                     <option value="Full-Time">Full-Time</option>
@@ -105,14 +106,12 @@ const AddJobPage = () => {
 
               <div className="mb-4">
                 <FormField id="title" label="Job Listing Name" required>
-                  <input
+                  <Input
                     {...register("title")}
-                    type="text"
                     id="title"
                     required
-                    aria-invalid={!!errors.title}
+                    invalid={!!errors.title}
                     aria-describedby={errors.title ? errId("title") : undefined}
-                    className="border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand"
                     placeholder="e.g. Senior Frontend Developer"
                   />
                   {errors.title && (
@@ -137,7 +136,7 @@ const AddJobPage = () => {
                     aria-describedby={
                       errors.description ? errId("description") : undefined
                     }
-                    className="border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand"
+                    className={`border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand ${errors.description && "border-danger"}`}
                     rows={4}
                     placeholder="Add any job duties, expectations, requirements, etc"
                   ></textarea>
@@ -164,7 +163,7 @@ const AddJobPage = () => {
                     aria-describedby={
                       errors.salary ? errId("salary") : undefined
                     }
-                    className="border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand"
+                    className={`border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand ${errors.salary && "border-danger"}`}
                   >
                     <option value="">Select Salary</option>
                     <option value="Under $50K">Under $50K</option>
@@ -194,16 +193,14 @@ const AddJobPage = () => {
 
               <div className="mb-4">
                 <FormField id="location" label="Location" required>
-                  <input
+                  <Input
                     {...register("location")}
-                    type="text"
                     id="location"
                     required
-                    aria-invalid={!!errors.location}
+                    invalid={!!errors.location}
                     aria-describedby={
                       errors.location ? errId("location") : undefined
                     }
-                    className="border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand"
                     placeholder="Company Location"
                   />
                   {errors.location && (
@@ -218,16 +215,14 @@ const AddJobPage = () => {
 
               <div className="mb-4">
                 <FormField id="company" label="Company Name" required>
-                  <input
+                  <Input
                     {...register("company")}
-                    type="text"
                     id="company"
                     required
-                    aria-invalid={!!errors.company}
+                    invalid={!!errors.company}
                     aria-describedby={
                       errors.company ? errId("company") : undefined
                     }
-                    className="border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand"
                     placeholder="Company Name"
                   />
                   {errors.company && (
@@ -254,7 +249,7 @@ const AddJobPage = () => {
                         ? errId("company_description")
                         : undefined
                     }
-                    className="border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand"
+                    className={`border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand ${errors.company_description && "border-danger"}`}
                     rows={4}
                     placeholder="What does your company do?"
                   ></textarea>
@@ -271,17 +266,16 @@ const AddJobPage = () => {
 
               <div className="mb-4">
                 <FormField id="contact_email" label="Contact Email" required>
-                  <input
+                  <Input
                     {...register("contact_email")}
                     type="email"
                     autoComplete="email"
                     id="contact_email"
                     required
-                    aria-invalid={!!errors.contact_email}
+                    invalid={!!errors.contact_email}
                     aria-describedby={
                       errors.contact_email ? errId("contact_email") : undefined
                     }
-                    className="border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand"
                     placeholder="Email address htmlFor applicants"
                   />
                   {errors.contact_email && (
@@ -293,16 +287,15 @@ const AddJobPage = () => {
               </div>
               <div className="mb-4">
                 <FormField id="contact_phone" label="Contact Phone">
-                  <input
+                  <Input
                     {...register("contact_phone")}
                     type="tel"
                     autoComplete="tel"
                     id="contact_phone"
-                    aria-invalid={!!errors.contact_phone}
+                    invalid={!!errors.contact_phone}
                     aria-describedby={
                       errors.contact_phone ? errId("contact_phone") : undefined
                     }
-                    className="border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand"
                     placeholder="Optional phone htmlFor applicants"
                   />
                   {errors.contact_phone && (
