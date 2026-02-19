@@ -8,7 +8,6 @@ import RootLayout from "./layout/RootLayout";
 import HomePage from "./pages/HomePage";
 import JobsPage from "./pages/JobsPage";
 import JobDetailsPage from "./pages/JobDetailsPage";
-import jobDetailsLoader from "./components/sections/Job/jobDetailsLoader";
 import NotFound from "./components/sections/Job/NotFound";
 import AddJobPage from "./pages/AddJobPage";
 
@@ -29,7 +28,6 @@ const router = createBrowserRouter(
           path=":id"
           element={<JobDetailsPage />}
           errorElement={<NotFound />}
-          loader={jobDetailsLoader}
           handle={{
             crumb: () => ({
               label: "Job",

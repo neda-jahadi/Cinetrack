@@ -5,6 +5,7 @@ import { connectDB } from './configs/mongodb.js';
 import JobRoutes from "./routes/job.route.js";
 
 dotenv.config();
+console.log("NODE_ENV:", process.env.NODE_ENV);
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -14,9 +15,10 @@ app.use(express.json());
 app.use("/api/jobs", JobRoutes);
 
 if(process.env.NODE_ENV === "production") {
-    app.use(express.static(path.join(__dirname, "/client/dist")))
+    const clientDistPath = path.join(__dirname, "client", "dist");
+    app.use(express.static(clientDistPath))
     app.get("*", (req, res) => {
-        res.sendFile(path.join(__dirname,"client","dist","index.html"))
+        res.sendFile(path.join(clientDistPath, "index.html"));
     });
 }
 

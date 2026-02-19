@@ -5,9 +5,11 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { useId } from "react";
 import Input from "../components/ui/Input";
+import { useAddJob } from "../features/jobs/jobData";
+import { useNavigate } from "react-router-dom";
 
 const schema = z.object({
-  type: z.string().min(1, "Please select a job type"),
+  type: z.enum(["Full-Time", "Part-Time", "Contract", "Internship"]),
   title: z.string().min(1, "Please add a job title"),
   description: z
     .string()
@@ -22,6 +24,7 @@ const schema = z.object({
   contact_phone: z
     .string()
     .trim()
+    .transform((v) => (v === "" ? undefined : v))
     .optional()
     .refine(
       (v) => !v || /^[0-9+()\-.\s]+$/.test(v),
@@ -36,6 +39,8 @@ const schema = z.object({
 type JobFormFields = z.infer<typeof schema>;
 
 const AddJobPage = () => {
+  const addJobMutation = useAddJob();
+  const navigate = useNavigate();
   const formId = useId();
 
   const {
@@ -50,15 +55,36 @@ const AddJobPage = () => {
     resolver: zodResolver(schema),
   });
 
-  const onSubmitJobForm: SubmitHandler<JobFormFields> = async (data) => {
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      throw new Error();
-      console.log(data);
-    } catch (error) {
-      setError("root", { message: "This email is already taken" });
-    }
+  const onSubmitJobForm: SubmitHandler<JobFormFields> = (data) => {
+    const payload = {
+      title: data.title,
+      type: data.type,
+      description: data.description,
+      salary: data.salary,
+      location: data.location,
+      company: {
+        name: data.company,
+        description: data.company_description,
+        contactEmail: data.contact_email,
+        contactPhone: data.contact_phone ?? "",
+      },
+    };
+    addJobMutation.mutate(payload, {
+      onSuccess: () => {
+        // Optional: reset form or navigate
+        console.log("Job created successfully");
+        navigate("/jobs");
+      },
+      onError: (error: any) => {
+        setError("root", {
+          type: "server",
+          message: error.message || "Failed to create job",
+        });
+      },
+    });
   };
+
+  const isSaving = addJobMutation.isPending;
 
   const errId = (name: string) => `${formId}-${name}-error`;
 
@@ -88,7 +114,7 @@ const AddJobPage = () => {
                     <option value="">Select job type</option>
                     <option value="Full-Time">Full-Time</option>
                     <option value="Part-Time">Part-Time</option>
-                    <option value="Remote">Remote</option>
+                    <option value="Contract">Contract</option>
                     <option value="Internship">Internship</option>
                   </select>
                   {errors.type && (
@@ -312,7 +338,7 @@ const AddJobPage = () => {
                   className="w-full"
                   type="submit"
                 >
-                  {isSubmitting ? "Loading ..." : "Add Job"}
+                  {isSaving ? "Saving ..." : "Add Job"}
                 </Button>
                 {errors.root && (
                   <p className="text-danger">{errors.root.message}</p>

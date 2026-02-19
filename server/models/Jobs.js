@@ -33,7 +33,7 @@ const jobSchema = new Schema(
         },
         type: {
             type: String,
-            enum: ["Full-Time", "Contract", "Internship", "Part-Time"],
+            enum: ["Full-Time", "Part-Time", "Contract", "Internship"],
             required: true,
         },
         description: {

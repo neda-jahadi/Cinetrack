@@ -1,14 +1,34 @@
-import { Link, useLoaderData } from "react-router-dom";
-import type { Job } from "../types";
+import { Link, useParams } from "react-router-dom";
 import Container from "../components/ui/Container";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import Card from "../components/ui/Card";
 import { FaMapMarker } from "react-icons/fa";
 import ButtonLink from "../components/ui/ButtonLink";
 import Button from "../components/ui/Button";
+import { useJob } from "../features/jobs/jobData";
+import NotFound from "../components/sections/Job/NotFound";
+import Spinner from "../components/ui/Spinner";
 
 const JobDetailsPage = () => {
-  const job = useLoaderData() as Job;
+  const { id } = useParams<{ id: string }>();
+  const { data: job, isLoading, isError } = useJob(id);
+
+  if (!id) return <NotFound />;
+
+  if (isLoading) {
+    return (
+      <section className="px-4 py-12">
+        <Container>
+          <Spinner loading={true} />
+        </Container>
+      </section>
+    );
+  }
+
+  if (isError || !job) {
+    return <NotFound />;
+  }
+
   return (
     <>
       <section aria-label="Back navigation">
