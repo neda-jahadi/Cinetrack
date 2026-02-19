@@ -22,9 +22,14 @@ const schema = z.object({
     .string()
     .trim()
     .optional()
-    .refine((v) => !v || v.length >= 6, {
-      message: "Phone number must be at least 6 characters",
-    }),
+    .refine(
+      (v) => !v || /^[0-9+()\-.\s]+$/.test(v),
+      "Phone number contains invalid characters",
+    )
+    .refine(
+      (v) => !v || v.replace(/\D/g, "").length >= 7,
+      "Phone number is too short",
+    ),
 });
 
 type JobFormFields = z.infer<typeof schema>;
