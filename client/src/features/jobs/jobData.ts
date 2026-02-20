@@ -7,6 +7,11 @@ type ApiResponse<T> = {
   data: T;
 };
 
+type ApiDeleteResponse = {
+  success: boolean;
+  message: string;
+}
+
 type JobParams = {
     limit?: number;
     sort?: JobSort;
@@ -78,6 +83,28 @@ export function useAddJob() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: postJob,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["jobs"] });
+    },
+  });
+}
+
+const deleteJob = async (id: string): Promise<boolean> => {
+ const res = await fetch(`/api/jobs/${id}`, {
+  method: "DELETE"
+ });
+  if (!res.ok) {
+    const errText = await res.text().catch(() => "");
+    throw new Error(errText || "Failed to delete job");
+  }
+  const json: ApiDeleteResponse = await res.json();
+  return json.success;
+}
+
+export function useDeleteJob() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: deleteJob,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["jobs"] });
     },

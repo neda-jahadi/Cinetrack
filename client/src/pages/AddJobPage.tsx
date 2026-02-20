@@ -71,8 +71,6 @@ const AddJobPage = () => {
     };
     addJobMutation.mutate(payload, {
       onSuccess: () => {
-        // Optional: reset form or navigate
-        console.log("Job created successfully");
         navigate("/jobs");
       },
       onError: (error: any) => {

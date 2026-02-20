@@ -50,7 +50,7 @@ export const getSingleJob = async (req, res) => {
 }
 
 export const createSingleJob = async (req, res) => {
-    try {
+  try {
     const job = await Job.create(req.body);
     return res.status(201).json({
       success: true,
@@ -70,5 +70,25 @@ export const updateSingleJob = async (req, res) => {
 }
 
 export const deleteSingleJob = async (req, res) => {
+  const jobId = req.params.id;
+  try {
+    const deletedJob = await Job.findByIdAndDelete(jobId);
+    if(!deletedJob) {
+      return res.status(404).json({
+        success: false,
+        message: "Job Not Found"
+      })
+    }
 
+    return res.status(200).json({
+      success: true,
+      messgae: "Job deleted succesfully"
+    })
+  } catch (error) {
+    console.error("Delete job error:", error.message);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to delete job",
+    });
+  }
 }

@@ -5,13 +5,19 @@ import Card from "../components/ui/Card";
 import { FaMapMarker } from "react-icons/fa";
 import ButtonLink from "../components/ui/ButtonLink";
 import Button from "../components/ui/Button";
-import { useJob } from "../features/jobs/jobData";
+import { useDeleteJob, useJob } from "../features/jobs/jobData";
 import NotFound from "../components/sections/Job/NotFound";
 import Spinner from "../components/ui/Spinner";
+import { useNavigate } from "react-router-dom";
 
 const JobDetailsPage = () => {
   const { id } = useParams<{ id: string }>();
   const { data: job, isLoading, isError } = useJob(id);
+
+  const deleteJobMutation = useDeleteJob();
+  console.log("deleteJobMutation is:", deleteJobMutation);
+
+  const navigate = useNavigate();
 
   if (!id) return <NotFound />;
 
@@ -26,8 +32,19 @@ const JobDetailsPage = () => {
   }
 
   if (isError || !job) {
-    return <NotFound />;
+    return;
+    <NotFound />;
   }
+
+  const handleDeleteSingleJob = () => {
+    const ok = window.confirm("Are you sure you want to delete this job?");
+    if (!ok) return;
+    deleteJobMutation.mutate(id, {
+      onSuccess: () => {
+        navigate("/jobs");
+      },
+    });
+  };
 
   return (
     <>
@@ -109,9 +126,17 @@ const JobDetailsPage = () => {
                 <ButtonLink to={`/jobs/${job._id}/edit`} className="w-full">
                   Edit Job
                 </ButtonLink>
-                <Button variant="danger" className="w-full rounded-full my-2">
-                  Delete Job
+                <Button
+                  variant="danger"
+                  className="w-full rounded-full my-2"
+                  disabled={deleteJobMutation.isPending}
+                  onClick={() => handleDeleteSingleJob()}
+                >
+                  {deleteJobMutation.isPending ? "Deleting ..." : "delete"}
                 </Button>
+                {deleteJobMutation.isError && (
+                  <p>{(deleteJobMutation.error as Error).message}</p>
+                )}
               </Card>
             </aside>
           </div>
