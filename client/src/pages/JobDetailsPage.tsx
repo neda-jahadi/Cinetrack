@@ -9,13 +9,13 @@ import { useDeleteJob, useJob } from "../features/jobs/jobData";
 import NotFound from "../components/sections/Job/NotFound";
 import Spinner from "../components/ui/Spinner";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const JobDetailsPage = () => {
   const { id } = useParams<{ id: string }>();
   const { data: job, isLoading, isError } = useJob(id);
 
   const deleteJobMutation = useDeleteJob();
-  console.log("deleteJobMutation is:", deleteJobMutation);
 
   const navigate = useNavigate();
 
@@ -134,6 +134,7 @@ const JobDetailsPage = () => {
                 >
                   {deleteJobMutation.isPending ? "Deleting ..." : "delete"}
                 </Button>
+                <div></div>
                 {deleteJobMutation.isError && (
                   <p>{(deleteJobMutation.error as Error).message}</p>
                 )}

@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { Company, Job, JobType } from "../../types";
 import type { JobSort } from "./constants";
+ import { toast } from 'react-toastify';
 
 type ApiResponse<T> = {
   success: boolean;
@@ -106,6 +107,7 @@ export function useDeleteJob() {
   return useMutation({
     mutationFn: deleteJob,
     onSuccess: () => {
+      toast.success("Job deleted successfully!");
       queryClient.invalidateQueries({ queryKey: ["jobs"] });
     },
   });
