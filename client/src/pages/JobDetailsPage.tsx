@@ -9,7 +9,6 @@ import { useDeleteJob, useJob } from "../features/jobs/jobData";
 import NotFound from "../components/sections/Job/NotFound";
 import Spinner from "../components/ui/Spinner";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 
 const JobDetailsPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -32,8 +31,7 @@ const JobDetailsPage = () => {
   }
 
   if (isError || !job) {
-    return;
-    <NotFound />;
+    return <NotFound />;
   }
 
   const handleDeleteSingleJob = () => {
@@ -123,7 +121,7 @@ const JobDetailsPage = () => {
 
               <Card className="bg-white mt-6">
                 <h2 className="text-xl font-bold mb-6">Manage Job</h2>
-                <ButtonLink to={`/jobs/${job._id}/edit`} className="w-full">
+                <ButtonLink to={`/jobs/edit-job/${job._id}`} className="w-full">
                   Edit Job
                 </ButtonLink>
                 <Button

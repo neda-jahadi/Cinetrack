@@ -1,5 +1,4 @@
 import Job from '../models/Jobs.js';
-import mongoose from "mongoose";
 
 export const getJobs = async (req, res) => {
     try {
@@ -32,12 +31,6 @@ export const getJobs = async (req, res) => {
 export const getSingleJob = async (req, res) => {
   const jobId = req.params.id;
   try {
-    if (!mongoose.Types.ObjectId.isValid(jobId)) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid job id",
-      });
-    }
     const job = await Job.findById(jobId);
     if (!job) {
       return res.status(404).json({message: false, message: "Job not found"});
@@ -66,7 +59,28 @@ export const createSingleJob = async (req, res) => {
 }
 
 export const updateSingleJob = async (req, res) => {
+    const jobId = req.params.id;
+    try {
+      const updatedJob = await Job.findByIdAndUpdate(jobId, req.body, { new: true, runValidators: true });
+      if (!updatedJob) {
+          return res.status(404).json({
+          success: false,
+          message: "Job not found",
+        });
+      }
 
+      return res.status(200).json({
+        success: true,
+        data: updatedJob,
+      })
+    } catch (error) {
+      console.error("Create job error:", error.message);
+
+      return res.status(500).json({
+        success: false,
+        message: error.message,
+      });
+    }
 }
 
 export const deleteSingleJob = async (req, res) => {

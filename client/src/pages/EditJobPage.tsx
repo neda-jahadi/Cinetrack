@@ -2,14 +2,20 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "../components/ui/Button";
 import FormField from "../components/ui/FormField";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import { useId } from "react";
+import { useEffect, useId } from "react";
 import Input from "../components/ui/Input";
-import { useAddJob } from "../features/jobs/jobData";
-import { useNavigate } from "react-router-dom";
+import { useEditJob, useJob } from "../features/jobs/jobData";
+import { useNavigate, useParams } from "react-router-dom";
 import { jobSchema, type JobFormFields } from "../validation/job";
+import Spinner from "../components/ui/Spinner";
+import NotFound from "../components/sections/Job/NotFound";
 
-const AddJobPage = () => {
-  const addJobMutation = useAddJob();
+const EditJobPage = () => {
+  const { id } = useParams<{ id: string }>();
+  if (!id) throw new Error("Missing job id");
+  const { data: job, isLoading, isError } = useJob(id);
+
+  const editJobMutation = useEditJob();
   const navigate = useNavigate();
   const formId = useId();
 
@@ -17,16 +23,45 @@ const AddJobPage = () => {
     register,
     handleSubmit,
     setError,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<JobFormFields>({
-    defaultValues: {
-      contact_email: "test@gmail.com",
-    },
     resolver: zodResolver(jobSchema),
+    defaultValues: {
+      title: "",
+      description: "",
+      salary: "",
+      location: "",
+      company: "",
+      company_description: "",
+      contact_email: "",
+      contact_phone: "",
+    },
+    mode: "onBlur",
   });
 
+  useEffect(() => {
+    if (!job) return;
+
+    reset({
+      type: job.type ?? "",
+      title: job.title ?? "",
+      description: job.description ?? "",
+      salary: job.salary ?? "",
+      location: job.location ?? "",
+      company: job.company?.name ?? "",
+      company_description: job.company?.description ?? "",
+      contact_email: job.company?.contactEmail ?? "",
+      contact_phone: job.company?.contactPhone ?? "",
+    });
+  }, [job, reset]);
+
+  if (!id) return <NotFound />;
+  if (isLoading) return <Spinner loading />;
+  if (isError || !job) return <NotFound />;
+
   const onSubmitJobForm: SubmitHandler<JobFormFields> = (data) => {
-    const payload = {
+    const jobToEdit = {
       title: data.title,
       type: data.type,
       description: data.description,
@@ -39,20 +74,24 @@ const AddJobPage = () => {
         contactPhone: data.contact_phone ?? "",
       },
     };
-    addJobMutation.mutate(payload, {
-      onSuccess: () => {
-        navigate("/jobs");
+
+    editJobMutation.mutate(
+      { id, jobToEdit },
+      {
+        onSuccess: () => {
+          navigate(`/jobs/${id}`);
+        },
+        onError: (error: any) => {
+          setError("root", {
+            type: "server",
+            message: error.message || "Failed to edit the job",
+          });
+        },
       },
-      onError: (error: any) => {
-        setError("root", {
-          type: "server",
-          message: error.message || "Failed to create job",
-        });
-      },
-    });
+    );
   };
 
-  const isSaving = addJobMutation.isPending;
+  const isSaving = editJobMutation.isPending;
 
   const errId = (name: string) => `${formId}-${name}-error`;
 
@@ -306,7 +345,7 @@ const AddJobPage = () => {
                   className="w-full"
                   type="submit"
                 >
-                  {isSaving ? "Saving ..." : "Add Job"}
+                  {isSaving ? "Saving ..." : "Edit Job"}
                 </Button>
                 {errors.root && (
                   <p className="text-danger">{errors.root.message}</p>
@@ -320,4 +359,4 @@ const AddJobPage = () => {
   );
 };
 
-export default AddJobPage;
+export default EditJobPage;

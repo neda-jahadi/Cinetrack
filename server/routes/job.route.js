@@ -1,12 +1,13 @@
 import express from 'express';
 import { createSingleJob, deleteSingleJob, getJobs, getSingleJob, updateSingleJob } from '../controllers/job.controller.js';
+import { validateObjectId } from '../middlewares/validateObjectId.js';
 
 const router = express.Router();
 
 router.get("/", getJobs);
-router.get("/:id", getSingleJob)
+router.get("/:id", validateObjectId("id"), getSingleJob)
 router.post("/", createSingleJob)
-router.delete("/:id", deleteSingleJob)
-router.put("/:id", updateSingleJob)
+router.delete("/:id", validateObjectId("id"), deleteSingleJob)
+router.put("/:id", validateObjectId("id"), updateSingleJob)
 
 export default router;

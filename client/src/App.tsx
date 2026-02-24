@@ -10,6 +10,7 @@ import JobsPage from "./pages/JobsPage";
 import JobDetailsPage from "./pages/JobDetailsPage";
 import NotFound from "./components/sections/Job/NotFound";
 import AddJobPage from "./pages/AddJobPage";
+import EditJobPage from "./pages/EditJobPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -31,6 +32,15 @@ const router = createBrowserRouter(
           handle={{
             crumb: () => ({
               label: "Job",
+            }),
+          }}
+        />
+        <Route
+          path="edit-job/:id"
+          element={<EditJobPage />}
+          handle={{
+            crumb: () => ({
+              label: "edit",
             }),
           }}
         />

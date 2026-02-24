@@ -27,6 +27,12 @@ export type CreateJobInput = {
   company: Company;
 };
 
+type UpdateJobInput = {
+  id: string,
+  jobToEdit: CreateJobInput
+}
+
+// Get all jobs
 const fetchJobs = async (params?: JobParams): Promise<Job[]> => {
   const qs = new URLSearchParams();
   if (params?.limit) qs.set("limit", String(params.limit));
@@ -49,6 +55,7 @@ export function useJobs(params?: JobParams) {
   return getJobsQuery;
 }
 
+// Get single job
 const fetchJobById = async (id: string): Promise<Job> => {
   if (!id) throw new Response("Missing job id", { status: 400 });
  const res = await fetch(`/api/jobs/${id}`);
@@ -66,6 +73,7 @@ export function useJob(id?: string) {
   return getJobQuery;
 }
 
+// Create job
 const postJob = async (payload: CreateJobInput): Promise<Job> => {
  const res = await fetch('/api/jobs/', {
   method: "POST",
@@ -85,11 +93,13 @@ export function useAddJob() {
   return useMutation({
     mutationFn: postJob,
     onSuccess: () => {
+      toast.success("Job added successfully!");
       queryClient.invalidateQueries({ queryKey: ["jobs"] });
     },
   });
 }
 
+// Delete job
 const deleteJob = async (id: string): Promise<boolean> => {
  const res = await fetch(`/api/jobs/${id}`, {
   method: "DELETE"
@@ -109,6 +119,33 @@ export function useDeleteJob() {
     onSuccess: () => {
       toast.success("Job deleted successfully!");
       queryClient.invalidateQueries({ queryKey: ["jobs"] });
+    },
+  });
+}
+
+// Edit job
+const editJob = async ({id, jobToEdit}: UpdateJobInput): Promise<Job> => {
+ const res = await fetch(`/api/jobs/${id}`, {
+  method: "PUT",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(jobToEdit),
+ });
+  if (!res.ok) {
+    const errText = await res.text().catch(() => "");
+    throw new Error(errText || "Failed to edit the job");
+  }
+  const json: ApiResponse<Job> = await res.json();
+  return json.data as Job;
+}
+
+export function useEditJob() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: editJob,
+    onSuccess: (_, variables) => {
+      toast.success("Job Editet successfully!");
+      queryClient.invalidateQueries({ queryKey: ["jobs"] });
+      queryClient.invalidateQueries({ queryKey: ["jobs", variables.id] });
     },
   });
 }
