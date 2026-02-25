@@ -32,6 +32,23 @@ type UpdateJobInput = {
   jobToEdit: CreateJobInput
 }
 
+// ✅ One place for keys
+const jobKeys = {
+  all: ["jobs"] as const,
+  list: (params: JobParams | undefined) => ["jobs", params ?? {}] as const,
+  detail: (id: string | undefined) => ["job", id ?? null] as const,
+};
+
+// ✅ One place for fetch + error parsing
+async function apiFetch<T>(url: string, init?: RequestInit): Promise<T> {
+  const res = await fetch(url, init);
+  if (!res.ok) {
+    const errText = await res.text().catch(() => "");
+    throw new Error(errText || `Request failed (${res.status})`);
+  }
+  return res.json() as Promise<T>;
+}
+
 // Get all jobs
 const fetchJobs = async (params?: JobParams): Promise<Job[]> => {
   const qs = new URLSearchParams();
@@ -40,16 +57,13 @@ const fetchJobs = async (params?: JobParams): Promise<Job[]> => {
 
 
   const url = qs.toString() ? `/api/jobs?${qs}` : "/api/jobs";
-  const response = await fetch(url);
-
-  if (!response.ok) throw new Error("Error fetching jobs");
-  const json: ApiResponse<Job[]> = await response.json();
+  const json = await apiFetch<ApiResponse<Job[]>>(url )
   return json.data;
 };
 
 export function useJobs(params?: JobParams) {
   const getJobsQuery =  useQuery({
-    queryKey: ["fetchJobs", params ?? {}],
+    queryKey: jobKeys.list(params),
     queryFn: () => fetchJobs(params),
   });
   return getJobsQuery;
@@ -58,15 +72,14 @@ export function useJobs(params?: JobParams) {
 // Get single job
 const fetchJobById = async (id: string): Promise<Job> => {
   if (!id) throw new Response("Missing job id", { status: 400 });
- const res = await fetch(`/api/jobs/${id}`);
-  if (!res.ok) throw new Response("Job not found", { status: 404 });
-  const json = await res.json();
+  const url = `/api/jobs/${id}`;
+  const json = await apiFetch<ApiResponse<Job>>(url);
   return json.data;
 }
 
 export function useJob(id?: string) {
   const getJobQuery =  useQuery({
-    queryKey: ["fetchJobById", id ?? null],
+    queryKey: jobKeys.detail(id),
     queryFn: () => fetchJobById(id as string),
     enabled: !!id,
   });
@@ -75,16 +88,11 @@ export function useJob(id?: string) {
 
 // Create job
 const postJob = async (payload: CreateJobInput): Promise<Job> => {
- const res = await fetch('/api/jobs/', {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify(payload),
+  const json = await apiFetch<ApiResponse<Job>>('/api/jobs/', {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
  });
-  if (!res.ok) {
-    const errText = await res.text().catch(() => "");
-    throw new Error(errText || "Failed to create job");
-  }
-  const json: ApiResponse<Job> = await res.json();
   return json.data as Job;
 }
 
@@ -94,21 +102,16 @@ export function useAddJob() {
     mutationFn: postJob,
     onSuccess: () => {
       toast.success("Job added successfully!");
-      queryClient.invalidateQueries({ queryKey: ["jobs"] });
+      queryClient.invalidateQueries({ queryKey: jobKeys.all });
     },
   });
 }
 
 // Delete job
 const deleteJob = async (id: string): Promise<boolean> => {
- const res = await fetch(`/api/jobs/${id}`, {
+ const json = await apiFetch<ApiDeleteResponse>(`/api/jobs/${id}`, {
   method: "DELETE"
  });
-  if (!res.ok) {
-    const errText = await res.text().catch(() => "");
-    throw new Error(errText || "Failed to delete job");
-  }
-  const json: ApiDeleteResponse = await res.json();
   return json.success;
 }
 
@@ -118,23 +121,19 @@ export function useDeleteJob() {
     mutationFn: deleteJob,
     onSuccess: () => {
       toast.success("Job deleted successfully!");
-      queryClient.invalidateQueries({ queryKey: ["jobs"] });
+      queryClient.invalidateQueries({ queryKey: jobKeys.all });
     },
   });
 }
 
 // Edit job
 const editJob = async ({id, jobToEdit}: UpdateJobInput): Promise<Job> => {
- const res = await fetch(`/api/jobs/${id}`, {
+  const json = await apiFetch<ApiResponse<Job>>(`/api/jobs/${id}`, {
   method: "PUT",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify(jobToEdit),
- });
-  if (!res.ok) {
-    const errText = await res.text().catch(() => "");
-    throw new Error(errText || "Failed to edit the job");
-  }
-  const json: ApiResponse<Job> = await res.json();
+ })
+ 
   return json.data as Job;
 }
 
@@ -143,9 +142,9 @@ export function useEditJob() {
   return useMutation({
     mutationFn: editJob,
     onSuccess: (_, variables) => {
-      toast.success("Job Editet successfully!");
-      queryClient.invalidateQueries({ queryKey: ["jobs"] });
-      queryClient.invalidateQueries({ queryKey: ["jobs", variables.id] });
+      toast.success("Job Edited successfully!");
+      queryClient.invalidateQueries({ queryKey: jobKeys.all });
+      queryClient.invalidateQueries({ queryKey: jobKeys.detail(variables.id)});
     },
   });
 }

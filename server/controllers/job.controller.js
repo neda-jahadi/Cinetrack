@@ -61,7 +61,7 @@ export const createSingleJob = async (req, res) => {
 export const updateSingleJob = async (req, res) => {
     const jobId = req.params.id;
     try {
-      const updatedJob = await Job.findByIdAndUpdate(jobId, req.body, { new: true, runValidators: true });
+      const updatedJob = await Job.findByIdAndUpdate(jobId, req.body, { new: true, runValidators: true, context: "query" });
       if (!updatedJob) {
           return res.status(404).json({
           success: false,
@@ -74,11 +74,11 @@ export const updateSingleJob = async (req, res) => {
         data: updatedJob,
       })
     } catch (error) {
-      console.error("Create job error:", error.message);
+      console.error("Update job error:", error.message);
 
       return res.status(500).json({
         success: false,
-        message: error.message,
+        message: "Failed to update job",
       });
     }
 }
