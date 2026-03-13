@@ -1,12 +1,24 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import type { Company, Job, JobType } from "../../types";
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import type { Company, Job, JobType, Pagination } from "../../types";
 import type { JobSort } from "./constants";
  import { toast } from 'react-toastify';
+
+type JobsApiResponse<T> = {
+  success: boolean;
+  data: T;
+  pagination: Pagination;
+  message?: string;
+};
 
 type ApiResponse<T> = {
   success: boolean;
   data: T;
 };
+
+type JobsResponse = {
+  data: Job[];
+  pagination: Pagination;
+}
 
 type ApiDeleteResponse = {
   success: boolean;
@@ -15,6 +27,7 @@ type ApiDeleteResponse = {
 
 type JobParams = {
     limit?: number;
+    page?: number;
     sort?: JobSort;
 }
 
@@ -35,7 +48,7 @@ type UpdateJobInput = {
 // ✅ One place for keys
 const jobKeys = {
   all: ["jobs"] as const,
-  list: (params: JobParams | undefined) => ["jobs", params ?? {}] as const,
+  list: (params: JobParams | undefined) => ["jobs", params ?? null] as const,
   detail: (id: string | undefined) => ["job", id ?? null] as const,
 };
 
@@ -50,21 +63,28 @@ async function apiFetch<T>(url: string, init?: RequestInit): Promise<T> {
 }
 
 // Get all jobs
-const fetchJobs = async (params?: JobParams): Promise<Job[]> => {
+const fetchJobs = async (params?: JobParams): Promise<JobsResponse> => {
   const qs = new URLSearchParams();
   if (params?.limit) qs.set("limit", String(params.limit));
   if (params?.sort) qs.set("sort", params.sort);
+  if (params?.page) qs.set("page", String(params.page));
 
 
   const url = qs.toString() ? `/api/jobs?${qs}` : "/api/jobs";
-  const json = await apiFetch<ApiResponse<Job[]>>(url )
-  return json.data;
+  const json = await apiFetch<JobsApiResponse<Job[]>>(url )
+  return {
+    data: json.data,
+    pagination: json.pagination,
+  }
 };
 
 export function useJobs(params?: JobParams) {
   const getJobsQuery =  useQuery({
     queryKey: jobKeys.list(params),
     queryFn: () => fetchJobs(params),
+    placeholderData: keepPreviousData,
+    staleTime: 1000 * 60 * 2,
+    refetchOnWindowFocus: false,
   });
   return getJobsQuery;
 }

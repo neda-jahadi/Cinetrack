@@ -1,5 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { cn } from "../../../lib/cn";
+import { useAuth } from "../../../context/AuthContext";
+import Button from "../../ui/Button";
 
 type NavItem = {
   label: string;
@@ -7,6 +9,8 @@ type NavItem = {
 };
 
 const NavBar = ({ items }: { items: NavItem[] }) => {
+  const { isLoggedIn, logout, login } = useAuth();
+
   return (
     <ul className="flex items-center gap-2">
       {items.map((navItem) => (
@@ -25,6 +29,12 @@ const NavBar = ({ items }: { items: NavItem[] }) => {
           </NavLink>
         </li>
       ))}
+
+      <li>
+        <Button onClick={isLoggedIn ? logout : login}>
+          {isLoggedIn ? "Logout" : "Login"}
+        </Button>
+      </li>
     </ul>
   );
 };

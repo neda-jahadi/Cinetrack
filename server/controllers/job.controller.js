@@ -1,32 +1,55 @@
 import Job from '../models/Jobs.js';
 
 export const getJobs = async (req, res) => {
-    try {
-        const limit = Math.min(parseInt(req.query.limit ?? "0", 10) || 0, 50);
-        const SORT_MAP = {
-          recent: { createdAt: -1 },
-          salary_asc: { salary: 1 },
-          salary_desc: { salary: -1 },
-        };
-        const sortKey = req.query.sort;
+  try {
+    const limit = parseInt(req.query.limit, 10) || 4;
+    const page = parseInt(req.query.page, 10) || 1;
 
-        if (sortKey && !SORT_MAP[sortKey]) {
-          return res.status(400).json({ success: false, message: "Invalid sort option" });
-        }
+    const SORT_MAP = {
+      recent: { createdAt: -1 },
+      salary_asc: { salary: 1 },
+      salary_desc: { salary: -1 },
+    };
 
-        const sort = SORT_MAP[req.query.sort] ?? { createdAt: -1 };
+    const sortKey = req.query.sort;
 
-        const query = Job.find().sort(sort);
-        if (limit > 0) query.limit(limit);
-
-        const jobs = await query;
-
-        res.status(200).json({ success: true, data: jobs });
- 
-    } catch (error) {
-        res.status(500).json({ success: false, message: "Server error" });
+    if (sortKey && !SORT_MAP[sortKey]) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid sort option" });
     }
-}
+
+    const sort = SORT_MAP[sortKey] ?? { createdAt: -1 };
+
+    const safeLimit = limit > 0 ? limit : 6;
+    const safePage = page > 0 ? page : 1;
+    const skip = (safePage - 1) * safeLimit;
+
+    const totalJobs = await Job.countDocuments();
+
+    const jobs = await Job.find()
+      .sort(sort)
+      .skip(skip)
+      .limit(safeLimit);
+
+    const totalPages = Math.ceil(totalJobs / safeLimit);
+
+    res.status(200).json({
+      success: true,
+      data: jobs,
+      pagination: {
+        totalJobs,
+        totalPages,
+        currentPage: safePage,
+        limit: safeLimit,
+        hasNextPage: safePage < totalPages,
+        hasPrevPage: safePage > 1,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+};
 
 export const getSingleJob = async (req, res) => {
   const jobId = req.params.id;

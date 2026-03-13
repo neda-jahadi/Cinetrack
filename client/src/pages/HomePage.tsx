@@ -6,14 +6,15 @@ import ButtonLink from "../components/ui/ButtonLink";
 import { useJobs } from "../features/jobs/jobData";
 import Spinner from "../components/ui/Spinner";
 import { JOB_SORT } from "../features/jobs/constants";
+import { useState } from "react";
+import Button from "../components/ui/Button";
 
 const HomePage = () => {
-  const {
-    data: jobs = [],
-    isLoading,
-    isError,
-  } = useJobs({ limit: 3, sort: JOB_SORT.SALARY_ASC });
-  console.log(jobs);
+  const { data, isLoading, isError } = useJobs({
+    limit: 3,
+    sort: JOB_SORT.RECENT,
+  });
+  const jobs = data?.data ?? [];
 
   return (
     <>
@@ -34,7 +35,7 @@ const HomePage = () => {
             <CtaCard
               title="For Employers"
               description="List your job to find the perfect developer for the role"
-              to="/ad-job"
+              to="/login"
               ctaLabel="Add Job"
               variant="light"
             />

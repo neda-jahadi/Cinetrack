@@ -21,3 +21,12 @@ export type Job = {
   location: string;  
   company: Company; 
 };
+
+export type Pagination = {
+  totalJobs: number;
+  totalPages: number;
+  currentPage: number;
+  limit: number;
+  hasNextPage: boolean;
+  hasPrevPage: boolean;
+}

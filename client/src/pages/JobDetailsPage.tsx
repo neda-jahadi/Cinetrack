@@ -9,8 +9,11 @@ import { useDeleteJob, useJob } from "../features/jobs/jobData";
 import NotFound from "../components/sections/Job/NotFound";
 import Spinner from "../components/ui/Spinner";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const JobDetailsPage = () => {
+  const { isLoggedIn } = useAuth();
+
   const { id } = useParams<{ id: string }>();
   const { data: job, isLoading, isError } = useJob(id);
 
@@ -118,25 +121,29 @@ const JobDetailsPage = () => {
                   {job.company.contactPhone}
                 </a>
               </Card>
-
-              <Card className="bg-white mt-6">
-                <h2 className="text-xl font-bold mb-6">Manage Job</h2>
-                <ButtonLink to={`/jobs/edit-job/${job._id}`} className="w-full">
-                  Edit Job
-                </ButtonLink>
-                <Button
-                  variant="danger"
-                  className="w-full rounded-full my-2"
-                  disabled={deleteJobMutation.isPending}
-                  onClick={() => handleDeleteSingleJob()}
-                >
-                  {deleteJobMutation.isPending ? "Deleting ..." : "delete"}
-                </Button>
-                <div></div>
-                {deleteJobMutation.isError && (
-                  <p>{(deleteJobMutation.error as Error).message}</p>
-                )}
-              </Card>
+              {isLoggedIn && (
+                <Card className="bg-white mt-6">
+                  <h2 className="text-xl font-bold mb-6">Manage Job</h2>
+                  <ButtonLink
+                    to={`/jobs/edit-job/${job._id}`}
+                    className="w-full"
+                  >
+                    Edit Job
+                  </ButtonLink>
+                  <Button
+                    variant="danger"
+                    className="w-full rounded-full my-2"
+                    disabled={deleteJobMutation.isPending}
+                    onClick={() => handleDeleteSingleJob()}
+                  >
+                    {deleteJobMutation.isPending ? "Deleting ..." : "delete"}
+                  </Button>
+                  <div></div>
+                  {deleteJobMutation.isError && (
+                    <p>{(deleteJobMutation.error as Error).message}</p>
+                  )}
+                </Card>
+              )}
             </aside>
           </div>
         </Container>
