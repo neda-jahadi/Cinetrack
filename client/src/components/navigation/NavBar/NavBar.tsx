@@ -2,6 +2,9 @@ import { NavLink } from "react-router-dom";
 import { cn } from "../../../lib/cn";
 import { useAuth } from "../../../context/AuthContext";
 import Button from "../../ui/Button";
+import { useTheme } from "../../../context/ThemeContext";
+import { CiLight } from "react-icons/ci";
+import { MdDarkMode } from "react-icons/md";
 
 type NavItem = {
   label: string;
@@ -10,6 +13,7 @@ type NavItem = {
 
 const NavBar = ({ items }: { items: NavItem[] }) => {
   const { isLoggedIn, logout, login } = useAuth();
+  const { isInDarkMode, toggleTheme } = useTheme();
 
   return (
     <ul className="flex items-center gap-2">
@@ -33,6 +37,11 @@ const NavBar = ({ items }: { items: NavItem[] }) => {
       <li>
         <Button onClick={isLoggedIn ? logout : login}>
           {isLoggedIn ? "Logout" : "Login"}
+        </Button>
+      </li>
+      <li>
+        <Button onClick={() => toggleTheme()}>
+          {isInDarkMode ? <CiLight /> : <MdDarkMode />}
         </Button>
       </li>
     </ul>

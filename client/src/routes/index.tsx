@@ -1,13 +1,14 @@
 import { createBrowserRouter } from "react-router-dom";
 import RootLayout from "../layout/RootLayout";
-import HomePage from "../pages/HomePage";
-import JobsPage from "../pages/JobsPage";
-import JobDetailsPage from "../pages/JobDetailsPage";
-import NotFound from "../components/sections/Job/NotFound";
-import EditJobPage from "../pages/EditJobPage";
-import AddJobPage from "../pages/AddJobPage";
-import LoginPage from "../pages/LoginPage";
-import RegisterPage from "../pages/RegisterPage";
+import { lazy } from "react";
+const HomePage = lazy(() => import("../pages/HomePage"));
+const JobsPage = lazy(() => import("../pages/JobsPage"));
+const JobDetailsPage = lazy(() => import("../pages/JobDetailsPage"));
+const NotFound = lazy(() => import("../components/sections/Job/NotFound"));
+const EditJobPage = lazy(() => import("../pages/EditJobPage"));
+const AddJobPage = lazy(() => import("../pages/AddJobPage"));
+const LoginPage = lazy(() => import("../pages/LoginPage"));
+const RegisterPage = lazy(() => import("../pages/RegisterPage"));
 
 export const router = createBrowserRouter([
   {
