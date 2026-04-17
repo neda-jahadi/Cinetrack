@@ -7,13 +7,11 @@ type HeroProps = {
 
 const Hero = ({ title, subtitle, children }: HeroProps) => {
   return (
-    <section className="bg-indigo-700">
-      <Container className="flex-col items-center py-16">
-        <div className="text-center">
-          <h1 className="text-4xl font-extrabold text-white sm:text-5xl md:text-6xl">
-            {title}
-          </h1>
-          {subtitle && <p className="my-4 text-xl text-white">{subtitle}</p>}
+    <section className="bg-brand-light">
+      <Container className="flex-col items-center">
+        <div className="">
+          <h1 className="hero-title">{title}</h1>
+          {subtitle && <p className="my-4 text-xl">{subtitle}</p>}
           {children && <div>{children}</div>}
         </div>
       </Container>

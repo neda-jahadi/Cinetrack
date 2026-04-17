@@ -20,7 +20,7 @@ const CtaCard = ({
 
   return (
     <article className={cn("p-6 rounded-lg shadow-md", cardClasses)}>
-      <h3 className="text-2xl font-bold">{title}</h3>
+      <h3 className="card-title">{title}</h3>
       <p className="mt-2 mb-4">{description}</p>
       <ButtonLink
         to={to}

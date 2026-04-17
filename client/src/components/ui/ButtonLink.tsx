@@ -15,7 +15,7 @@ const base =
 
 const variants: Record<ButtonLinkVariant, string> = {
   primary: "bg-indigo-600 text-white hover:bg-indigo-700",
-  secondary: "bg-indigo-100 text-indigo-900 hover:bg-indigo-200",
+  secondary: "bg-indigo-200 text-indigo-900 hover:bg-indigo-300",
   dark: "bg-black text-white hover:bg-gray-700",
 };
 
