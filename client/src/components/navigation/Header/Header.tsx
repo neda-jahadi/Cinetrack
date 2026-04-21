@@ -7,7 +7,7 @@ const Header = () => {
   const items = [
     { label: "Home", to: "/" },
     { label: "Manage Bookings", to: "/manage-bookings" },
-    { label: "Careers", to: "/jobs" },
+    { label: "Careers", to: "/careers" },
     { label: "Add Job", to: "/add-job" },
   ];
   return (

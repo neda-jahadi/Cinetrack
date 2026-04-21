@@ -24,7 +24,7 @@ export const router = createBrowserRouter([
         path: "jobs",
         handle: { crumb: () => ({ to: "/jobs", label: "Jobs" }) },
         children: [
-          { index: true, element: <JobsPage /> },
+          { index: true, element: <BrowseJobsPage /> },
 
           {
             path: ":id",
@@ -42,7 +42,7 @@ export const router = createBrowserRouter([
       },
       { path: "manage-bookings", element: <ManageBookingPage /> },
       { path: "add-job", element: <AddJobPage /> },
-      { path: "browse-jobs", element: <BrowseJobsPage /> },
+      { path: "careers", element: <JobsPage /> },
       { path: "login", element: <LoginPage /> },
       { path: "register", element: <RegisterPage /> },
       { path: "*", element: <NotFound /> },

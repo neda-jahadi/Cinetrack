@@ -26,7 +26,7 @@ const HomePage = () => {
             <CtaCard
               title="For Developers"
               description="Browse our React jobs and start your career today"
-              to="/browse-jobs"
+              to="/jobs"
               ctaLabel="Browse Jobs"
               variant="tint"
             />
@@ -58,7 +58,7 @@ const HomePage = () => {
             <ButtonLink
               variant="dark"
               size="lg"
-              to="/browse-jobs"
+              to="/jobs"
               aria-label="View All Jobs"
               className="w-full max-w-md"
             >

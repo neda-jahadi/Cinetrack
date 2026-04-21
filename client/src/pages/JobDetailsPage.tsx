@@ -125,7 +125,7 @@ const JobDetailsPage = () => {
                 <Card className="bg-white mt-6">
                   <h2 className="text-xl font-bold mb-6">Manage Job</h2>
                   <ButtonLink
-                    to={`/jobs/edit-job/${job._id}`}
+                    to={`/jobs/edit-job/${job.id}`}
                     className="w-full"
                   >
                     Edit Job

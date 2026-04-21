@@ -6,9 +6,9 @@ import { validateObjectId } from '../middlewares/validateObjectId.js';
 const router = express.Router();
 
 router.get("/", getJobs);
-router.get("/:id", validateObjectId("id"), getSingleJob)
+router.get("/:id", getSingleJob)
 router.post("/", createSingleJob)
-router.delete("/:id", validateObjectId("id"), deleteSingleJob)
-router.put("/:id", validateObjectId("id"), updateSingleJob)
+router.delete("/:id", deleteSingleJob)
+router.put("/:id", updateSingleJob)
 
 export default router;
