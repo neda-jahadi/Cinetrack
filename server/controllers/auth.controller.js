@@ -1,38 +1,79 @@
+import { prisma } from "../configs/prisma.js";
 import bcrypt from "bcrypt";
-import User from "../models/User.js";
 import { signAccessToken, signRefreshToken, verifyRefreshToken } from "../utils/tokens.js";
+import { generateToken } from "../utils/generateToken.js";
 
-
+// https://www.webfx.com/web-development/glossary/http-status-codes/
 
 export const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
+  const userExists = await prisma.user.findUnique({
+    where: {email: email}
+  });
 
-  if (!email || !password) return res.status(400).json({ message: "Email and password required" });
+  if (userExists) {
+    return res.status(400).json({error: "User already exists with this email" })
+  }
 
-  const exists = await User.findOne({ email });
-  if (exists) return res.status(409).json({ message: "Email already in use" });
+  // Hash password : npm i bcryptjs
+  const hashedPassword = await bcrypt.hash(password, 10);
+  
+  // Create user
+  const user = await prisma.user.create({
+    data: {
+      name, email, password: hashedPassword
+    }
+  });
 
-  const passwordHash = await bcrypt.hash(password, 12);
-  const user = await User.create({ name, email, passwordHash });
+   // Generate JWT Token
+    const token = generateToken(user.id);
 
-  res.status(201).json({ id: user._id, email: user.email, name: user.name });
+  res.status(201).json({
+    status: "success", data: { user: { id: user.id, name: name, email: email}, token}
+  })
 
-  return res.status(201).json({ id: user._id, email: user.email, name: user.name });
 };
 
 export const loginUser = async (req, res) => {
     const { email, password } = req.body;
+    const user = await prisma.user.findUnique({
+      where: { email: email }
+    })
 
-  const user = await User.findOne({ email });
-  if (!user) return res.status(401).json({ message: "Invalid credentials" });
+    if (!user) {
+      res.status(401).json({message: "Invalid email or password"});
+    }
 
-  const ok = await bcrypt.compare(password, user.passwordHash);
-  if (!ok) return res.status(401).json({ message: "Invalid credentials" });
+    // verify the password
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if(!isPasswordValid) {
+      res.status(401).json({message: "Invalid email or password"});
+    }
 
-  const accessToken = signAccessToken(user._id.toString());
+    // Generate JWT Token
+    const token = generateToken(user.id, res);
 
-  res.json({
-    accessToken,
-    user: { id: user._id, email: user.email, name: user.name },
+    res.status(201).json({
+      message: "success",
+      data: { 
+        user: {
+          id: user.id, 
+          name: user.name, 
+          email: email
+        }, 
+        token
+      }
+      });
+}
+
+export const logoutUser = async (req, res) => {
+  res.cookie("jwt", "", {
+    httpOnly: true,
+    expires: new Date(0),
   });
+  
+  res.status(200).json({
+    status: "success",
+    message: "Logged out successfully"
+  })
 }

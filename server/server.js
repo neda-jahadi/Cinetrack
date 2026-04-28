@@ -7,6 +7,7 @@ import cookieParser from "cookie-parser";
 import { connectDB } from './configs/mongodb.js';
 import JobRoutes from "./routes/job.route.js";
 import AuthRoutes from "./routes/auth.route.js";
+import watchlistRoutes from "./routes/watchlistRoutes.js";
 
 dotenv.config();
 
@@ -15,7 +16,10 @@ const PORT = process.env.PORT || 5000;
 
 const __dirname = path.resolve();
 
+// Body parsing middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.use(cookieParser());
 
 // CORS for Vite dev
@@ -28,6 +32,7 @@ app.use(
 
 app.use("/api/auth", AuthRoutes);
 app.use("/api/jobs", JobRoutes);
+app.use("/api/watchlist", watchlistRoutes)
 
 if(process.env.NODE_ENV === "production") {
     const clientDistPath = path.join(__dirname, "client", "dist");
