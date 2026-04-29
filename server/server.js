@@ -4,7 +4,6 @@ import path from "path";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
-import { connectDB } from './configs/mongodb.js';
 import JobRoutes from "./routes/job.route.js";
 import AuthRoutes from "./routes/auth.route.js";
 import watchlistRoutes from "./routes/watchlistRoutes.js";
@@ -40,15 +39,28 @@ app.use("/api/movies", movieRoutes)
 app.use(notFound);
 app.use(errorHandler);
 
-if(process.env.NODE_ENV === "production") {
-    const clientDistPath = path.join(__dirname, "client", "dist");
-    app.use(express.static(clientDistPath))
-    app.get("*", (req, res) => {
-        res.sendFile(path.join(clientDistPath, "index.html"));
-    });
-}
+const server = app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server running on port ${PORT}`);
+});
 
-app.listen(PORT, () => {
-    connectDB();
-    console.log('Server started at http://localhost:' + PORT)
-})
+process.on("unhandledRejection", (err) => {
+  console.error("Unhandled Rejection:", err);
+  server.close(async () => {
+    await disconnectDB();
+    process.exit(1);
+  });
+});
+
+process.on("uncaughtException", async (err) => {
+  console.error("Uncaught Exception:", err);
+  await disconnectDB();
+  process.exit(1);
+});
+
+process.on("SIGTERM", async () => {
+  console.log("SIGTERM received, shutting down gracefully");
+  server.close(async () => {
+    await disconnectDB();
+    process.exit(0);
+  });
+});
