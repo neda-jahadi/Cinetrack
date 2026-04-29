@@ -8,6 +8,8 @@ import { connectDB } from './configs/mongodb.js';
 import JobRoutes from "./routes/job.route.js";
 import AuthRoutes from "./routes/auth.route.js";
 import watchlistRoutes from "./routes/watchlistRoutes.js";
+import movieRoutes from "./routes/movieRoutes.js";
+import { notFound, errorHandler } from "./middlewares/errorMiddleware.js";
 
 dotenv.config();
 
@@ -33,6 +35,10 @@ app.use(
 app.use("/api/auth", AuthRoutes);
 app.use("/api/jobs", JobRoutes);
 app.use("/api/watchlist", watchlistRoutes)
+app.use("/api/movies", movieRoutes)
+
+app.use(notFound);
+app.use(errorHandler);
 
 if(process.env.NODE_ENV === "production") {
     const clientDistPath = path.join(__dirname, "client", "dist");
