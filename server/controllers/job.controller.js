@@ -61,9 +61,8 @@ export const getJobs = async (req, res) => {
 };
 
 export const getSingleJob = async (req, res) => {
-  const jobId = Number(req.params.id);
-
   try {
+    const jobId = Number(req.params.id);
     const job = await prisma.job.findUnique({
       where: { id: jobId },
       include: { company: true },
@@ -82,41 +81,35 @@ export const getSingleJob = async (req, res) => {
 
 export const createSingleJob = async (req, res) => {
   try {
-    const { title, type, description, salary, location, company } = req.body;
+    const company = req.company;
 
-    const createdCompany = await prisma.company.create({
-      data: {
-        name: company.name,
-        description: company.description,
-        contactEmail: company.contactEmail,
-        contactPhone: company.contactPhone,
-      },
-    });
+    const { title, type, description, salary, location } = req.body;
 
     const job = await prisma.job.create({
       data: {
         title,
-        type: type.replace("-", "_"),
+        type: type,
         description,
         salary,
         location,
-        companyId: createdCompany.id,
+        companyId: company.id,
       },
       include: {
-        company: true,
-      },
+        company: true
+      }
     });
 
     return res.status(201).json({
       success: true,
+      message: "Job created successfully",
       data: mapJob(job),
     });
   } catch (error) {
-    console.error("Create job error:", error);
-    return res.status(500).json({
-      success: false,
-      message: "Failed to create job",
-    });
+      console.error("Create job error:", error);
+      return res.status(500).json({
+        success: false,
+        message: "Failed to create job",
+      });
   }
 };
 
@@ -136,23 +129,19 @@ export const updateSingleJob = async (req, res) => {
       });
     }
 
-    const { title, type, description, salary, location, company } = req.body;
+    if (existingJob.companyId !== req.company.id ) {
+      return res.status(403).json({
+        success: false, message: "you are not allowed to updet this job"
+      })
+    }
 
-    await prisma.company.update({
-      where: { id: existingJob.companyId },
-      data: {
-        name: company.name,
-        description: company.description,
-        contactEmail: company.contactEmail,
-        contactPhone: company.contactPhone,
-      },
-    });
+    const { title, type, description, salary, location } = req.body;
 
     const updatedJob = await prisma.job.update({
       where: { id: jobId },
       data: {
         title,
-        type: type.replace("-", "_"),
+        type,
         description,
         salary,
         location,
@@ -176,9 +165,8 @@ export const updateSingleJob = async (req, res) => {
 };
 
 export const deleteSingleJob = async (req, res) => {
-  const jobId = Number(req.params.id);
-
   try {
+    const jobId = Number(req.params.id);
     const existingJob = await prisma.job.findUnique({
       where: { id: jobId },
     });

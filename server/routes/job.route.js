@@ -1,13 +1,17 @@
 import express from 'express';
-import { requireAuth } from "../middlewares/requireAuth.js";
+import { authMiddleware } from '../middlewares/authMiddleware.js';
 import { createSingleJob, deleteSingleJob, getJobs, getSingleJob, updateSingleJob } from '../controllers/job.controller.js';
+import { addJobSchema } from '../validators/addJobValidators.js';
+import { authorizeRoles } from '../middlewares/roleMiddleware.js';
+import { validateRequest } from '../middlewares/validateRequest.js';
+import { companyApprovedCheck } from '../middlewares/companyMiddleware.js';
 
 const router = express.Router();
 
 router.get("/", getJobs);
 router.get("/:id", getSingleJob)
-router.post("/", createSingleJob)
-router.delete("/:id", deleteSingleJob)
-router.put("/:id", updateSingleJob)
+router.post("/", authMiddleware, authorizeRoles("COMPANY"), companyApprovedCheck, validateRequest(addJobSchema), createSingleJob)
+router.delete("/:id", authMiddleware, authorizeRoles("COMPANY"), deleteSingleJob)
+router.put("/:id", authMiddleware, authorizeRoles("COMPANY"), companyApprovedCheck, validateRequest(addJobSchema), updateSingleJob)
 
 export default router;

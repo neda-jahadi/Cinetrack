@@ -7,9 +7,9 @@ import { addToWatchlistSchema, updateWatchlistSchema } from '../validators/watch
 const router = express.Router();
 router.use(authMiddleware);
 
-router.get("/", getMyWatchlist);
-router.post("/", validateRequest(addToWatchlistSchema), addToWatchlist);
-router.delete("/:id", removeFromWatchlist);
-router.put("/:id", validateRequest(updateWatchlistSchema), updateWatchListitem);
+router.get("/", authMiddleware, getMyWatchlist);
+router.post("/", authMiddleware, validateRequest(addToWatchlistSchema), addToWatchlist);
+router.delete("/:id", authMiddleware, removeFromWatchlist);
+router.put("/:id", authMiddleware, validateRequest(updateWatchlistSchema), updateWatchListitem);
 
 export default router;

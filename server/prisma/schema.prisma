@@ -7,15 +7,35 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  role      UserRole @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  movies         Movie[]         @relation("MovieCreator")
+  watchlistItems WatchlistItem[]
+  company        Company?
+}
+
 model Company {
-  id           Int      @id @default(autoincrement())
+  id           Int           @id @default(autoincrement())
+  userId       Int           @unique
   name         String
   description  String
   contactEmail String
   contactPhone String
-  jobs         Job[]
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  status       CompanyStatus @default(PENDING)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  // Relations
+  user User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  jobs Job[]
 }
 
 model Job {
@@ -26,29 +46,11 @@ model Job {
   salary      String
   location    String
   companyId   Int
-  company     Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-}
-
-enum JobType {
-  Full_Time
-  Part_Time
-  Contract
-  Internship
-}
-
-model User {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 
   // Relations
-  movies         Movie[]         @relation("MovieCreator")
-  watchlistItems WatchlistItem[]
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
 }
 
 model Movie {
@@ -62,6 +64,7 @@ model Movie {
   createdBy   Int
   createdAt   DateTime @default(now())
 
+  // Relations
   creator        User            @relation("MovieCreator", fields: [createdBy], references: [id], onDelete: Cascade)
   watchlistItems WatchlistItem[]
 }
@@ -74,13 +77,32 @@ model WatchlistItem {
   rating    Int?
   notes     String?
   createdAt DateTime        @default(now())
-  updatedAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
 
   // Relations
   user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
   movie Movie @relation(fields: [movieId], references: [id], onDelete: Cascade)
 
   @@unique([userId, movieId])
+}
+
+enum UserRole {
+  USER
+  COMPANY
+  ADMIN
+}
+
+enum CompanyStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum JobType {
+  Full_Time
+  Part_Time
+  Contract
+  Internship
 }
 
 enum WatchlistStatus {
