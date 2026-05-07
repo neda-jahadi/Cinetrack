@@ -30,7 +30,7 @@ export const registerUser = async (req, res) => {
       const token = generateToken(user.id, res);
   
     return res.status(201).json({
-        success: true, message: "User registered successfully", data: { user: { id: user.id, name: user.name, email: user.email, role: user.role}, token}
+        success: true, message: "User registered successfully", data: { user: { id: user.id, name: user.name, email: user.email, role: user.role}}
       })
   } catch (error) {
       console.error("Register user error:", error);
@@ -71,8 +71,7 @@ export const loginUser = async (req, res) => {
           email: user.email,
           role: user.role
         }, 
-        company: user.company ? {  status: user.company.status} : null,
-        token
+        company: user.company ? {  status: user.company.status} : null
       }
       });
   } catch (error) {
@@ -94,4 +93,28 @@ export const logoutUser = async (req, res) => {
     success: true,
     message: "Logged out successfully"
   })
+}
+
+export const getMe = async (req, res) => {
+  try {
+    const user = req.user;
+    return res.status(200).json({
+      success: true,
+      data: {
+        user: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          role: user.role
+        },
+        company: user.company ? { status: user.company.status } : null
+      }
+    })
+  } catch (error) {
+      console.error("getMe error:", error);
+      return res.status(500).json({
+        success: false,
+        message: "Failed to fetch user",
+      });
+  }
 }

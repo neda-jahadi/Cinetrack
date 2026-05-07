@@ -5,20 +5,41 @@ import { loginSchema, type LoginFormFields } from "../validation/login";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useId } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useLogin } from "../features/auth/authQueries";
 
 const LoginPage = () => {
+  const loginMutation = useLogin();
   const formId = useId();
 
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<LoginFormFields>({
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmitLoginForm: SubmitHandler<LoginFormFields> = () => {};
+  const navigate = useNavigate();
+
+  const onSubmitLoginForm: SubmitHandler<LoginFormFields> = (data) => {
+    const payload = {
+      email: data.email,
+      password: data.password,
+    };
+    loginMutation.mutate(payload, {
+      onSuccess: () => {
+        navigate("/jobs");
+      },
+      onError: (error: any) => {
+        setError("root", {
+          type: "server",
+          message: error.message || "Failed to log in ",
+        });
+      },
+    });
+  };
 
   const errId = (name: string) => `${formId}-${name}-error`;
 

@@ -1,6 +1,5 @@
 import { NavLink } from "react-router-dom";
 import { cn } from "../../../lib/cn";
-import { useAuth } from "../../../context/AuthContext";
 import Button from "../../ui/Button";
 import { useTheme } from "../../../context/ThemeContext";
 import { CiLight } from "react-icons/ci";
@@ -12,7 +11,6 @@ type NavItem = {
 };
 
 const NavBar = ({ items }: { items: NavItem[] }) => {
-  const { isLoggedIn, logout, login } = useAuth();
   const { isInDarkMode, toggleTheme } = useTheme();
 
   return (
@@ -33,12 +31,6 @@ const NavBar = ({ items }: { items: NavItem[] }) => {
           </NavLink>
         </li>
       ))}
-
-      <li>
-        <Button onClick={isLoggedIn ? logout : login}>
-          {isLoggedIn ? "Logout" : "Login"}
-        </Button>
-      </li>
       <li>
         <Button onClick={() => toggleTheme()}>
           {isInDarkMode ? <CiLight /> : <MdDarkMode />}

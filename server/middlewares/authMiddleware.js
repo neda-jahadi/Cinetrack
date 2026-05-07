@@ -17,7 +17,7 @@ export const authMiddleware = async (req, res, next) => {
   }
 
   if (!token) {
-    return res.status(401).json({ error: "Not authorized, no token provided" });
+    return res.status(401).json({ success: false, message: "Not authorized, no token provided" });
   }
 
   try {
@@ -25,16 +25,16 @@ export const authMiddleware = async (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     const user = await prisma.user.findUnique({
-      where: { id: decoded.id },
+      where: { id: decoded.id }, include: { company: true}
     });
 
     if (!user) {
-      return res.status(401).json({ error: "User no longer exists" });
+      return res.status(401).json({ success: false, message: "User no longer exists" });
     }
 
     req.user = user;
     next();
   } catch (err) {
-    return res.status(401).json({ error: "Not authorized, token failed" });
+    return res.status(401).json({ success: false, message: "Not authorized, token failed" });
   }
 };

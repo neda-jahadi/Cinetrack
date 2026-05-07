@@ -1,25 +1,44 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
+import { createContext, useContext, type ReactNode } from "react";
+import { useMe } from "../features/auth/authQueries";
+import type { AuthCompany, AuthUser, UserRole } from "../types/authtypes";
 
 type AuthContextType = {
-  isLoggedIn: boolean;
-  login: () => void;
-  logout: () => void;
+  user: AuthUser | null;
+  company: AuthCompany | null;
+  isLoading: boolean;
+  isAuthenticated: boolean;
+  role: UserRole | undefined;
+  isAdmin: boolean;
+  isCompany: boolean;
+  isApprovedCompany: boolean;
 };
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const AuthContext = createContext<AuthContextType | null>(null);
 
 type AuthProviderProps = {
   children: ReactNode;
 };
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const { data, isLoading, isError } = useMe();
 
-  const login = () => setIsLoggedIn(true);
-  const logout = () => setIsLoggedIn(false);
+  const user = data?.user ?? null;
+  const company = data?.company ?? null;
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        company,
+        isLoading,
+        isAuthenticated: !!user && !isError,
+        role: user?.role,
+        isAdmin: user?.role === "ADMIN",
+        isCompany: user?.role === "COMPANY",
+        isApprovedCompany:
+          user?.role === "COMPANY" && company?.status === "APPROVED",
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
