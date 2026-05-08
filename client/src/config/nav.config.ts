@@ -31,7 +31,7 @@ export const navItems = [
   },
   {
     label: "Create Business Account",
-    to: "/business-account",
+    to: "/business",
     hideForRoles: ["COMPANY"]
   }
 ];

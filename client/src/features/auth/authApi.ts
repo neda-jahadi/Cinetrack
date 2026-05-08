@@ -1,15 +1,29 @@
+import axios from "axios";
 import { api } from "../../lib/api";
 import type { AuthMeApiResponse, loginType, registerType } from "../../types/authtypes"
 
 
 export const login = async (data: loginType) => {
-  const res = await api.post("/api/auth/login", data);
-  return res.data;
+  try {
+    const res = await api.post("/api/auth/login", data);
+    return res.data.data;
+
+  } catch (error: any) {
+    throw new Error(
+      error.response?.data?.message || "Login failed"
+    );
+  }
 };
 
 export const register = async (data: registerType) => {
-  const res = await api.post("/api/auth/register", data);
-  return res.data;
+  try {
+    const res = await api.post("/api/auth/register", data);
+    return res.data.data;
+  } catch (error: any) {
+    throw new Error(
+      error.response?.data?.message || "Register failed"
+    );
+  }
 };
 
 export const logout = async () => {
@@ -17,7 +31,20 @@ export const logout = async () => {
   return res.data;
 };
 
-export const getMe = async (): Promise<AuthMeApiResponse> => {
-  const res = await api.get("/api/auth/me");
-  return res.data.data;
+export const getMe = async (): Promise<AuthMeApiResponse | null> => {
+  try {
+    const res = await api.get("/api/auth/me");
+
+    if (!res.data?.success || !res.data?.data) {
+      return null;
+    }
+
+    return res.data.data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response?.status === 401) {
+      return null;
+    }
+
+    throw error;
+  }
 };

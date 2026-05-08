@@ -72,7 +72,8 @@ export const loginUser = async (req, res) => {
           role: user.role
         }, 
         company: user.company ? {  status: user.company.status} : null
-      }
+      },
+      token
       });
   } catch (error) {
     console.error("User login error:", error);

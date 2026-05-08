@@ -3,6 +3,7 @@ import RootLayout from "../layout/RootLayout";
 import { lazy } from "react";
 import BrowseJobsPage from "../pages/BrowseJobsPage";
 import ProfilePage from "../pages/ProfilePage";
+import BusinessAccountPage from "../pages/BusinessAccountPage";
 const HomePage = lazy(() => import("../pages/HomePage"));
 const JobsPage = lazy(() => import("../pages/JobsPage"));
 const JobDetailsPage = lazy(() => import("../pages/JobDetailsPage"));
@@ -43,8 +44,9 @@ export const router = createBrowserRouter([
       { path: "add-job", element: <AddJobPage /> },
       { path: "careers", element: <JobsPage /> },
       { path: "login", element: <LoginPage /> },
-      { path: "register", element: <RegisterPage /> },
+      { path: "signup", element: <RegisterPage /> },
       { path: "profile", element: <ProfilePage /> },
+      { path: "business", element: <BusinessAccountPage /> },
       { path: "*", element: <NotFound /> },
     ],
   },

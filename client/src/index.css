@@ -55,7 +55,7 @@
   }
 
   .section-title {
-    @apply text-2xl font-bold tracking-tight sm:text-3xl;
+    @apply text-2xl font-bold tracking-tight sm:text-3xl mb-7;
   }
 
   .section-subtitle {

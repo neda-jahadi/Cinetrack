@@ -9,7 +9,7 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 const base =
-  "inline-flex items-center justify-center rounded-md font-medium transition " +
+  "inline-flex items-center justify-center rounded-md font-bold transition " +
   "focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600 focus-visible:ring-offset-2 " +
   "disabled:cursor-not-allowed disabled:opacity-60";
 
@@ -21,9 +21,9 @@ const variants: Record<ButtonVariant, string> = {
 };
 
 const sizes = {
-  sm: "px-3 py-2 text-sm",
-  md: "px-4 py-2 text-sm",
-  lg: "py-4 px-6 text-base",
+  sm: "px-4 py-3 text-sm",
+  md: "px-6 py-4 text-sm",
+  lg: "py-6 px-8 text-base",
 };
 
 export default function Button({
