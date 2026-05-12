@@ -1,9 +1,11 @@
 export type Company = {
   id: number;
+  userId: number;
   name: string;
   description: string;
   contactEmail: string;
   contactPhone: string;
+  status: string;
 }
 
 export type JobType =
@@ -21,7 +23,6 @@ export type Job = {
   salary: string;      
   location: string;
   companyId: number;  
-  company: Company; 
 };
 
 export type Pagination = {
@@ -31,4 +32,8 @@ export type Pagination = {
   limit: number;
   hasNextPage: boolean;
   hasPrevPage: boolean;
+}
+
+export type SingleJob = Job & {
+  company: Company
 }

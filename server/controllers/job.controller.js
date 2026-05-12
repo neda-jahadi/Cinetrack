@@ -1,10 +1,5 @@
 import { prisma } from "../configs/prisma.js";
 
-const mapJob = (job) => ({
-  ...job,
-  type: job.type.replace("_", "-"),
-});
-
 export const getJobs = async (req, res) => {
   try {
     const limit = parseInt(req.query.limit, 10) || 4;
@@ -44,7 +39,7 @@ export const getJobs = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      data: jobs.map(mapJob),
+      data: jobs,
       pagination: {
         totalJobs,
         totalPages,
@@ -72,7 +67,7 @@ export const getSingleJob = async (req, res) => {
       return res.status(404).json({ success: false, message: "Job not found" });
     }
 
-    res.status(200).json({ success: true, data: mapJob(job) });
+    res.status(200).json({ success: true, data: job });
   } catch (error) {
     console.error("getSingleJob error:", error);
     res.status(500).json({ success: false, message: "Internal server error" });
@@ -102,7 +97,7 @@ export const createSingleJob = async (req, res) => {
     return res.status(201).json({
       success: true,
       message: "Job created successfully",
-      data: mapJob(job),
+      data: job,
     });
   } catch (error) {
       console.error("Create job error:", error);
@@ -153,7 +148,7 @@ export const updateSingleJob = async (req, res) => {
 
     return res.status(200).json({
       success: true,
-      data: mapJob(updatedJob),
+      data: updatedJob,
     });
   } catch (error) {
     console.error("Update job error:", error);

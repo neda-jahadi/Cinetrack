@@ -8,8 +8,9 @@ import PaginationComponent from "../components/sections/PaginationComponent";
 const BrowseJobsPage = () => {
   const [page, setPage] = useState<number>(1);
   const { data, isLoading, isError } = useJobs({ page });
-  const jobs = data?.data ?? [];
+  const jobs = data ? data.data : [];
   const pagination = data?.pagination;
+  console.log("jobs are:", jobs);
 
   const handleChangePage = (currentPage: number) => {
     setPage(currentPage);

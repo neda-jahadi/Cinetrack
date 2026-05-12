@@ -1,8 +1,8 @@
-import type { Job } from "../../../types";
+import type { SingleJob } from "../../../types";
 import JobCard from "./JobCard";
 
 type JobPreviewProps = {
-  jobs: Job[];
+  jobs: SingleJob[] | [];
   limit?: number;
 };
 

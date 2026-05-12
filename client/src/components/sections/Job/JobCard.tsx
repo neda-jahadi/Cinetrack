@@ -1,26 +1,24 @@
 import { Link } from "react-router-dom";
 import { cn } from "../../../lib/cn";
-import type { Job } from "../../../types";
-import { useState, useMemo, useId } from "react";
+import type { SingleJob } from "../../../types";
+import { useState, useId } from "react";
 import { FaMapMarker } from "react-icons/fa";
 
 type JobCardProps = {
-  job: Job;
+  job: SingleJob;
   className?: string;
   variant?: "light" | "tint";
 };
 
-const FALLBACK_MAX_CHARS = 100;
+const FALLBACK_MAX_CHARS = 300;
 
 const JobCard = ({ job, className, variant = "tint" }: JobCardProps) => {
   const cardClasses = variant === "tint" ? "bg-white" : "bg-gray-50";
   const detailsPath = `/jobs/${job.id}`;
   const descId = useId();
   const description = job.description?.trim() ?? "";
-  const canToggle = useMemo(
-    () => description.length > FALLBACK_MAX_CHARS,
-    [description],
-  );
+  console.log(description.length);
+  const canToggle = description.length > FALLBACK_MAX_CHARS ? true : false;
   const [expanded, setExpanded] = useState(false);
 
   return (
@@ -31,7 +29,9 @@ const JobCard = ({ job, className, variant = "tint" }: JobCardProps) => {
         className,
       )}
     >
-      <p className="text-sm font-medium text-muted">{job.type}</p>
+      <p className="text-sm font-medium text-muted">
+        {job.type.replace("_", " ")}
+      </p>
       <h3 className="mt-2 text-xl font-bold">
         <Link
           to={detailsPath}
@@ -66,7 +66,7 @@ const JobCard = ({ job, className, variant = "tint" }: JobCardProps) => {
         </div>
       )}
 
-      <p className="text-indigo-500 mb-2">{job.salary}$</p>
+      <p className="text-indigo-500 mb-2">{job.salary}</p>
       <p className="text-indigo-500 mb-2">{job.company.name}</p>
       <p className="text-accent mt-5 mb-3 pt-2 border-t border-border inline-flex items-center">
         <FaMapMarker aria-hidden="true" className="mr-2 h-4 w-4" />

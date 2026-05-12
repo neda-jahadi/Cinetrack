@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 const JobDetailsPage = () => {
-  const { isApprovedCompany } = useAuth();
+  const { isApprovedCompany, user } = useAuth();
   const { id } = useParams<{ id: string }>();
   const { data: job, isLoading, isError } = useJob(id);
 
@@ -46,6 +46,8 @@ const JobDetailsPage = () => {
     });
   };
 
+  const canManageJob = isApprovedCompany && user?.id === job.company.userId;
+
   return (
     <>
       <section aria-label="Back navigation">
@@ -68,7 +70,9 @@ const JobDetailsPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-6">
             <article>
               <Card className="bg-white text-center md:text-left">
-                <div className="text-gray-500 mb-4">{job.type}</div>
+                <div className="text-gray-500 mb-4">
+                  {job.type.replace("_", " ")}
+                </div>
                 <h1 className="text-3xl font-bold mb-4">{job.title}</h1>
                 <p className="text-accent mt-5 mb-3 pt-2 border-t border-border inline-flex items-center">
                   <FaMapMarker aria-hidden="true" className="mr-2 h-4 w-4" />
@@ -120,9 +124,9 @@ const JobDetailsPage = () => {
                   {job.company.contactPhone}
                 </a>
               </Card>
-              {isApprovedCompany && (
+              {canManageJob && (
                 <Card className="bg-white mt-6">
-                  <h2 className="text-xl font-bold mb-6">Manage Job</h2>
+                  <h2 className="text-xl font-bold mb-6">Manage the Job</h2>
                   <ButtonLink
                     to={`/jobs/edit-job/${job.id}`}
                     className="w-full"
@@ -135,7 +139,7 @@ const JobDetailsPage = () => {
                     disabled={deleteJobMutation.isPending}
                     onClick={() => handleDeleteSingleJob()}
                   >
-                    {deleteJobMutation.isPending ? "Deleting ..." : "delete"}
+                    {deleteJobMutation.isPending ? "Deleting ..." : "Delete"}
                   </Button>
                   <div></div>
                   {deleteJobMutation.isError && (
