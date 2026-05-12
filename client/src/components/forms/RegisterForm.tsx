@@ -66,9 +66,9 @@ const RegisterForm = ({ onSuccessRedirect }: RegisterFormProps) => {
               {...register("name")}
               id="name"
               required
-              invalid={!!errors.email}
-              aria-describedby={errors.email ? errId("name") : undefined}
-              placeholder="test@email.com"
+              invalid={!!errors.name}
+              aria-describedby={errors.name ? errId("name") : undefined}
+              placeholder="Your Name"
             />
             {errors.name && (
               <p

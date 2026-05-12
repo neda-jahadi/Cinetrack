@@ -1,3 +1,5 @@
+import type { CompanyStatus } from "./companyTypes";
+
 export type loginType = {
     email: string;
     password: string;
@@ -10,7 +12,6 @@ export type registerType = {
 }
 
 export type UserRole = "USER" | "COMPANY" | "ADMIN";
-export type CompanyStatus = "PENDING" | "REJECTED" | "APPROVED";
 
 export type AuthCompany = {
     status: CompanyStatus;

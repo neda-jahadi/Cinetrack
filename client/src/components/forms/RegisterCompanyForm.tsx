@@ -2,21 +2,23 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useId } from "react";
 import {
-  registerUserSchema,
-  type RegisterUserFormFields,
-} from "../../validation/registerUser";
+  registerCompanySchema,
+  type RegisterCompanyFormFields,
+} from "../../validation/registerCompany";
 import FormField from "../ui/FormField";
 import Input from "../ui/Input";
 import Button from "../ui/Button";
-import { useRegister } from "../../features/auth/authQueries";
 import { useNavigate } from "react-router";
+import { userRegisterCompany } from "../../features/company/companyQuery";
 
-type RegisterFormProps = {
+type RegisterCompanyFormProps = {
   onSuccessRedirect: string;
 };
 
-const RegisterForm = ({ onSuccessRedirect }: RegisterFormProps) => {
-  const registerMutation = useRegister();
+const RegisterCompanyForm = ({
+  onSuccessRedirect,
+}: RegisterCompanyFormProps) => {
+  const registerMutation = userRegisterCompany();
   const formId = useId();
 
   const {
@@ -24,23 +26,26 @@ const RegisterForm = ({ onSuccessRedirect }: RegisterFormProps) => {
     handleSubmit,
     setError,
     formState: { errors, isSubmitting },
-  } = useForm<RegisterUserFormFields>({
-    resolver: zodResolver(registerUserSchema),
+  } = useForm<RegisterCompanyFormFields>({
+    resolver: zodResolver(registerCompanySchema),
     defaultValues: {
       name: "",
-      email: "",
+      description: "",
+      contactEmail: "",
+      contactPhone: "",
     },
   });
 
   const navigate = useNavigate();
 
-  const onSubmitRegisterForm: SubmitHandler<RegisterUserFormFields> = (
+  const onSubmitRegisterForm: SubmitHandler<RegisterCompanyFormFields> = (
     data,
   ) => {
     const payload = {
       name: data.name,
-      email: data.email,
-      password: data.password,
+      description: data.description,
+      contactEmail: data.contactEmail,
+      contactPhone: data.contactPhone,
     };
     registerMutation.mutate(payload, {
       onSuccess: () => {
@@ -49,7 +54,7 @@ const RegisterForm = ({ onSuccessRedirect }: RegisterFormProps) => {
       onError: (error: any) => {
         setError("root", {
           type: "server",
-          message: error.message || "Failed to Signup ",
+          message: error.message || "Failed to Register Company ",
         });
       },
     });
@@ -66,9 +71,9 @@ const RegisterForm = ({ onSuccessRedirect }: RegisterFormProps) => {
               {...register("name")}
               id="name"
               required
-              invalid={!!errors.email}
-              aria-describedby={errors.email ? errId("name") : undefined}
-              placeholder="test@email.com"
+              invalid={!!errors.name}
+              aria-describedby={errors.name ? errId("name") : undefined}
+              placeholder="Company Name"
             />
             {errors.name && (
               <p
@@ -84,77 +89,81 @@ const RegisterForm = ({ onSuccessRedirect }: RegisterFormProps) => {
         </div>
 
         <div className="mb-4">
-          <FormField id="email" label="Email" required>
+          <FormField id="description" label="description" required>
             <Input
-              {...register("email")}
-              id="email"
+              {...register("description")}
+              id="description"
               required
-              invalid={!!errors.email}
-              aria-describedby={errors.email ? errId("email") : undefined}
-              placeholder="test@email.com"
-            />
-            {errors.email && (
-              <p
-                id={errId("email")}
-                aria-live="polite"
-                aria-hidden="false"
-                className="text-danger"
-              >
-                {errors.email.message}
-              </p>
-            )}
-          </FormField>
-        </div>
-
-        <div className="mb-4">
-          <FormField id="password" label="Password" required>
-            <Input
-              {...register("password")}
-              id="password"
-              required
-              type="password"
-              invalid={!!errors.password}
-              aria-describedby={errors.password ? errId("password") : undefined}
-              placeholder="8 charachters"
-            />
-            {errors.password && (
-              <p
-                id={errId("password")}
-                aria-live="polite"
-                aria-hidden="false"
-                className="text-danger"
-              >
-                {errors.password.message}
-              </p>
-            )}
-          </FormField>
-        </div>
-
-        <div className="mb-4">
-          <FormField id="confirm_password" label="Confirm Password" required>
-            <Input
-              {...register("confirm_password")}
-              id="confirm_password"
-              required
-              type="password"
-              invalid={!!errors.confirm_password}
+              invalid={!!errors.description}
               aria-describedby={
-                errors.password ? errId("confirm_password") : undefined
+                errors.description ? errId("description") : undefined
               }
-              placeholder="8 charachters"
+              placeholder="Description of your company"
             />
-            {errors.confirm_password && (
+            {errors.description && (
               <p
-                id={errId("confirm_password")}
+                id={errId("description")}
                 aria-live="polite"
                 aria-hidden="false"
                 className="text-danger"
               >
-                {errors.confirm_password.message}
+                {errors.description.message}
               </p>
             )}
           </FormField>
         </div>
+
+        <div className="mb-4">
+          <FormField id="contactEmail" label="Contact Email" required>
+            <Input
+              {...register("contactEmail")}
+              id="contactEmail"
+              required
+              invalid={!!errors.contactEmail}
+              aria-describedby={
+                errors.contactEmail ? errId("contactEmail") : undefined
+              }
+              placeholder="example@email.com"
+            />
+            {errors.contactEmail && (
+              <p
+                id={errId("contactEmail")}
+                aria-live="polite"
+                aria-hidden="false"
+                className="text-danger"
+              >
+                {errors.contactEmail.message}
+              </p>
+            )}
+          </FormField>
+        </div>
+
+        <div className="mb-4">
+          <FormField id="contactPhone" label="Contact Phone" required>
+            <Input
+              {...register("contactPhone")}
+              id="contactPhone"
+              required
+              type="contactPhone"
+              invalid={!!errors.contactPhone}
+              aria-describedby={
+                errors.contactPhone ? errId("contactPhone") : undefined
+              }
+              placeholder="Contact Phone"
+            />
+            {errors.contactPhone && (
+              <p
+                id={errId("contactPhone")}
+                aria-live="polite"
+                aria-hidden="false"
+                className="text-danger"
+              >
+                {errors.contactPhone.message}
+              </p>
+            )}
+          </FormField>
+        </div>
+
         <div className="mb-4">
           <Button disabled={isSubmitting} className="w-full" type="submit">
             Register
@@ -171,4 +180,4 @@ const RegisterForm = ({ onSuccessRedirect }: RegisterFormProps) => {
   );
 };
 
-export default RegisterForm;
+export default RegisterCompanyForm;

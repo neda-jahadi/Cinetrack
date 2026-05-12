@@ -8,8 +8,10 @@ type CompanyStatusProps = {
 const PendingCompanyNotice = ({ company }: CompanyStatusProps) => {
   return (
     <section>
-      <Container>
-        <h1>Your business account is {company.status} approval</h1>
+      <Container className="text-center">
+        <h1 className="card-title">
+          Your registered company has {company.status.toLowerCase()} status
+        </h1>
         <p>An admin needs to approve your company before you can add jobs.</p>
         <p>Please contact support for more information.</p>
       </Container>

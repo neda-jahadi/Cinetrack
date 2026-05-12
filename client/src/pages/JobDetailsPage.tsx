@@ -12,8 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 const JobDetailsPage = () => {
-  const { isLoggedIn } = useAuth();
-
+  const { isApprovedCompany } = useAuth();
   const { id } = useParams<{ id: string }>();
   const { data: job, isLoading, isError } = useJob(id);
 
@@ -121,7 +120,7 @@ const JobDetailsPage = () => {
                   {job.company.contactPhone}
                 </a>
               </Card>
-              {isLoggedIn && (
+              {isApprovedCompany && (
                 <Card className="bg-white mt-6">
                   <h2 className="text-xl font-bold mb-6">Manage Job</h2>
                   <ButtonLink

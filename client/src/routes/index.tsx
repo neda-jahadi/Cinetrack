@@ -4,6 +4,10 @@ import { lazy } from "react";
 import BrowseJobsPage from "../pages/BrowseJobsPage";
 import ProfilePage from "../pages/ProfilePage";
 import BusinessAccountPage from "../pages/BusinessAccountPage";
+import RegisterCompanyPage from "../pages/RegisterCompanyPage";
+import RequireAuth from "./RequireAuth";
+import GuestOnly from "./GuestOnly";
+import RequireCompany from "./RequireCompany";
 const HomePage = lazy(() => import("../pages/HomePage"));
 const JobsPage = lazy(() => import("../pages/JobsPage"));
 const JobDetailsPage = lazy(() => import("../pages/JobDetailsPage"));
@@ -20,7 +24,54 @@ export const router = createBrowserRouter([
     handle: { crumb: () => ({ to: "/", label: "Home" }) },
     children: [
       { index: true, element: <HomePage /> },
-
+      {
+        element: <GuestOnly />,
+        children: [
+          {
+            path: "login",
+            element: <LoginPage />,
+          },
+          {
+            path: "signup",
+            element: <RegisterPage />,
+          },
+          {
+            path: "/business/signup",
+            element: <RegisterPage />,
+            handle: { crumb: () => ({ label: "Signup" }) },
+          },
+        ],
+      },
+      {
+        element: <RequireCompany />,
+        children: [
+          {
+            path: "jobs/edit-job/:id",
+            element: <EditJobPage />,
+            handle: { crumb: () => ({ label: "Edit" }) },
+          },
+          {
+            path: "jobs/add-job",
+            element: <AddJobPage />,
+            handle: { crumb: () => ({ label: "Add Job" }) },
+          },
+        ],
+      },
+      {
+        element: <RequireAuth />,
+        children: [
+          {
+            path: "profile",
+            element: <ProfilePage />,
+            handle: { crumb: () => ({ label: "Profile" }) },
+          },
+          {
+            path: "business/register-company",
+            element: <RegisterCompanyPage />,
+            handle: { crumb: () => ({ label: "Create Company" }) },
+          },
+        ],
+      },
       {
         path: "jobs",
         handle: { crumb: () => ({ to: "/jobs", label: "Jobs" }) },
@@ -33,20 +84,16 @@ export const router = createBrowserRouter([
             errorElement: <NotFound />,
             handle: { crumb: () => ({ label: "Job" }) },
           },
-
-          {
-            path: "edit-job/:id",
-            element: <EditJobPage />,
-            handle: { crumb: () => ({ label: "edit" }) },
-          },
         ],
       },
-      { path: "add-job", element: <AddJobPage /> },
       { path: "careers", element: <JobsPage /> },
-      { path: "login", element: <LoginPage /> },
-      { path: "signup", element: <RegisterPage /> },
-      { path: "profile", element: <ProfilePage /> },
-      { path: "business", element: <BusinessAccountPage /> },
+      {
+        path: "business",
+        element: <BusinessAccountPage />,
+        handle: {
+          crumb: () => ({ to: "/business", label: "Business Account" }),
+        },
+      },
       { path: "*", element: <NotFound /> },
     ],
   },
