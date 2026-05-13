@@ -41,14 +41,19 @@ const EditJobPage = () => {
   useEffect(() => {
     if (!job) return;
 
-    reset({
-      type: job.type ?? "",
-      title: job.title ?? "",
-      description: job.description ?? "",
-      salary: job.salary ?? "",
-      location: job.location ?? "",
-    });
-  }, [job, reset]);
+    reset(
+      {
+        type: job.type ?? "",
+        title: job.title ?? "",
+        description: job.description ?? "",
+        salary: job.salary ?? "",
+        location: job.location ?? "",
+      },
+      {
+        keepDirtyValues: true,
+      },
+    );
+  }, [job?.id, reset]);
 
   if (!id) return <NotFound />;
   if (isLoading) return <Spinner loading />;
@@ -179,7 +184,7 @@ const EditJobPage = () => {
 
               <div className="mb-4">
                 <FormField id="salary" label="Salary" required>
-                  <select
+                  <textarea
                     {...register("salary")}
                     id="salary"
                     required
@@ -188,20 +193,9 @@ const EditJobPage = () => {
                       errors.salary ? errId("salary") : undefined
                     }
                     className={`border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand ${errors.salary && "border-danger focus:ring-danger"}`}
-                  >
-                    <option value="">Select Salary</option>
-                    <option value="Under $50K">Under $50K</option>
-                    <option value="$50K - 60K">$50K - $60K</option>
-                    <option value="$60K - 70K">$60K - $70K</option>
-                    <option value="$70K - 80K">$70K - $80K</option>
-                    <option value="$80K - 90K">$80K - $90K</option>
-                    <option value="$90K - 100K">$90K - $100K</option>
-                    <option value="$100K - 125K">$100K - $125K</option>
-                    <option value="$125K - 150K">$125K - $150K</option>
-                    <option value="$150K - 175K">$150K - $175K</option>
-                    <option value="$175K - 200K">$175K - $200K</option>
-                    <option value="Over $200K">Over $200K</option>
-                  </select>
+                    rows={4}
+                    placeholder="Add expected salary for the job"
+                  ></textarea>
                   {errors.salary && (
                     <p
                       id={errId("salary")}

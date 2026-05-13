@@ -10,7 +10,6 @@ const BrowseJobsPage = () => {
   const { data, isLoading, isError } = useJobs({ page });
   const jobs = data ? data.data : [];
   const pagination = data?.pagination;
-  console.log("jobs are:", jobs);
 
   const handleChangePage = (currentPage: number) => {
     setPage(currentPage);

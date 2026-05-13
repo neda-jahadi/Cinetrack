@@ -27,6 +27,6 @@ export const editJob = async ({id, jobToEdit}: UpdateJobInput): Promise<Job> => 
         const res = await api.put<ApiResponse<Job>>(`/api/jobs/${id}`, jobToEdit);
         return res.data.data
     } catch (error: any) {
-        throw new Error( error.response?.data?.message || "Failed to add a job")
+        throw new Error( error.response?.data?.message || "Failed to edit the job")
     }
 }
