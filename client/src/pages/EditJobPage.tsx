@@ -9,6 +9,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { jobSchema, type JobFormFields } from "../validation/job";
 import Spinner from "../components/ui/Spinner";
 import NotFound from "../components/sections/Job/NotFound";
+import { JOB_TYPES } from "../constants/job";
 
 const EditJobPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -28,14 +29,11 @@ const EditJobPage = () => {
   } = useForm<JobFormFields>({
     resolver: zodResolver(jobSchema),
     defaultValues: {
+      type: "Full_Time",
       title: "",
       description: "",
       salary: "",
       location: "",
-      company: "",
-      company_description: "",
-      contact_email: "",
-      contact_phone: "",
     },
     mode: "onBlur",
   });
@@ -49,10 +47,6 @@ const EditJobPage = () => {
       description: job.description ?? "",
       salary: job.salary ?? "",
       location: job.location ?? "",
-      company: job.company?.name ?? "",
-      company_description: job.company?.description ?? "",
-      contact_email: job.company?.contactEmail ?? "",
-      contact_phone: job.company?.contactPhone ?? "",
     });
   }, [job, reset]);
 
@@ -67,28 +61,24 @@ const EditJobPage = () => {
       description: data.description,
       salary: data.salary,
       location: data.location,
-      company: {
-        name: data.company,
-        description: data.company_description,
-        contactEmail: data.contact_email,
-        contactPhone: data.contact_phone ?? "",
-      },
     };
 
-    editJobMutation.mutate(
-      { id, jobToEdit },
-      {
-        onSuccess: () => {
-          navigate(`/jobs/${id}`);
-        },
-        onError: (error: any) => {
-          setError("root", {
-            type: "server",
-            message: error.message || "Failed to edit the job",
-          });
-        },
+    const payload = {
+      id,
+      jobToEdit,
+    };
+
+    editJobMutation.mutate(payload, {
+      onSuccess: () => {
+        navigate(`/jobs/${id}`);
       },
-    );
+      onError: (error: any) => {
+        setError("root", {
+          type: "server",
+          message: error.message || "Failed to edit the job",
+        });
+      },
+    });
   };
 
   const isSaving = editJobMutation.isPending;
@@ -102,7 +92,7 @@ const EditJobPage = () => {
           <div className="bg-white px-6 py-8 mb-4 shadow-md rounded-md border m-4 md:m-0">
             <form onSubmit={handleSubmit(onSubmitJobForm)} noValidate>
               <h2 className="text-3xl text-center font-semibold mb-6">
-                Add Job
+                Edit the Job
               </h2>
               <p role="alert" className="text-danger text-sm min-h-1.5 mb-4">
                 {errors.root?.message ?? ""}
@@ -119,10 +109,11 @@ const EditJobPage = () => {
                     className={`border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand ${errors.type && "border-danger focus:ring-danger"}`}
                   >
                     <option value="">Select job type</option>
-                    <option value="Full-Time">Full-Time</option>
-                    <option value="Part-Time">Part-Time</option>
-                    <option value="Contract">Contract</option>
-                    <option value="Internship">Internship</option>
+                    {JOB_TYPES.map((type) => (
+                      <option key={type} value={type}>
+                        {type.replaceAll("_", " ")}
+                      </option>
+                    ))}
                   </select>
                   {errors.type && (
                     <p
@@ -239,101 +230,6 @@ const EditJobPage = () => {
                   {errors.location && (
                     <p id={errId("location")} className="text-danger">
                       {errors.location.message}
-                    </p>
-                  )}
-                </FormField>
-              </div>
-
-              <h3 className="text-2xl mb-5">Company Info</h3>
-
-              <div className="mb-4">
-                <FormField id="company" label="Company Name" required>
-                  <Input
-                    {...register("company")}
-                    id="company"
-                    required
-                    invalid={!!errors.company}
-                    aria-describedby={
-                      errors.company ? errId("company") : undefined
-                    }
-                    placeholder="Company Name"
-                  />
-                  {errors.company && (
-                    <p id={errId("company")} className="text-danger">
-                      {errors.company.message}
-                    </p>
-                  )}
-                </FormField>
-              </div>
-
-              <div className="mb-4">
-                <FormField
-                  id="company_description"
-                  label="Company Description"
-                  required
-                >
-                  <textarea
-                    {...register("company_description")}
-                    id="company_description"
-                    required
-                    aria-invalid={!!errors.company_description}
-                    aria-describedby={
-                      errors.company_description
-                        ? errId("company_description")
-                        : undefined
-                    }
-                    className={`border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand ${errors.company_description && "border-danger focus:ring-danger"}`}
-                    rows={4}
-                    placeholder="What does your company do?"
-                  ></textarea>
-                  {errors.company_description && (
-                    <p
-                      id={errId("company_description")}
-                      className="text-danger"
-                    >
-                      {errors.company_description.message}
-                    </p>
-                  )}
-                </FormField>
-              </div>
-
-              <div className="mb-4">
-                <FormField id="contact_email" label="Contact Email" required>
-                  <Input
-                    {...register("contact_email")}
-                    type="email"
-                    autoComplete="email"
-                    id="contact_email"
-                    required
-                    invalid={!!errors.contact_email}
-                    aria-describedby={
-                      errors.contact_email ? errId("contact_email") : undefined
-                    }
-                    placeholder="Email address htmlFor applicants"
-                  />
-                  {errors.contact_email && (
-                    <p id={errId("contact_email")} className="text-danger">
-                      {errors.contact_email.message}
-                    </p>
-                  )}
-                </FormField>
-              </div>
-              <div className="mb-4">
-                <FormField id="contact_phone" label="Contact Phone">
-                  <Input
-                    {...register("contact_phone")}
-                    type="tel"
-                    autoComplete="tel"
-                    id="contact_phone"
-                    invalid={!!errors.contact_phone}
-                    aria-describedby={
-                      errors.contact_phone ? errId("contact_phone") : undefined
-                    }
-                    placeholder="Optional phone htmlFor applicants"
-                  />
-                  {errors.contact_phone && (
-                    <p id={errId("contact_phone")} className="text-danger">
-                      {errors.contact_phone.message}
                     </p>
                   )}
                 </FormField>

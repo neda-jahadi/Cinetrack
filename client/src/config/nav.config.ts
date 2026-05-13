@@ -9,7 +9,7 @@ export const navItems = [
   },
   {
     label: "Add Job",
-    to: "/add-job",
+    to: "/Jobs/add-job",
     requiresAuth: true,
     roles: ["COMPANY"]
   },

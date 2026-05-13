@@ -4,4 +4,10 @@ export const JOB_SORT = {
     SALARY_DESC: "salary_desc",
 } as const;
 
-export type JobSort = (typeof JOB_SORT)[keyof typeof JOB_SORT];
+
+export const JOB_TYPES = [
+  "Full_Time",
+  "Part_Time",
+  "Contract",
+  "Internship",
+] as const;

@@ -1,3 +1,13 @@
+export type Company = {
+  id: number;
+  userId: number;
+  name: string;
+  description: string;
+  contactEmail: string;
+  contactPhone: string;
+  status: string;
+}
+
 export type CompanyInput = {
     name: string;
     description: string;

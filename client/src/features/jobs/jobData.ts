@@ -1,7 +1,7 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import type { Company, Job, JobType, Pagination, SingleJob } from "../../types";
-import type { JobSort } from "./constants";
+import type { JobSort, Pagination, SingleJob } from "../../types/jobTypes";
 import { toast } from 'react-toastify';
+import { editJob, postJob } from "./jobApi";
 
 type JobsApiResponse<T> = {
   success: boolean;
@@ -27,20 +27,6 @@ type JobParams = {
     sort?: JobSort;
 }
 
-export type CreateJobInput = {
-  title: string;
-  type: JobType;
-  description: string;
-  salary: string;
-  location: string;
-  company: Company;
-};
-
-type UpdateJobInput = {
-  id: string,
-  jobToEdit: CreateJobInput
-}
-
 // ✅ One place for keys
 const jobKeys = {
   all: ["jobs"] as const,
@@ -51,11 +37,12 @@ const jobKeys = {
 // ✅ One place for fetch + error parsing
 async function apiFetch<T>(url: string, init?: RequestInit): Promise<T> {
   const res = await fetch(url, init);
+  const json = await res.json().catch(() => null);
+
   if (!res.ok) {
-    const errText = await res.text().catch(() => "");
-    throw new Error(errText || `Request failed (${res.status})`);
+    throw new Error(json?.message || `Request failed (${res.status})`);
   }
-  return res.json() as Promise<T>;
+  return json as T;
 }
 
 // Get all jobs
@@ -103,15 +90,6 @@ export function useJob(id?: string) {
 }
 
 // Create job
-const postJob = async (payload: CreateJobInput): Promise<Job> => {
-  const json = await apiFetch<ApiResponse<Job>>('/api/jobs/', {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
- });
-  return json.data as Job;
-}
-
 export function useAddJob() {
   const queryClient = useQueryClient();
   return useMutation({
@@ -143,16 +121,6 @@ export function useDeleteJob() {
 }
 
 // Edit job
-const editJob = async ({id, jobToEdit}: UpdateJobInput): Promise<Job> => {
-  const json = await apiFetch<ApiResponse<Job>>(`/api/jobs/${id}`, {
-  method: "PUT",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify(jobToEdit),
- })
- 
-  return json.data as Job;
-}
-
 export function useEditJob() {
   const queryClient = useQueryClient();
   return useMutation({

@@ -33,7 +33,7 @@ const HomePage = () => {
             <CtaCard
               title="For Employers"
               description="List your job to find the perfect developer for the role"
-              to="/add-job"
+              to="/jobs/add-job"
               ctaLabel="Add Job"
               variant="light"
             />

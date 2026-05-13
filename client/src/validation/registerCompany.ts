@@ -18,12 +18,19 @@ export const registerCompanySchema = z.object({
     .trim()
     .email("Invalid email address")
     .toLowerCase(),
-
   contactPhone: z
     .string()
     .trim()
-    .min(6, "Phone number is too short")
-    .max(30, "Phone number is too long"),
+    .transform((v) => (v === "" ? undefined : v))
+    .optional()
+    .refine(
+      (v) => !v || /^[0-9+()\-.\s]+$/.test(v),
+      "Phone number contains invalid characters",
+    )
+    .refine(
+      (v) => !v || v.replace(/\D/g, "").length >= 7,
+      "Phone number is too short",
+    ),
 });
 
 export type RegisterCompanyFormFields = z.infer<

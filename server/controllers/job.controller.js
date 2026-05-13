@@ -88,9 +88,6 @@ export const createSingleJob = async (req, res) => {
         salary,
         location,
         companyId: company.id,
-      },
-      include: {
-        company: true
       }
     });
 
@@ -114,7 +111,6 @@ export const updateSingleJob = async (req, res) => {
   try {
     const existingJob = await prisma.job.findUnique({
       where: { id: jobId },
-      include: { company: true },
     });
 
     if (!existingJob) {
@@ -140,10 +136,7 @@ export const updateSingleJob = async (req, res) => {
         description,
         salary,
         location,
-      },
-      include: {
-        company: true,
-      },
+      }
     });
 
     return res.status(200).json({

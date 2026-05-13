@@ -1,18 +1,8 @@
-export type Company = {
-  id: number;
-  userId: number;
-  name: string;
-  description: string;
-  contactEmail: string;
-  contactPhone: string;
-  status: string;
-}
+import type { JOB_SORT, JOB_TYPES } from "../constants/job";
+import type { Company } from "./companyTypes";
 
-export type JobType =
-  | "Full_Time"
-  | "Part_Time"
-  | "Contract"
-  | "Internship";
+export type JobType = (typeof JOB_TYPES)[number];
+export type JobSort = (typeof JOB_SORT)[keyof typeof JOB_SORT];
 
 
 export type Job = {
@@ -37,3 +27,12 @@ export type Pagination = {
 export type SingleJob = Job & {
   company: Company
 }
+
+
+export type CreateJobInput = {
+  title: string;
+  type: JobType;
+  description: string;
+  salary: string;
+  location: string;
+};
