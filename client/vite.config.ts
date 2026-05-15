@@ -23,6 +23,12 @@ export default defineConfig({
       gzipSize: true,
       brotliSize: true,
     }),],
+
+  resolve: {
+    alias: {
+      "@": path.resolve(dirname, "./src")
+    }
+  },
   server: {
     proxy: {
       "/api": {
