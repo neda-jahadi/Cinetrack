@@ -22,35 +22,64 @@ model User {
   company        Company?
 }
 
+model Region {
+  id   Int    @id @default(autoincrement())
+  code String @unique
+  name String
+
+  municipality Municipality[]
+  company      Company[]
+  job          Job[]
+}
+
+model Municipality {
+  id       Int    @id @default(autoincrement())
+  code     String @unique
+  name     String
+  regionId Int
+
+  region  Region    @relation(fields: [regionId], references: [id], onDelete: Cascade)
+  company Company[]
+  job     Job[]
+}
+
 model Company {
-  id           Int           @id @default(autoincrement())
-  userId       Int           @unique
-  name         String
-  description  String
-  contactEmail String
-  contactPhone String
-  status       CompanyStatus @default(PENDING)
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
+  id             Int           @id @default(autoincrement())
+  userId         Int           @unique
+  name           String
+  description    String
+  contactEmail   String
+  contactPhone   String
+  status         CompanyStatus @default(PENDING)
+  regionId       Int
+  municipalityId Int
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
 
   // Relations
-  user User  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  jobs Job[]
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  region       Region       @relation(fields: [regionId], references: [id], onDelete: Cascade)
+  municipality Municipality @relation(fields: [municipalityId], references: [id], onDelete: Cascade)
+  jobs         Job[]
 }
 
 model Job {
-  id          Int      @id @default(autoincrement())
-  title       String
-  type        JobType
-  description String
-  salary      String
-  location    String
-  companyId   Int
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id             Int      @id @default(autoincrement())
+  title          String
+  type           JobType
+  description    String
+  salary         String
+  companyId      Int
+  regionId       Int
+  municipalityId Int
+  wordMode       WorkMode @default(ONSITE)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 
   // Relations
-  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  company      Company      @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  region       Region       @relation(fields: [regionId], references: [id], onDelete: Cascade)
+  municipality Municipality @relation(fields: [municipalityId], references: [id], onDelete: Cascade)
 }
 
 model Movie {
@@ -110,4 +139,10 @@ enum WatchlistStatus {
   WATCHING
   COMPLETED
   DROPPED
+}
+
+enum WorkMode {
+  ONSITE
+  HYBRID
+  REMOTE
 }
