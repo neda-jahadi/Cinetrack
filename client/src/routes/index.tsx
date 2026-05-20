@@ -9,7 +9,6 @@ import RequireAuth from "./RequireAuth";
 import GuestOnly from "./GuestOnly";
 import RequireCompany from "./RequireCompany";
 const HomePage = lazy(() => import("../pages/HomePage"));
-const JobsPage = lazy(() => import("../pages/JobsPage"));
 const JobDetailsPage = lazy(() => import("../pages/JobDetailsPage"));
 const NotFound = lazy(() => import("../components/sections/Job/NotFound"));
 const EditJobPage = lazy(() => import("../pages/EditJobPage"));
@@ -86,7 +85,6 @@ export const router = createBrowserRouter([
           },
         ],
       },
-      { path: "careers", element: <JobsPage /> },
       {
         path: "business",
         element: <BusinessAccountPage />,

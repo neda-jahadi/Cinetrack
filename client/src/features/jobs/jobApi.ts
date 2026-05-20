@@ -12,6 +12,12 @@ type UpdateJobInput = {
   jobToEdit: CreateJobInput
 }
 
+type ApiDeleteResponse = {
+  success: boolean;
+  message: string;
+}
+
+
 
 export const postJob = async (job: CreateJobInput): Promise<Job> => {
     try {
@@ -26,6 +32,15 @@ export const editJob = async ({id, jobToEdit}: UpdateJobInput): Promise<Job> => 
     try {
         const res = await api.put<ApiResponse<Job>>(`/api/jobs/${id}`, jobToEdit);
         return res.data.data
+    } catch (error: any) {
+        throw new Error( error.response?.data?.message || "Failed to edit the job")
+    }
+}
+
+export const deleteJob = async (id: string): Promise<boolean> => {
+    try {
+        const res = await api.delete<ApiDeleteResponse>(`/api/jobs/${id}`);
+        return res.data.success
     } catch (error: any) {
         throw new Error( error.response?.data?.message || "Failed to edit the job")
     }

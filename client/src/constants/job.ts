@@ -11,3 +11,22 @@ export const JOB_TYPES = [
   "Contract",
   "Internship",
 ] as const;
+
+export const WORK_MODE = [
+  "ONSITE",
+  "HYBRID",
+  "REMOTE"
+] as const;
+
+export const JOB_TYPES_LABELS = {
+  Full_Time: "Full Time",
+  Part_Time: "Part Time",
+  Contract: "Contract",
+  Internship: "Internship",
+} as const;
+
+export const WORK_MODE_LABELS = {
+  ONSITE: "On-site",
+  HYBRID: "Hybrid",
+  REMOTE: "Remote",
+} as const;

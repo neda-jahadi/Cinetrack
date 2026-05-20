@@ -21,16 +21,12 @@ export const registerCompanySchema = z.object({
   contactPhone: z
     .string()
     .trim()
-    .transform((v) => (v === "" ? undefined : v))
-    .optional()
+    .min(1, "Phone number is required")
+    .regex(/^[0-9+()\-.\s]+$/, "Phone number contains invalid characters")
     .refine(
-      (v) => !v || /^[0-9+()\-.\s]+$/.test(v),
-      "Phone number contains invalid characters",
+      (v) => v.replace(/\D/g, "").length >= 7,
+      "Phone number is too short"
     )
-    .refine(
-      (v) => !v || v.replace(/\D/g, "").length >= 7,
-      "Phone number is too short",
-    ),
 });
 
 export type RegisterCompanyFormFields = z.infer<

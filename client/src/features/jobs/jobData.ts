@@ -1,7 +1,7 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { JobSort, Pagination, SingleJob } from "../../types/jobTypes";
 import { toast } from 'react-toastify';
-import { editJob, postJob } from "./jobApi";
+import { deleteJob, editJob, postJob } from "./jobApi";
 
 type JobsApiResponse<T> = {
   success: boolean;
@@ -16,10 +16,6 @@ type ApiResponse<T> = {
   message?: string;
 };
 
-type ApiDeleteResponse = {
-  success: boolean;
-  message: string;
-}
 
 type JobParams = {
     limit?: number;
@@ -102,12 +98,6 @@ export function useAddJob() {
 }
 
 // Delete job
-const deleteJob = async (id: string): Promise<boolean> => {
- const json = await apiFetch<ApiDeleteResponse>(`/api/jobs/${id}`, {
-  method: "DELETE"
- });
-  return json.success;
-}
 
 export function useDeleteJob() {
   const queryClient = useQueryClient();

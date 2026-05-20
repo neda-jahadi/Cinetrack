@@ -1,8 +1,10 @@
-import type { JOB_SORT, JOB_TYPES } from "../constants/job";
+import { JOB_SORT, JOB_TYPES, WORK_MODE } from "../constants/job";
 import type { Company } from "./companyTypes";
+import type { Municipality, Region } from "./locationTypes";
 
 export type JobType = (typeof JOB_TYPES)[number];
 export type JobSort = (typeof JOB_SORT)[keyof typeof JOB_SORT];
+export type WorkMode = (typeof WORK_MODE)[number];
 
 
 export type Job = {
@@ -10,9 +12,11 @@ export type Job = {
   title: string;
   type: JobType; 
   description: string; 
-  salary: string;      
-  location: string;
-  companyId: number;  
+  salary: string; 
+  workMode:  WorkMode;    
+  companyId: number; 
+  regionId: number;
+  municipalityId: number; 
 };
 
 export type Pagination = {
@@ -25,7 +29,9 @@ export type Pagination = {
 }
 
 export type SingleJob = Job & {
-  company: Company
+  company: Company,
+  region: Region,
+  municipality: Municipality
 }
 
 
@@ -34,5 +40,6 @@ export type CreateJobInput = {
   type: JobType;
   description: string;
   salary: string;
-  location: string;
+  workMode: WorkMode;
+  municipalityId: number;
 };

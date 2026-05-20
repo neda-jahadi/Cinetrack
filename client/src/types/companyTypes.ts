@@ -6,6 +6,8 @@ export type Company = {
   contactEmail: string;
   contactPhone: string;
   status: string;
+  regionId: number;
+  municipality: number;
 }
 
 export type CompanyInput = {
@@ -13,6 +15,8 @@ export type CompanyInput = {
     description: string;
     contactEmail: string;
     contactPhone: string;
+    regionId: number;
+    municipality: number;
 }
 
 export type CompanyStatus = "PENDING" | "REJECTED" | "APPROVED";
@@ -25,6 +29,8 @@ export type AddCompanyResponse = {
     contactEmail: string;
     contactPhone: string;
     status: string;
+    regionId: number;
+    municipalityId: number;
     createdAt: string;
     updatedAt: string;
 }

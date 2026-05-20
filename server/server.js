@@ -9,6 +9,7 @@ import AuthRoutes from "./routes/auth.route.js";
 import watchlistRoutes from "./routes/watchlistRoutes.js";
 import movieRoutes from "./routes/movieRoutes.js";
 import companyRoutes from "./routes/companyRoutes.js";
+import locationRoutes from "./routes/locationRoutes.js";
 
 import { notFound, errorHandler } from "./middlewares/errorMiddleware.js";
 
@@ -38,6 +39,7 @@ app.use("/api/jobs", JobRoutes);
 app.use("/api/watchlist", watchlistRoutes)
 app.use("/api/movies", movieRoutes)
 app.use("/api/companies", companyRoutes)
+app.use("/api/locations", locationRoutes)
 
 app.use(notFound);
 app.use(errorHandler);

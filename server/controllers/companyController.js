@@ -3,7 +3,7 @@ import { prisma } from "../configs/prisma.js";
 
 export const addCompany = async (req, res) => {
   try {
-    const { name, description, contactEmail, contactPhone } = req.body;
+    const { name, description, municipalityId, contactEmail, contactPhone } = req.body;
     const userId = req.user.id;
   
     const companyExists = await prisma.company.findUnique({
@@ -13,11 +13,26 @@ export const addCompany = async (req, res) => {
     if (companyExists) {
       return res.status(400).json({ success: false, message: "Company already exists for this user" })
     }
+
+    const municipality = await prisma.municipality.findUnique({
+      where: {
+        id: municipalityId
+      }
+    })
+
+    if (!municipality) {
+      return res.status(400).json({ success: "false", message: "Invalid municipality"})
+    }
     
     // Create Company
     const createdCompany = await prisma.company.create({
       data: {
-        userId, name, description, contactEmail, contactPhone, status: "PENDING"
+        userId, name, description, contactEmail, contactPhone, status: "PENDING", regionId: Number(municipality.regionId), municipalityId: Number(municipalityId)
+      }, 
+      include: {
+        user: true,
+        region: true,
+        municipality: true
       }
     });
   
@@ -60,7 +75,9 @@ export const getAllCompanies = async (req, res) => {
   try {
     const allCompanies = await prisma.company.findMany( {
         include: {
-            user: true
+            user: true,
+            region: true,
+            municipality: true
         }, 
         orderBy: {
             createdAt: "desc"
@@ -94,7 +111,9 @@ export const updateCompanyStatus = async (req, res) => {
         id: companyId,
       }, 
       include: {
-        user: true
+        user: true,
+        municipality: true,
+        region: true
       }
     })
 
@@ -123,7 +142,9 @@ export const updateCompanyStatus = async (req, res) => {
       },
       data: { status },
       include: {
-        user: true
+        user: true,
+        region: true,
+        municipality: true
       }
     })
 

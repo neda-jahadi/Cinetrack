@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { cn } from "../../../lib/cn";
-import type { SingleJob } from "../../../types";
 import { useState, useId } from "react";
 import { FaMapMarker } from "react-icons/fa";
+import type { SingleJob } from "@/types/jobTypes";
 
 type JobCardProps = {
   job: SingleJob;
@@ -31,6 +31,9 @@ const JobCard = ({ job, className, variant = "tint" }: JobCardProps) => {
     >
       <p className="text-sm font-medium text-muted">
         {job.type.replace("_", " ")}
+      </p>
+      <p className="text-sm font-medium text-muted">
+        {job.workMode.toLowerCase()}
       </p>
       <h3 className="mt-2 text-xl font-bold">
         <Link
@@ -71,7 +74,7 @@ const JobCard = ({ job, className, variant = "tint" }: JobCardProps) => {
       <p className="text-accent mt-5 mb-3 pt-2 border-t border-border inline-flex items-center">
         <FaMapMarker aria-hidden="true" className="mr-2 h-4 w-4" />
         <span className="sr-only">Location</span>
-        {job.location}
+        {job.region.name}-{job.municipality.name}
       </p>
     </article>
   );

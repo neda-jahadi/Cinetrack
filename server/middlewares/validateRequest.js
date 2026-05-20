@@ -1,20 +1,37 @@
-export const validateRequest = (schema) => {
-  return (req, res, next) => {
-    const result = schema.safeParse(req.body);
+const Labels = {
+  "name": "Name",
+  "description": "Description",
+  "regionId": "Region",
+  "municipalityId": "Municipality",
+  "wordMode": "Work Mode",
+  "contactEmail": "Contact Email",
+  "contactPhone": "Contact Phone"
+}
 
-    if (!result.success) {
-      const formatted = result.error.format();
+export const validateRequest = (schema) => (req, res, next) => {
+  const result = schema.safeParse(req.body);
+  
+  if (!result.success) {
+    const firstError = result.error.issues[0];
+    const fieldName = firstError.path[0];
 
-      const flatErrors = Object.values(formatted)
-        .flat()
-        .filter(Boolean)
-        .map((err) => err._errors)
-        .flat();
+    const label = Labels[fieldName] ? Labels[fieldName] : String(fieldName);
 
-      return res.status(400).json({ message: flatErrors.join(", ") });
+    let message = firstError.message;
+
+    if (
+      firstError.code === "invalid_type" &&
+      req.body[fieldName] === undefined
+    ) {
+      message = `${label} is required`;
     }
-    
-    req.body = result.data;
-    next();
-  };
+
+    return res.status(400).json({
+      success: false,
+      message,
+    });
+  }
+
+  req.body = result.data;
+  next();
 };

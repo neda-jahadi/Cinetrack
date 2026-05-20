@@ -5,12 +5,23 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { jobSchema, type JobFormFields } from "../../validation/job";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormField from "../ui/FormField";
-import { JOB_TYPES } from "../../constants/job";
+import {
+  JOB_TYPES,
+  JOB_TYPES_LABELS,
+  WORK_MODE,
+  WORK_MODE_LABELS,
+} from "../../constants/job";
 import Input from "../ui/Input";
 import Button from "../ui/Button";
+import type { MunicipalityApiResponse } from "@/types/locationTypes";
 
-const JobForm = () => {
+type JobFormProps = {
+  municipalities: MunicipalityApiResponse[];
+};
+
+const JobForm = ({ municipalities }: JobFormProps) => {
   const addJobMutation = useAddJob();
+
   const navigate = useNavigate();
   const formId = useId();
 
@@ -27,9 +38,10 @@ const JobForm = () => {
     const payload = {
       title: data.title,
       type: data.type,
+      workMode: data.workMode,
       description: data.description,
       salary: data.salary,
-      location: data.location,
+      municipalityId: Number(data.municipalityId),
     };
 
     addJobMutation.mutate(payload, {
@@ -68,7 +80,7 @@ const JobForm = () => {
               <option value="">Select job type</option>
               {JOB_TYPES.map((type) => (
                 <option key={type} value={type}>
-                  {type.replace("_", " ")}
+                  {JOB_TYPES_LABELS[type]}
                 </option>
               ))}
             </select>
@@ -80,6 +92,35 @@ const JobForm = () => {
                 className="text-danger"
               >
                 {errors.type.message}
+              </p>
+            )}
+          </FormField>
+        </div>
+        <div className="mb-4">
+          <FormField id="workMode" label="Work Mode" required>
+            <select
+              {...register("workMode")}
+              id="workMode"
+              required
+              aria-invalid={!!errors.workMode}
+              aria-describedby={errors.workMode ? errId("workMode") : undefined}
+              className={`border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand ${errors.workMode && "border-danger focus:ring-danger"}`}
+            >
+              <option value="">Select work mode</option>
+              {WORK_MODE.map((mode) => (
+                <option key={mode} value={mode}>
+                  {WORK_MODE_LABELS[mode]}
+                </option>
+              ))}
+            </select>
+            {errors.workMode && (
+              <p
+                id={errId("workMode")}
+                aria-live="polite"
+                aria-hidden="false"
+                className="text-danger"
+              >
+                {errors.workMode.message}
               </p>
             )}
           </FormField>
@@ -160,18 +201,32 @@ const JobForm = () => {
         </div>
 
         <div className="mb-4">
-          <FormField id="location" label="Location" required>
-            <Input
-              {...register("location")}
-              id="location"
+          <FormField id="municipalityId" label="Municipality" required>
+            <select
+              {...register("municipalityId")}
+              id="municipalityId"
               required
-              invalid={!!errors.location}
-              aria-describedby={errors.location ? errId("location") : undefined}
-              placeholder="Company Location"
-            />
-            {errors.location && (
-              <p id={errId("location")} className="text-danger">
-                {errors.location.message}
+              aria-invalid={!!errors.municipalityId}
+              aria-describedby={
+                errors.municipalityId ? errId("municipalityId") : undefined
+              }
+              className={`border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand ${errors.municipalityId && "border-danger focus:ring-danger"}`}
+            >
+              <option value="">Select Municipality</option>
+              {municipalities.map((municipality) => (
+                <option key={municipality.id} value={municipality.id}>
+                  {municipality.name}
+                </option>
+              ))}
+            </select>
+            {errors.municipalityId && (
+              <p
+                id={errId("municipalityId")}
+                aria-live="polite"
+                aria-hidden="false"
+                className="text-danger"
+              >
+                {errors.municipalityId.message}
               </p>
             )}
           </FormField>

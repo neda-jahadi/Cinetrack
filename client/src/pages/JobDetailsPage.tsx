@@ -77,7 +77,7 @@ const JobDetailsPage = () => {
                 <p className="text-accent mt-5 mb-3 pt-2 border-t border-border inline-flex items-center">
                   <FaMapMarker aria-hidden="true" className="mr-2 h-4 w-4" />
                   <span className="sr-only">Location</span>
-                  {job.location}
+                  {job.region.name} - {job.municipality.name}
                 </p>
               </Card>
 

@@ -119,6 +119,8 @@ const RegisterCompanyForm = ({
               {...register("contactEmail")}
               id="contactEmail"
               required
+              type="email"
+              autoComplete="email"
               invalid={!!errors.contactEmail}
               aria-describedby={
                 errors.contactEmail ? errId("contactEmail") : undefined
@@ -144,7 +146,7 @@ const RegisterCompanyForm = ({
               {...register("contactPhone")}
               id="contactPhone"
               required
-              type="contactPhone"
+              type="tel"
               invalid={!!errors.contactPhone}
               aria-describedby={
                 errors.contactPhone ? errId("contactPhone") : undefined

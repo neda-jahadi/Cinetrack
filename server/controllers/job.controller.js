@@ -31,6 +31,8 @@ export const getJobs = async (req, res) => {
         orderBy: SORT_MAP[sortKey] ?? { createdAt: "desc" },
         include: {
           company: true,
+          municipality: true,
+          region: true
         },
       }),
     ]);
@@ -60,7 +62,7 @@ export const getSingleJob = async (req, res) => {
     const jobId = Number(req.params.id);
     const job = await prisma.job.findUnique({
       where: { id: jobId },
-      include: { company: true },
+      include: { company: true, municipality: true, region: true },
     });
 
     if (!job) {
@@ -78,7 +80,17 @@ export const createSingleJob = async (req, res) => {
   try {
     const company = req.company;
 
-    const { title, type, description, salary, location } = req.body;
+    const { title, type, description, salary, workMode, municipalityId } = req.body;
+
+    const municipality = await prisma.municipality.findUnique({
+      where: {
+        id: municipalityId
+      }
+    })
+
+    if (!municipality) {
+      return res.status(400).json({ success: "false", message: "Invalid municipality"})
+    }
 
     const job = await prisma.job.create({
       data: {
@@ -86,8 +98,15 @@ export const createSingleJob = async (req, res) => {
         type: type,
         description,
         salary,
-        location,
         companyId: company.id,
+        workMode,
+        regionId: Number(municipality.regionId),
+        municipalityId: Number(municipalityId)
+      }, 
+      include: {
+        company: true,
+        region: true,
+        municipality: true
       }
     });
 
@@ -126,7 +145,17 @@ export const updateSingleJob = async (req, res) => {
       })
     }
 
-    const { title, type, description, salary, location } = req.body;
+    const { title, type, description, salary, workMode, municipalityId } = req.body;
+
+    const municipality = await prisma.municipality.findUnique({
+      where: {
+        id: municipalityId
+      }
+    })
+
+    if (!municipality) {
+      return res.status(400).json({ success: "false", message: "Invalid municipality"})
+    }
 
     const updatedJob = await prisma.job.update({
       where: { id: jobId },
@@ -135,7 +164,14 @@ export const updateSingleJob = async (req, res) => {
         type,
         description,
         salary,
-        location,
+        workMode,
+        regionId: Number(municipality.regionId),
+        municipalityId: Number(municipalityId)
+      }, 
+      include: {
+        company: true,
+        municipality: true,
+        region: true
       }
     });
 
