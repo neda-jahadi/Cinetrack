@@ -8,8 +8,8 @@ import { authorizeRoles } from '../middlewares/roleMiddleware.js';
 const router = express.Router();
 
 router.post("/", authMiddleware, validateRequest(addCompanySchema), addCompany)
-router.get("/:id", authMiddleware, authorizeRoles("ADMIN"), getCompanyStatus)
-router.get("/all", authMiddleware, getAllCompanies)
+router.get("/:id/status", authMiddleware, authorizeRoles("ADMIN"), getCompanyStatus)
+router.get("/all", authMiddleware, authorizeRoles("ADMIN"), getAllCompanies)
 router.patch("/:id/status", authMiddleware, authorizeRoles("ADMIN"), updateCompanyStatus)
 
 export default router;

@@ -4,9 +4,10 @@ import Container from "../components/ui/Container";
 import Spinner from "../components/ui/Spinner";
 import { useAuth } from "../context/AuthContext";
 import { useLogout } from "../features/auth/authQueries";
+import ButtonLink from "@/components/ui/ButtonLink";
 
 const ProfilePage = () => {
-  const { user, isLoading } = useAuth();
+  const { user, isLoading, isAdmin } = useAuth();
 
   const navigate = useNavigate();
 
@@ -27,7 +28,12 @@ const ProfilePage = () => {
         <h1 className="hero-title">Welcome {user?.name}</h1>
         <p>You have a {user?.role} role</p>
       </Container>
-      <Container>
+      <Container className="flex gap-3">
+        {isAdmin && (
+          <ButtonLink to="/admin-dashboard" variant="dark">
+            Dashboard
+          </ButtonLink>
+        )}
         <Button onClick={() => handleLogout()}>Logout</Button>
       </Container>
     </section>

@@ -11,3 +11,14 @@ export const register = async (company: CompanyInput): Promise<AddCompanyRespons
         );
     }
 }
+
+export const getAllCompanies = async () => {
+    try {
+        const res = await api.get('/api/companies/all');
+        return res.data.data;
+    } catch (error:any) {
+        throw new Error(
+            error.response?.data?.message || "Failed to fetch companies"
+        );
+    }
+}

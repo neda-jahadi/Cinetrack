@@ -26,7 +26,9 @@ export const registerCompanySchema = z.object({
     .refine(
       (v) => v.replace(/\D/g, "").length >= 7,
       "Phone number is too short"
-    )
+    ),
+  municipalityId: z.string().min(1, "Please select a municipality")
+
 });
 
 export type RegisterCompanyFormFields = z.infer<

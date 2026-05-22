@@ -10,6 +10,7 @@ import NotFound from "../components/sections/Job/NotFound";
 import Spinner from "../components/ui/Spinner";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { JOB_TYPES_LABELS, WORK_MODE_LABELS } from "@/constants/job";
 
 const JobDetailsPage = () => {
   const { isApprovedCompany, user } = useAuth();
@@ -71,7 +72,8 @@ const JobDetailsPage = () => {
             <article>
               <Card className="bg-white text-center md:text-left">
                 <div className="text-gray-500 mb-4">
-                  {job.type.replace("_", " ")}
+                  {JOB_TYPES_LABELS[job.type]} -{" "}
+                  {WORK_MODE_LABELS[job.workMode]}
                 </div>
                 <h1 className="text-3xl font-bold mb-4">{job.title}</h1>
                 <p className="text-accent mt-5 mb-3 pt-2 border-t border-border inline-flex items-center">

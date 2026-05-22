@@ -15,8 +15,7 @@ export type CompanyInput = {
     description: string;
     contactEmail: string;
     contactPhone: string;
-    regionId: number;
-    municipality: number;
+    municipalityId: number;
 }
 
 export type CompanyStatus = "PENDING" | "REJECTED" | "APPROVED";

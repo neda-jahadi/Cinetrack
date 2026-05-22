@@ -8,6 +8,8 @@ import RegisterCompanyPage from "../pages/RegisterCompanyPage";
 import RequireAuth from "./RequireAuth";
 import GuestOnly from "./GuestOnly";
 import RequireCompany from "./RequireCompany";
+import { AdminDashboardPage } from "@/pages/AdminDashboardPage";
+import RequireAdmin from "./RequireAdmin";
 const HomePage = lazy(() => import("../pages/HomePage"));
 const JobDetailsPage = lazy(() => import("../pages/JobDetailsPage"));
 const NotFound = lazy(() => import("../components/sections/Job/NotFound"));
@@ -68,6 +70,16 @@ export const router = createBrowserRouter([
             path: "business/register-company",
             element: <RegisterCompanyPage />,
             handle: { crumb: () => ({ label: "Create Company" }) },
+          },
+        ],
+      },
+      {
+        element: <RequireAdmin />,
+        children: [
+          {
+            path: "admin-dashboard",
+            element: <AdminDashboardPage />,
+            handle: { crumb: () => ({ label: "Admin Dashboard" }) },
           },
         ],
       },

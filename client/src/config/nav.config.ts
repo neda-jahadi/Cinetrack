@@ -14,8 +14,8 @@ export const navItems = [
     roles: ["COMPANY"]
   },
   {
-    label: "Admin",
-    to: "/admin",
+    label: "Admin Dashboard",
+    to: "/admin-dashboard",
     requiresAuth: true,
     roles: ["ADMIN"],
   },

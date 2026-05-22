@@ -10,13 +10,16 @@ import Input from "../ui/Input";
 import Button from "../ui/Button";
 import { useNavigate } from "react-router";
 import { userRegisterCompany } from "../../features/company/companyQuery";
+import type { MunicipalityApiResponse } from "@/types/locationTypes";
 
 type RegisterCompanyFormProps = {
   onSuccessRedirect: string;
+  municipalities: MunicipalityApiResponse[];
 };
 
 const RegisterCompanyForm = ({
   onSuccessRedirect,
+  municipalities,
 }: RegisterCompanyFormProps) => {
   const registerMutation = userRegisterCompany();
   const formId = useId();
@@ -33,6 +36,7 @@ const RegisterCompanyForm = ({
       description: "",
       contactEmail: "",
       contactPhone: "",
+      municipalityId: "",
     },
   });
 
@@ -46,6 +50,7 @@ const RegisterCompanyForm = ({
       description: data.description,
       contactEmail: data.contactEmail,
       contactPhone: data.contactPhone,
+      municipalityId: Number(data.municipalityId),
     };
     registerMutation.mutate(payload, {
       onSuccess: () => {
@@ -161,6 +166,38 @@ const RegisterCompanyForm = ({
                 className="text-danger"
               >
                 {errors.contactPhone.message}
+              </p>
+            )}
+          </FormField>
+        </div>
+
+        <div className="mb-4">
+          <FormField id="municipalityId" label="Municipality" required>
+            <select
+              {...register("municipalityId")}
+              id="municipalityId"
+              required
+              aria-invalid={!!errors.municipalityId}
+              aria-describedby={
+                errors.municipalityId ? errId("municipalityId") : undefined
+              }
+              className={`border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand ${errors.municipalityId && "border-danger focus:ring-danger"}`}
+            >
+              <option value="">Select Municipality</option>
+              {municipalities.map((municipality) => (
+                <option key={municipality.id} value={municipality.id}>
+                  {municipality.name}
+                </option>
+              ))}
+            </select>
+            {errors.municipalityId && (
+              <p
+                id={errId("municipalityId")}
+                aria-live="polite"
+                aria-hidden="false"
+                className="text-danger"
+              >
+                {errors.municipalityId.message}
               </p>
             )}
           </FormField>
