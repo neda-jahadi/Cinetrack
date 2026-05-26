@@ -13,7 +13,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         type={type}
         aria-invalid={invalid || undefined}
         className={cn(
-          "w-full rounded border px-3 py-2 text-sm transition",
+          "w-full rounded border px-3 py-2 text-sm transition input",
           "focus:outline-none focus:ring-2 focus:ring-brand",
           "disabled:cursor-not-allowed disabled:opacity-60",
           invalid && "border-danger focus:ring-danger",

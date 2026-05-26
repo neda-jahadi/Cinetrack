@@ -2,7 +2,7 @@ import { useNavigate } from "react-router";
 import { useLogout } from "../../features/auth/authQueries";
 import Container from "../ui/Container";
 import ButtonLink from "../ui/ButtonLink";
-import Button from "../ui/Button";
+import { Button } from "../ui/Button";
 
 const ContinueAsUserCard = ({ name }: { name: string }) => {
   const navigate = useNavigate();
@@ -49,7 +49,7 @@ const ContinueAsUserCard = ({ name }: { name: string }) => {
         </div>
 
         <Button
-          variant="dark"
+          variant="default"
           className="flex flex-col"
           onClick={() => handleAnotherAccount("signup")}
         >

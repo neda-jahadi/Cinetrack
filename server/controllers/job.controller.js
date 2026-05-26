@@ -2,44 +2,64 @@ import { prisma } from "../configs/prisma.js";
 
 export const getJobs = async (req, res) => {
   try {
-    const limit = parseInt(req.query.limit, 10) || 4;
-    const page = parseInt(req.query.page, 10) || 1;
+    const rawPage = Number(req.query.page) || 1;
+    const rawLimit = Number(req.query.limit) || 9;
+    const sortKey = req.query.sort || "recent";
+
+    const safePage = Math.max(rawPage, 1);
+    const safeLimit = Math.min(Math.max(rawLimit, 1), 100);
+    const skip = (safePage - 1) * safeLimit;
 
     const SORT_MAP = {
       recent: { createdAt: "desc" },
-      salary_asc: { salary: "asc" },
-      salary_desc: { salary: "desc" },
     };
 
-    const sortKey = req.query.sort;
-
-    if (sortKey && !SORT_MAP[sortKey]) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Invalid sort option" });
+    if (!SORT_MAP[sortKey]) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid sort option",
+      });
     }
-
-    const safeLimit = limit > 0 ? limit : 6;
-    const safePage = page > 0 ? page : 1;
-    const skip = (safePage - 1) * safeLimit;
 
     const [totalJobs, jobs] = await Promise.all([
       prisma.job.count(),
       prisma.job.findMany({
         skip,
         take: safeLimit,
-        orderBy: SORT_MAP[sortKey] ?? { createdAt: "desc" },
-        include: {
-          company: true,
-          municipality: true,
-          region: true
+        orderBy: SORT_MAP[sortKey],
+        select: {
+          id: true,
+          title: true,
+          type: true,
+          description: true,
+          salary: true,
+          workMode: true,
+          createdAt: true,
+          company: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+          municipality: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+          region: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
         },
       }),
     ]);
 
     const totalPages = Math.ceil(totalJobs / safeLimit);
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       data: jobs,
       pagination: {
@@ -53,7 +73,11 @@ export const getJobs = async (req, res) => {
     });
   } catch (error) {
     console.error("getJobs error:", error);
-    res.status(500).json({ success: false, message: "Server error" });
+
+    return res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
   }
 };
 

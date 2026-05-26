@@ -3,8 +3,8 @@ import Container from "../components/ui/Container";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import Card from "../components/ui/Card";
 import { FaMapMarker } from "react-icons/fa";
+import { Button } from "../components/ui/Button";
 import ButtonLink from "../components/ui/ButtonLink";
-import Button from "../components/ui/Button";
 import { useDeleteJob, useJob } from "../features/jobs/jobData";
 import NotFound from "../components/sections/Job/NotFound";
 import Spinner from "../components/ui/Spinner";
@@ -136,7 +136,7 @@ const JobDetailsPage = () => {
                     Edit Job
                   </ButtonLink>
                   <Button
-                    variant="danger"
+                    variant="destructive"
                     className="w-full rounded-full my-2"
                     disabled={deleteJobMutation.isPending}
                     onClick={() => handleDeleteSingleJob()}

@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import Button from "../components/ui/Button";
 import Container from "../components/ui/Container";
 import Spinner from "../components/ui/Spinner";
 import { useAuth } from "../context/AuthContext";
 import { useLogout } from "../features/auth/authQueries";
 import ButtonLink from "@/components/ui/ButtonLink";
+import { Button } from "@/components/ui/Button";
 
 const ProfilePage = () => {
   const { user, isLoading, isAdmin } = useAuth();

@@ -12,8 +12,8 @@ import {
   WORK_MODE_LABELS,
 } from "../../constants/job";
 import Input from "../ui/Input";
-import Button from "../ui/Button";
 import type { MunicipalityApiResponse } from "@/types/locationTypes";
+import { Button } from "../ui/Button";
 
 type JobFormProps = {
   municipalities: MunicipalityApiResponse[];

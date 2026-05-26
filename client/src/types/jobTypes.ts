@@ -19,7 +19,7 @@ export type Job = {
   municipalityId: number; 
 };
 
-export type Pagination = {
+export type PaginationType = {
   totalJobs: number;
   totalPages: number;
   currentPage: number;

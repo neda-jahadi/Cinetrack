@@ -7,10 +7,10 @@ import {
 } from "../../validation/registerCompany";
 import FormField from "../ui/FormField";
 import Input from "../ui/Input";
-import Button from "../ui/Button";
 import { useNavigate } from "react-router";
 import { userRegisterCompany } from "../../features/company/companyQuery";
 import type { MunicipalityApiResponse } from "@/types/locationTypes";
+import { Button } from "../ui/Button";
 
 type RegisterCompanyFormProps = {
   onSuccessRedirect: string;

@@ -7,9 +7,9 @@ import {
 } from "../../validation/registerUser";
 import FormField from "../ui/FormField";
 import Input from "../ui/Input";
-import Button from "../ui/Button";
 import { useRegister } from "../../features/auth/authQueries";
 import { useNavigate } from "react-router";
+import { Button } from "../ui/Button";
 
 type RegisterFormProps = {
   onSuccessRedirect: string;

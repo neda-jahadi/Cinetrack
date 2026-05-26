@@ -15,11 +15,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { ButtonRadix } from "@/components/ui/buttonRadix";
 import { useAllCompanies } from "@/features/company/companyQuery";
 import Spinner from "@/components/ui/Spinner";
 import NotFound from "@/components/sections/Job/NotFound";
 import type { Company } from "@/types/companyTypes";
+import { Button } from "@/components/ui/Button";
 
 export function AdminDashboardPage() {
   const { data: companies, isLoading, isError } = useAllCompanies();
@@ -47,10 +47,10 @@ export function AdminDashboardPage() {
             <TableCell className="text-right">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <ButtonRadix variant="ghost" size="icon" className="size-8">
+                  <Button variant="ghost" size="icon" className="size-8">
                     <MoreHorizontalIcon />
                     <span className="sr-only">Open menu</span>
-                  </ButtonRadix>
+                  </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                   {company.status === "PENDING" && (

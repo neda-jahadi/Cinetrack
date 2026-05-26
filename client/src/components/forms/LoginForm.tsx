@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { useLogin } from "../../features/auth/authQueries";
 import FormField from "../ui/FormField";
 import Input from "../ui/Input";
-import Button from "../ui/Button";
 import { loginSchema, type LoginFormFields } from "../../validation/login";
+import { Button } from "../ui/Button";
 
 type LoginFormProps = {
   onSuccessRedirect: string;

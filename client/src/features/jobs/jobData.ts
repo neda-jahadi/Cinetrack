@@ -1,12 +1,12 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import type { JobSort, Pagination, SingleJob } from "../../types/jobTypes";
+import type { JobSort, PaginationType, SingleJob } from "../../types/jobTypes";
 import { toast } from 'react-toastify';
 import { deleteJob, editJob, postJob } from "./jobApi";
 
 type JobsApiResponse<T> = {
   success: boolean;
   data: T;
-  pagination: Pagination;
+  pagination: PaginationType;
   message?: string;
 };
 

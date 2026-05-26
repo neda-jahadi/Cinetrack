@@ -16,7 +16,6 @@ const JobCard = ({ job, className, variant = "tint" }: JobCardProps) => {
   const detailsPath = `/jobs/${job.id}`;
   const descId = useId();
   const description = job.description?.trim() ?? "";
-  console.log(description.length);
 
   return (
     <article

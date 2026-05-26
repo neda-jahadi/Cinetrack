@@ -81,5 +81,8 @@
   .eyebrow {
     @apply text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--color-brand-600)];
   }
+  .input {
+    @apply text-default;
+  }
 }
 
