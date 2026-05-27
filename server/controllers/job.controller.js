@@ -1,7 +1,9 @@
+import { JobType, WorkMode } from "@prisma/client";
 import { prisma } from "../configs/prisma.js";
 
 export const getJobs = async (req, res) => {
   try {
+    const { title, type, mode } = req.query;
     const rawPage = Number(req.query.page) || 1;
     const rawLimit = Number(req.query.limit) || 9;
     const sortKey = req.query.sort || "recent";
@@ -21,9 +23,27 @@ export const getJobs = async (req, res) => {
       });
     }
 
+    const where = {
+      ...(title && {
+        title: {
+          contains: title,
+          mode: "insensitive",
+        },
+      }),
+
+      ...(type && {
+        type: JobType[type],
+      }),
+
+      ...(mode && {
+        workMode: WorkMode[mode],
+      }),
+    };
+
     const [totalJobs, jobs] = await Promise.all([
-      prisma.job.count(),
+      prisma.job.count({ where }),
       prisma.job.findMany({
+        where,
         skip,
         take: safeLimit,
         orderBy: SORT_MAP[sortKey],
