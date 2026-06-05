@@ -5,43 +5,81 @@ import {
   WORK_MODE_LABELS,
 } from "@/constants/job";
 
-const FilterFields = ({
-  type,
-  mode,
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import { ChevronDown } from "lucide-react";
+const FilterField = ({
+  types,
+  modes,
   handleUpdateSearchParams,
 }: {
-  type: string;
-  mode: string;
+  types: string[];
+  modes: string[];
   handleUpdateSearchParams: (key: string, value: string) => void;
 }) => {
   return (
-    <div className="mb-4 flex flex-col md:flex-row md:items-center gap-4 mt-6">
-      <select
-        value={type}
-        onChange={(e) => handleUpdateSearchParams("type", e.target.value)}
-        className="border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand"
-      >
-        <option value="">Select job type</option>
-        {JOB_TYPES.map((type) => (
-          <option key={type} value={type}>
-            {JOB_TYPES_LABELS[type]}
-          </option>
-        ))}
-      </select>
-      <select
-        value={mode}
-        onChange={(e) => handleUpdateSearchParams("mode", e.target.value)}
-        className="border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand"
-      >
-        <option value="">Select work mode</option>
-        {WORK_MODE.map((mode) => (
-          <option key={mode} value={mode}>
-            {WORK_MODE_LABELS[mode]}
-          </option>
-        ))}
-      </select>
+    <div className="flex">
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            size="sm"
+            className="w-full justify-between"
+          >
+            Select Job type <ChevronDown />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-[var(--radix-popover-trigger-width)]">
+          {JOB_TYPES.map((type) => (
+            <div key={type} className="flex items-start gap-2 m-2">
+              <Checkbox
+                id={type}
+                name={type}
+                checked={types.includes(type)}
+                onCheckedChange={() => {
+                  handleUpdateSearchParams("type", type);
+                }}
+              />
+              <Label htmlFor={type}>{JOB_TYPES_LABELS[type]}</Label>
+            </div>
+          ))}
+        </PopoverContent>
+      </Popover>
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            size="sm"
+            className="w-full justify-between"
+          >
+            Select Work mode <ChevronDown />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-[var(--radix-popover-trigger-width)]">
+          {WORK_MODE.map((mode) => (
+            <div key={mode} className="flex items-start gap-2 m-2">
+              <Checkbox
+                id={mode}
+                name={mode}
+                checked={modes.includes(mode)}
+                onCheckedChange={() => {
+                  handleUpdateSearchParams("mode", mode);
+                }}
+              />
+              <Label htmlFor={mode}>{WORK_MODE_LABELS[mode]}</Label>
+            </div>
+          ))}
+        </PopoverContent>
+      </Popover>
     </div>
   );
 };
 
-export default FilterFields;
+export default FilterField;
+<PopoverContent className="w-[var(--radix-popover-trigger-width)]"></PopoverContent>;

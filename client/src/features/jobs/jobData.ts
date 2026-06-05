@@ -1,14 +1,7 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import type { PaginationType, SingleJob } from "../../types/jobTypes";
+import type { SingleJob } from "../../types/jobTypes";
 import { toast } from 'react-toastify';
-import { deleteJob, editJob, postJob } from "./jobApi";
-
-type JobsApiResponse<T> = {
-  success: boolean;
-  data: T;
-  pagination: PaginationType;
-  message?: string;
-};
+import { deleteJob, editJob, fetchJobs, postJob } from "./jobApi";
 
 type ApiResponse<T> = {
   success: boolean;
@@ -21,8 +14,8 @@ type JobParams = {
     limit?: number;
     page?: number;
     title?: string;
-    type?: string;
-    mode?: string;
+    types?: string[];
+    modes?: string[];
 }
 
 // ✅ One place for keys
@@ -43,23 +36,7 @@ async function apiFetch<T>(url: string, init?: RequestInit): Promise<T> {
   return json as T;
 }
 
-// Get all jobs
-const fetchJobs = async (params?: JobParams) => {
-  const qs = new URLSearchParams();
-  if (params?.limit) qs.set("limit", String(params.limit));
-  if (params?.page) qs.set("page", String(params.page));
-  if (params?.title) qs.set("title", params.title);
-  if (params?.type) qs.set("type", params.type);
-  if (params?.mode) qs.set("mode", params.mode);
-
-  const url = qs.toString() ? `/api/jobs?${qs}` : "/api/jobs";
-  const json = await apiFetch<JobsApiResponse<SingleJob[]>>(url )
-  return {
-    data: json.data,
-    pagination: json.pagination,
-  }
-};
-
+ 
 export function useJobs(params?: JobParams) {
   const getJobsQuery =  useQuery({
     queryKey: jobKeys.list(params),

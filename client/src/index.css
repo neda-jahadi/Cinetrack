@@ -20,10 +20,6 @@
   --color-border: theme(colors.gray.100);
   --color-ring: theme(colors.indigo.600);
 
-  /* Accents */
-  --color-accent: theme(colors.orange.700); /* location */
-  --color-warning: theme(colors.yellow.400); /* 404 icon */
-
   /* Actions */
   --color-danger: theme(colors.red.600);
   --color-danger-hover: theme(colors.red.700);

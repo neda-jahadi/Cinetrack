@@ -1,9 +1,13 @@
 import { JobType, WorkMode } from "@prisma/client";
 import { prisma } from "../configs/prisma.js";
+import { toArray } from "../helpers/helpers.js";
+
 
 export const getJobs = async (req, res) => {
   try {
-    const { title, type, mode } = req.query;
+    const { title } = req.query;
+    const types = toArray(req.query.type);
+    const modes = toArray(req.query.mode);
     const rawPage = Number(req.query.page) || 1;
     const rawLimit = Number(req.query.limit) || 9;
     const sortKey = req.query.sort || "recent";
@@ -31,12 +35,16 @@ export const getJobs = async (req, res) => {
         },
       }),
 
-      ...(type && {
-        type: JobType[type],
+      ...(types.length > 0 && {
+        type: {
+          in: types,
+        },
       }),
 
-      ...(mode && {
-        workMode: WorkMode[mode],
+      ...(modes.length > 0 && {
+        workMode: {
+          in: modes,
+        },
       }),
     };
 

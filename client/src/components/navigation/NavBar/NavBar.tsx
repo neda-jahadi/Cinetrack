@@ -3,7 +3,7 @@ import { cn } from "../../../lib/cn";
 import { useTheme } from "../../../context/ThemeContext";
 import { CiLight } from "react-icons/ci";
 import { MdDarkMode } from "react-icons/md";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 
 type NavItem = {
   label: string;

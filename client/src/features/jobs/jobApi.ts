@@ -1,5 +1,5 @@
 import { api } from "../../lib/api";
-import type { CreateJobInput, Job } from "../../types/jobTypes";
+import type { CreateJobInput, Job, PaginationType, SingleJob } from "../../types/jobTypes";
 
 type ApiResponse<T> = {
   success: boolean;
@@ -16,6 +16,23 @@ type ApiDeleteResponse = {
   success: boolean;
   message: string;
 }
+
+type JobParams = {
+    limit?: number;
+    page?: number;
+    title?: string;
+    types?: string[];
+    modes?: string[];
+}
+
+type JobsApiResponse<T> = {
+  success: boolean;
+  data: T;
+  pagination: PaginationType;
+  message?: string;
+};
+
+
 
 
 
@@ -45,3 +62,26 @@ export const deleteJob = async (id: string): Promise<boolean> => {
         throw new Error( error.response?.data?.message || "Failed to edit the job")
     }
 }
+
+// Get all jobs
+export const fetchJobs = async (params?: JobParams) => {
+  const qs = new URLSearchParams();
+  if (params?.limit) qs.set("limit", String(params.limit));
+  if (params?.page) qs.set("page", String(params.page));
+  if (params?.title) qs.set("title", params.title);
+    params?.types?.forEach((type) => qs.append("type", type));
+  params?.modes?.forEach((mode) => qs.append("mode", mode));
+
+  const url = qs.toString() ? `/api/jobs?${qs}` : "/api/jobs";
+  try {
+    const res = await api.get<JobsApiResponse<SingleJob[]>>(url);
+    return {
+      data: res.data.data,
+      pagination: res.data.pagination,
+    }
+  }
+  catch (error: any) {
+    throw new Error( error.response?.data?.message || "Failed to fetch jobs")
+  }
+};
+

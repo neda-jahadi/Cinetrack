@@ -7,15 +7,15 @@ const SearchField = ({
   title,
   handleUpdateSearchParams,
 }: {
-  title: string;
-  handleUpdateSearchParams: (title: string) => void;
+  title: string | "";
+  handleUpdateSearchParams: (key: string, value: string) => void;
 }) => {
   const [searchTitle, setSearchTitle] = useState(title);
   const debaouncedSearchTitle = useDebounce(searchTitle, 500);
 
   useEffect(() => {
-    handleUpdateSearchParams(debaouncedSearchTitle);
-  }, [debaouncedSearchTitle, handleUpdateSearchParams]);
+    handleUpdateSearchParams("title", debaouncedSearchTitle);
+  }, [debaouncedSearchTitle]);
 
   return (
     <div>

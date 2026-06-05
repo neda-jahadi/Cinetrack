@@ -6,17 +6,17 @@ import { useJobs } from "../features/jobs/jobData";
 import NotFound from "@/components/sections/Job/NotFound";
 import PaginationComponent from "@/components/navigation/pagination/PaginationComponent";
 import SearchField from "@/components/navigation/searchBar/SearchField";
-import FilterFields from "@/components/navigation/searchBar/FilterFields";
-
+import FilterField from "@/components/navigation/searchBar/FilterFields";
 const BrowseJobsPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const page = Number(searchParams.get("page") || 1);
   const title = searchParams.get("title") || "";
-  const type = searchParams.get("type") || "";
-  const mode = searchParams.get("mode") || "";
+  const types = searchParams.getAll("type");
+  const modes = searchParams.getAll("mode");
+  // console.log("Search Params:", { page, title, types, modes });
 
-  const { data, isLoading, isError } = useJobs({ page, title, type, mode });
+  const { data, isLoading, isError } = useJobs({ page, types, modes, title });
   const jobs = data ? data.data : [];
   const pagination = data?.pagination;
 
@@ -26,17 +26,27 @@ const BrowseJobsPage = () => {
     setSearchParams(params);
   };
 
-  const handleUpdateSearchParams = (key: string, value: string) => {
+  const toggleParamValue = (key: string, value: string) => {
     const params = new URLSearchParams(searchParams);
-    const currentValue = searchParams.get(key) || "";
-    if (value === currentValue) return; // No change, do nothing
-    if (value) {
+    const currentValues = params.getAll(key);
+    params.delete(key);
+
+    const newValues = currentValues.includes(value)
+      ? currentValues.filter((v) => v !== value)
+      : [...currentValues, value];
+    newValues.forEach((v) => params.append(key, v));
+    params.set("page", "1");
+    setSearchParams(params);
+  };
+
+  const setParamValue = (key: string, value: string) => {
+    const params = new URLSearchParams(searchParams);
+    if (value.trim()) {
       params.set(key, value);
     } else {
       params.delete(key);
     }
-
-    params.set("page", "1"); // Reset to first page on filter change
+    params.set("page", "1");
     setSearchParams(params);
   };
 
@@ -47,14 +57,14 @@ const BrowseJobsPage = () => {
           <h1 className="text-3xl font-bold mb-7 text-center">Browse Jobs</h1>
           <SearchField
             title={title}
-            handleUpdateSearchParams={(value) =>
-              handleUpdateSearchParams("title", value)
-            }
+            handleUpdateSearchParams={(key, value) => setParamValue(key, value)}
           />
-          <FilterFields
-            type={type}
-            mode={mode}
-            handleUpdateSearchParams={handleUpdateSearchParams}
+          <FilterField
+            types={types}
+            modes={modes}
+            handleUpdateSearchParams={(key, value) =>
+              toggleParamValue(key, value)
+            }
           />
         </Container>
       </section>
