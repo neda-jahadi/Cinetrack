@@ -1,5 +1,5 @@
-import jwt from "jsonwebtoken";
-import { prisma } from "../configs/prisma.js";
+import jwt from 'jsonwebtoken';
+import { prisma } from '../configs/prisma.js';
 
 // Read the token from the request
 // Check if token is valid
@@ -8,9 +8,9 @@ export const authMiddleware = async (req, res, next) => {
 
   if (
     req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearer")
+    req.headers.authorization.startsWith('Bearer')
   ) {
-    token = req.headers.authorization.split(" ")[1];
+    token = req.headers.authorization.split(' ')[1];
   } else if (req.cookies?.jwt) {
     token = req.cookies.jwt;
   }
@@ -18,7 +18,7 @@ export const authMiddleware = async (req, res, next) => {
   if (!token) {
     return res
       .status(401)
-      .json({ success: false, message: "Not authorized, no token provided" });
+      .json({ success: false, message: 'Not authorized, no token provided' });
   }
 
   try {
@@ -33,7 +33,7 @@ export const authMiddleware = async (req, res, next) => {
     if (!user) {
       return res
         .status(401)
-        .json({ success: false, message: "User no longer exists" });
+        .json({ success: false, message: 'User no longer exists' });
     }
 
     req.user = user;
@@ -41,6 +41,6 @@ export const authMiddleware = async (req, res, next) => {
   } catch (err) {
     return res
       .status(401)
-      .json({ success: false, message: "Not authorized, token failed" });
+      .json({ success: false, message: 'Not authorized, token failed' });
   }
 };

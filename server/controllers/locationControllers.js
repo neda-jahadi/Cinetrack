@@ -1,4 +1,4 @@
-import { prisma } from "../configs/prisma.js";
+import { prisma } from '../configs/prisma.js';
 
 export const getAllMunicipalities = async (reg, res) => {
   try {
@@ -7,21 +7,19 @@ export const getAllMunicipalities = async (reg, res) => {
         region: true,
       },
       orderBy: {
-        name: "asc",
+        name: 'asc',
       },
     });
 
-    return res
-      .status(200)
-      .json({
-        success: true,
-        data: municipalities,
-        message: "Got all municipalities successfully",
-      });
+    return res.status(200).json({
+      success: true,
+      data: municipalities,
+      message: 'Got all municipalities successfully',
+    });
   } catch (error) {
     return res.status(500).json({
       success: false,
-      message: "Failed to get municipalities",
+      message: 'Failed to get municipalities',
     });
   }
 };
@@ -30,21 +28,19 @@ export const getAllRegions = async (reg, res) => {
   try {
     const regions = await prisma.region.findMany({
       orderBy: {
-        name: "asc",
+        name: 'asc',
       },
     });
 
-    return res
-      .status(200)
-      .json({
-        success: true,
-        data: regions,
-        message: "Got all regions successfully",
-      });
+    return res.status(200).json({
+      success: true,
+      data: regions,
+      message: 'Got all regions successfully',
+    });
   } catch (error) {
     return res.status(500).json({
       success: false,
-      message: "Failed to get regions",
+      message: 'Failed to get regions',
     });
   }
 };

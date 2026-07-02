@@ -1,11 +1,11 @@
-import { prisma } from "../configs/prisma.js";
-import bcrypt from "bcrypt";
+import { prisma } from '../configs/prisma.js';
+import bcrypt from 'bcrypt';
 import {
   signAccessToken,
   signRefreshToken,
   verifyRefreshToken,
-} from "../utils/tokens.js";
-import { generateToken } from "../utils/generateToken.js";
+} from '../utils/tokens.js';
+import { generateToken } from '../utils/generateToken.js';
 
 // https://www.webfx.com/web-development/glossary/http-status-codes/
 
@@ -17,12 +17,10 @@ export const registerUser = async (req, res) => {
     });
 
     if (userExists) {
-      return res
-        .status(400)
-        .json({
-          success: false,
-          message: "User already exists with this email",
-        });
+      return res.status(400).json({
+        success: false,
+        message: 'User already exists with this email',
+      });
     }
 
     // Hash password : npm i bcryptjs
@@ -34,7 +32,7 @@ export const registerUser = async (req, res) => {
         name,
         email,
         password: hashedPassword,
-        role: "USER",
+        role: 'USER',
       },
     });
 
@@ -43,7 +41,7 @@ export const registerUser = async (req, res) => {
 
     return res.status(201).json({
       success: true,
-      message: "User registered successfully",
+      message: 'User registered successfully',
       data: {
         user: {
           id: user.id,
@@ -54,10 +52,10 @@ export const registerUser = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("Register user error:", error);
+    console.error('Register user error:', error);
     return res.status(500).json({
       success: false,
-      message: "Failed to register user",
+      message: 'Failed to register user',
     });
   }
 };
@@ -73,7 +71,7 @@ export const loginUser = async (req, res) => {
     if (!user) {
       return res
         .status(401)
-        .json({ success: false, message: "Invalid email or password" });
+        .json({ success: false, message: 'Invalid email or password' });
     }
 
     // verify the password
@@ -81,7 +79,7 @@ export const loginUser = async (req, res) => {
     if (!isPasswordValid) {
       return res
         .status(401)
-        .json({ success: false, message: "Invalid email or password" });
+        .json({ success: false, message: 'Invalid email or password' });
     }
 
     // Generate JWT Token
@@ -89,7 +87,7 @@ export const loginUser = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "Logged in successfully",
+      message: 'Logged in successfully',
       data: {
         user: {
           id: user.id,
@@ -102,23 +100,23 @@ export const loginUser = async (req, res) => {
       token,
     });
   } catch (error) {
-    console.error("User login error:", error);
+    console.error('User login error:', error);
     return res.status(500).json({
       success: false,
-      message: "Failed to login",
+      message: 'Failed to login',
     });
   }
 };
 
 export const logoutUser = async (req, res) => {
-  res.cookie("jwt", "", {
+  res.cookie('jwt', '', {
     httpOnly: true,
     expires: new Date(0),
   });
 
   res.status(200).json({
     success: true,
-    message: "Logged out successfully",
+    message: 'Logged out successfully',
   });
 };
 
@@ -138,10 +136,10 @@ export const getMe = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("getMe error:", error);
+    console.error('getMe error:', error);
     return res.status(500).json({
       success: false,
-      message: "Failed to fetch user",
+      message: 'Failed to fetch user',
     });
   }
 };

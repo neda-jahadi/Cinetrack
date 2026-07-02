@@ -1,39 +1,39 @@
-import express from "express";
-import { authMiddleware } from "../middlewares/authMiddleware.js";
+import express from 'express';
+import { authMiddleware } from '../middlewares/authMiddleware.js';
 import {
   createSingleJob,
   deleteSingleJob,
   getJobs,
   getSingleJob,
   updateSingleJob,
-} from "../controllers/job.controller.js";
-import { addJobSchema } from "../validators/addJobValidators.js";
-import { authorizeRoles } from "../middlewares/roleMiddleware.js";
-import { validateRequest } from "../middlewares/validateRequest.js";
-import { companyApprovedCheck } from "../middlewares/companyMiddleware.js";
+} from '../controllers/job.controller.js';
+import { addJobSchema } from '../validators/addJobValidators.js';
+import { authorizeRoles } from '../middlewares/roleMiddleware.js';
+import { validateRequest } from '../middlewares/validateRequest.js';
+import { companyApprovedCheck } from '../middlewares/companyMiddleware.js';
 
 const router = express.Router();
 
-router.get("/", getJobs);
-router.get("/:id", getSingleJob);
+router.get('/', getJobs);
+router.get('/:id', getSingleJob);
 router.post(
-  "/",
+  '/',
   authMiddleware,
-  authorizeRoles("COMPANY"),
+  authorizeRoles('COMPANY'),
   companyApprovedCheck,
   validateRequest(addJobSchema),
   createSingleJob,
 );
 router.delete(
-  "/:id",
+  '/:id',
   authMiddleware,
-  authorizeRoles("COMPANY"),
+  authorizeRoles('COMPANY'),
   deleteSingleJob,
 );
 router.put(
-  "/:id",
+  '/:id',
   authMiddleware,
-  authorizeRoles("COMPANY"),
+  authorizeRoles('COMPANY'),
   companyApprovedCheck,
   validateRequest(addJobSchema),
   updateSingleJob,

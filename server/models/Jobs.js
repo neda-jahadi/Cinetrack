@@ -1,4 +1,4 @@
-import { Schema, mongoose } from "mongoose";
+import { Schema, mongoose } from 'mongoose';
 
 const companySchema = new Schema(
   {
@@ -35,7 +35,7 @@ const jobSchema = new Schema(
     },
     type: {
       type: String,
-      enum: ["Full-Time", "Part-Time", "Contract", "Internship"],
+      enum: ['Full-Time', 'Part-Time', 'Contract', 'Internship'],
       required: true,
     },
     description: {
@@ -64,5 +64,5 @@ const jobSchema = new Schema(
   },
 );
 
-const Job = mongoose.model("Job", jobSchema);
+const Job = mongoose.model('Job', jobSchema);
 export default Job;

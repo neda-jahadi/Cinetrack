@@ -1,17 +1,17 @@
-import jwt from "jsonwebtoken";
+import jwt from 'jsonwebtoken';
 
 // node -e "console.log(require('crypto').randomBytes(32).toString('base64'))" -> Generate a random JWT_SECRET
 
 export const generateToken = (userId, res) => {
   const payload = { id: userId };
   const token = jwt.sign(payload, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN || "7d",
+    expiresIn: process.env.JWT_EXPIRES_IN || '7d',
   });
 
-  res.cookie("jwt", token, {
+  res.cookie('jwt', token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
     maxAge: 1000 * 60 * 60 * 24 * 7,
   });
   return token;

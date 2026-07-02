@@ -3,13 +3,13 @@ export const authorizeRoles = (...roles) => {
     if (!req.user) {
       return res
         .status(401)
-        .json({ success: false, message: "Not authenticated" });
+        .json({ success: false, message: 'Not authenticated' });
     }
 
     if (!roles.includes(req.user.role)) {
       return res.status(403).json({
         success: false,
-        message: `Access denied. Required role: ${roles.join(", ")}`,
+        message: `Access denied. Required role: ${roles.join(', ')}`,
       });
     }
 

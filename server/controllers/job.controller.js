@@ -1,45 +1,45 @@
-import { JobType, WorkMode } from "@prisma/client";
-import { prisma } from "../configs/prisma.js";
-import { toArray } from "../helpers/helpers.js";
+import { JobType, WorkMode } from '@prisma/client';
+import { prisma } from '../configs/prisma.js';
+import { toArray } from '../helpers/helpers.js';
 
 export const getJobs = async (req, res) => {
   try {
     const { title, location } = req.query;
     const types = toArray(req.query.type);
     const modes = toArray(req.query.mode);
-    console.log("re query is", req.query);
+    console.log('re query is', req.query);
     const rawPage = Number(req.query.page) || 1;
     const rawLimit = Number(req.query.limit) || 9;
-    const sortKey = req.query.sort || "recent";
+    const sortKey = req.query.sort || 'recent';
 
     const safePage = Math.max(rawPage, 1);
     const safeLimit = Math.min(Math.max(rawLimit, 1), 100);
     const skip = (safePage - 1) * safeLimit;
 
     const SORT_MAP = {
-      recent: { createdAt: "desc" },
+      recent: { createdAt: 'desc' },
     };
 
     if (!SORT_MAP[sortKey]) {
       return res.status(400).json({
         success: false,
-        message: "Invalid sort option",
+        message: 'Invalid sort option',
       });
     }
 
     let locationWhere = {};
 
     if (location) {
-      const [type, id] = location.split("-");
+      const [type, id] = location.split('-');
 
-      if (type === "region") {
+      if (type === 'region') {
         locationWhere = { regionId: Number(id) };
-      } else if (type === "municipality") {
+      } else if (type === 'municipality') {
         locationWhere = { municipalityId: Number(id) };
       } else {
         return res.status(400).json({
           success: false,
-          message: "Invalid location type",
+          message: 'Invalid location type',
         });
       }
     }
@@ -48,7 +48,7 @@ export const getJobs = async (req, res) => {
       ...(title && {
         title: {
           contains: title,
-          mode: "insensitive",
+          mode: 'insensitive',
         },
       }),
       ...locationWhere,
@@ -118,11 +118,11 @@ export const getJobs = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("getJobs error:", error);
+    console.error('getJobs error:', error);
 
     return res.status(500).json({
       success: false,
-      message: "Server error",
+      message: 'Server error',
     });
   }
 };
@@ -136,13 +136,13 @@ export const getSingleJob = async (req, res) => {
     });
 
     if (!job) {
-      return res.status(404).json({ success: false, message: "Job not found" });
+      return res.status(404).json({ success: false, message: 'Job not found' });
     }
 
     res.status(200).json({ success: true, data: job });
   } catch (error) {
-    console.error("getSingleJob error:", error);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.error('getSingleJob error:', error);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
@@ -162,7 +162,7 @@ export const createSingleJob = async (req, res) => {
     if (!municipality) {
       return res
         .status(400)
-        .json({ success: "false", message: "Invalid municipality" });
+        .json({ success: 'false', message: 'Invalid municipality' });
     }
 
     const job = await prisma.job.create({
@@ -185,14 +185,14 @@ export const createSingleJob = async (req, res) => {
 
     return res.status(201).json({
       success: true,
-      message: "Job created successfully",
+      message: 'Job created successfully',
       data: job,
     });
   } catch (error) {
-    console.error("Create job error:", error);
+    console.error('Create job error:', error);
     return res.status(500).json({
       success: false,
-      message: "Failed to create job",
+      message: 'Failed to create job',
     });
   }
 };
@@ -208,14 +208,14 @@ export const updateSingleJob = async (req, res) => {
     if (!existingJob) {
       return res.status(404).json({
         success: false,
-        message: "Job not found",
+        message: 'Job not found',
       });
     }
 
     if (existingJob.companyId !== req.company.id) {
       return res.status(403).json({
         success: false,
-        message: "you are not allowed to updet this job",
+        message: 'you are not allowed to updet this job',
       });
     }
 
@@ -231,7 +231,7 @@ export const updateSingleJob = async (req, res) => {
     if (!municipality) {
       return res
         .status(400)
-        .json({ success: "false", message: "Invalid municipality" });
+        .json({ success: 'false', message: 'Invalid municipality' });
     }
 
     const updatedJob = await prisma.job.update({
@@ -257,10 +257,10 @@ export const updateSingleJob = async (req, res) => {
       data: updatedJob,
     });
   } catch (error) {
-    console.error("Update job error:", error);
+    console.error('Update job error:', error);
     return res.status(500).json({
       success: false,
-      message: "Failed to update job",
+      message: 'Failed to update job',
     });
   }
 };
@@ -275,7 +275,7 @@ export const deleteSingleJob = async (req, res) => {
     if (!existingJob) {
       return res.status(404).json({
         success: false,
-        message: "Job Not Found",
+        message: 'Job Not Found',
       });
     }
 
@@ -285,13 +285,13 @@ export const deleteSingleJob = async (req, res) => {
 
     return res.status(200).json({
       success: true,
-      message: "Job deleted successfully",
+      message: 'Job deleted successfully',
     });
   } catch (error) {
-    console.error("Delete job error:", error);
+    console.error('Delete job error:', error);
     return res.status(500).json({
       success: false,
-      message: "Failed to delete job",
+      message: 'Failed to delete job',
     });
   }
 };

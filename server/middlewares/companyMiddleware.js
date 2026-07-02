@@ -1,4 +1,4 @@
-import { prisma } from "../configs/prisma.js";
+import { prisma } from '../configs/prisma.js';
 
 export const companyApprovedCheck = async (req, res, next) => {
   try {
@@ -10,13 +10,13 @@ export const companyApprovedCheck = async (req, res, next) => {
 
     if (!company) {
       return res.status(404).json({
-        error: "No company found for this user",
+        error: 'No company found for this user',
       });
     }
 
-    if (company.status !== "APPROVED") {
+    if (company.status !== 'APPROVED') {
       return res.status(403).json({
-        error: "Company is not approved yet",
+        error: 'Company is not approved yet',
       });
     }
 
@@ -26,7 +26,7 @@ export const companyApprovedCheck = async (req, res, next) => {
     next();
   } catch (error) {
     return res.status(500).json({
-      error: "Failed to verify company status",
+      error: 'Failed to verify company status',
     });
   }
 };

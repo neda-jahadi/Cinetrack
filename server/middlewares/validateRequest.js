@@ -1,11 +1,11 @@
 const Labels = {
-  name: "Name",
-  description: "Description",
-  regionId: "Region",
-  municipalityId: "Municipality",
-  wordMode: "Work Mode",
-  contactEmail: "Contact Email",
-  contactPhone: "Contact Phone",
+  name: 'Name',
+  description: 'Description',
+  regionId: 'Region',
+  municipalityId: 'Municipality',
+  wordMode: 'Work Mode',
+  contactEmail: 'Contact Email',
+  contactPhone: 'Contact Phone',
 };
 
 export const validateRequest = (schema) => (req, res, next) => {
@@ -20,7 +20,7 @@ export const validateRequest = (schema) => (req, res, next) => {
     let message = firstError.message;
 
     if (
-      firstError.code === "invalid_type" &&
+      firstError.code === 'invalid_type' &&
       req.body[fieldName] === undefined
     ) {
       message = `${label} is required`;
