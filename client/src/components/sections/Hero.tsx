@@ -1,4 +1,4 @@
-import Container from "../ui/Container";
+import Container from '../ui/Container';
 type HeroProps = {
   title: string;
   subtitle?: string;

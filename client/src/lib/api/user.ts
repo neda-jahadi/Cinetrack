@@ -1,4 +1,4 @@
-import { users, type User } from "../mock-data";
+import { users, type User } from '../mock-data';
 
 export const fetchUsers = (): Promise<User[]> => {
   return new Promise((resolve) => {
@@ -6,4 +6,4 @@ export const fetchUsers = (): Promise<User[]> => {
       resolve(users);
     }, 800); // simulate network delay
   });
-}
+};

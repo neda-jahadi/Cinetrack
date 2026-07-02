@@ -1,9 +1,9 @@
-import SearchInput from "@/components/ui/searchInput";
-import { useDebounce } from "@/performance/hooks/useDebounce";
-import { useEffect, useState } from "react";
+import SearchInput from '@/components/ui/searchInput';
+import { useDebounce } from '@/performance/hooks/useDebounce';
+import { useEffect, useState } from 'react';
 
 type SearchFieldProps = {
-  title: string | "";
+  title: string | '';
   handleUpdateSearchParams: (value: string) => void;
 };
 

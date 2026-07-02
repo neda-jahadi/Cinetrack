@@ -1,5 +1,5 @@
-import type { AuthCompany } from "../../types/authtypes";
-import Container from "../ui/Container";
+import type { AuthCompany } from '../../types/authtypes';
+import Container from '../ui/Container';
 
 type CompanyStatusProps = {
   company: AuthCompany;

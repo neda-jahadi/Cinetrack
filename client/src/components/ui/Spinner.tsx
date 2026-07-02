@@ -1,9 +1,9 @@
-import type { CSSProperties } from "react";
-import { ClipLoader } from "react-spinners";
+import type { CSSProperties } from 'react';
+import { ClipLoader } from 'react-spinners';
 
 const override: CSSProperties = {
-  display: "block",
-  margin: "0 auto",
+  display: 'block',
+  margin: '0 auto',
 };
 
 type SpinnerProps = {

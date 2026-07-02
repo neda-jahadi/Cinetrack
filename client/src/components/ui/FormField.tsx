@@ -1,4 +1,4 @@
-import { cn } from "../../lib/cn";
+import { cn } from '../../lib/cn';
 
 type FormFieldProps = {
   id: string;
@@ -12,14 +12,14 @@ const FormField = ({
   id,
   label,
   required,
-  className = "",
+  className = '',
   children,
 }: FormFieldProps) => {
   return (
     <div>
       <label
         htmlFor={id}
-        className={cn("block text-gray-700 font-bold mb-2", className)}
+        className={cn('block text-gray-700 font-bold mb-2', className)}
       >
         {label}
         {required && (

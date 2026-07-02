@@ -1,36 +1,29 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 export const registerCompanySchema = z.object({
   name: z
     .string()
     .trim()
-    .min(2, "Company name must be at least 2 characters")
-    .max(100, "Company name is too long"),
+    .min(2, 'Company name must be at least 2 characters')
+    .max(100, 'Company name is too long'),
 
   description: z
     .string()
     .trim()
-    .min(8, "Description must be at least 8 characters")
-    .max(1000, "Description is too long"),
+    .min(8, 'Description must be at least 8 characters')
+    .max(1000, 'Description is too long'),
 
-  contactEmail: z
-    .string()
-    .trim()
-    .email("Invalid email address")
-    .toLowerCase(),
+  contactEmail: z.string().trim().email('Invalid email address').toLowerCase(),
   contactPhone: z
     .string()
     .trim()
-    .min(1, "Phone number is required")
-    .regex(/^[0-9+()\-.\s]+$/, "Phone number contains invalid characters")
+    .min(1, 'Phone number is required')
+    .regex(/^[0-9+()\-.\s]+$/, 'Phone number contains invalid characters')
     .refine(
-      (v) => v.replace(/\D/g, "").length >= 7,
-      "Phone number is too short"
+      (v) => v.replace(/\D/g, '').length >= 7,
+      'Phone number is too short',
     ),
-  municipalityId: z.string().min(1, "Please select a municipality")
-
+  municipalityId: z.string().min(1, 'Please select a municipality'),
 });
 
-export type RegisterCompanyFormFields = z.infer<
-  typeof registerCompanySchema
->;
+export type RegisterCompanyFormFields = z.infer<typeof registerCompanySchema>;

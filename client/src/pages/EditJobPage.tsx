@@ -1,10 +1,10 @@
-import { useJob } from "../features/jobs/jobData";
-import { useParams } from "react-router-dom";
-import Spinner from "../components/ui/Spinner";
-import NotFound from "../components/sections/Job/NotFound";
+import { useJob } from '../features/jobs/jobData';
+import { useParams } from 'react-router-dom';
+import Spinner from '../components/ui/Spinner';
+import NotFound from '../components/sections/Job/NotFound';
 
-import { useMunicipalities } from "@/features/locations/locationQuery";
-import EditJobForm from "@/components/forms/EditJobForm";
+import { useMunicipalities } from '@/features/locations/locationQuery';
+import EditJobForm from '@/components/forms/EditJobForm';
 
 const EditJobPage = () => {
   const { id } = useParams<{ id: string }>();

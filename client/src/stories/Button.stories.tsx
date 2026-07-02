@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import type { ComponentProps } from "react";
-import { fn } from "storybook/test";
-import Button from "../components/ui/Button";
+import type { Meta, StoryObj } from '@storybook/react';
+import type { ComponentProps } from 'react';
+import { fn } from 'storybook/test';
+import Button from '../components/ui/Button';
 
 type StoryProps = ComponentProps<typeof Button>;
 
@@ -18,17 +18,17 @@ type Story = StoryObj<StoryProps>;
 
 export const Primary: Story = {
   args: {
-    variant: "primary",
-    size: "md",
-    children: "Test",
+    variant: 'primary',
+    size: 'md',
+    children: 'Test',
   },
 };
 
 export const Secondary: Story = {
   args: {
-    variant: "secondary",
-    size: "md",
-    children: "Test",
+    variant: 'secondary',
+    size: 'md',
+    children: 'Test',
   },
   render: (args) => {
     return <Button {...args} />;
@@ -37,7 +37,7 @@ export const Secondary: Story = {
 
 export const Loading: Story = {
   args: {
-    children: "Save",
+    children: 'Save',
     isLoading: true,
     onClick: fn(),
   },
@@ -45,7 +45,7 @@ export const Loading: Story = {
 
 export const Disabled: Story = {
   args: {
-    children: "Save",
+    children: 'Save',
     disabled: true,
     onClick: fn(),
   },

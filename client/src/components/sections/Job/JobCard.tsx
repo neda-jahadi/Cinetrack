@@ -1,26 +1,26 @@
-import { Link } from "react-router-dom";
-import { cn } from "../../../lib/cn";
-import { useId } from "react";
-import { FaMapMarker } from "react-icons/fa";
-import type { SingleJob } from "@/types/jobTypes";
-import { JOB_TYPES_LABELS, WORK_MODE_LABELS } from "@/constants/job";
+import { Link } from 'react-router-dom';
+import { cn } from '../../../lib/cn';
+import { useId } from 'react';
+import { FaMapMarker } from 'react-icons/fa';
+import type { SingleJob } from '@/types/jobTypes';
+import { JOB_TYPES_LABELS, WORK_MODE_LABELS } from '@/constants/job';
 
 type JobCardProps = {
   job: SingleJob;
   className?: string;
-  variant?: "light" | "tint";
+  variant?: 'light' | 'tint';
 };
 
-const JobCard = ({ job, className, variant = "tint" }: JobCardProps) => {
-  const cardClasses = variant === "tint" ? "bg-white" : "bg-gray-50";
+const JobCard = ({ job, className, variant = 'tint' }: JobCardProps) => {
+  const cardClasses = variant === 'tint' ? 'bg-white' : 'bg-gray-50';
   const detailsPath = `/jobs/${job.id}`;
   const descId = useId();
-  const description = job.description?.trim() ?? "";
+  const description = job.description?.trim() ?? '';
 
   return (
     <article
       className={cn(
-        "h-full rounded-xl p-6 shadow-sm ring-1 ring-black/5",
+        'h-full rounded-xl p-6 shadow-sm ring-1 ring-black/5',
         cardClasses,
         className,
       )}
@@ -40,7 +40,7 @@ const JobCard = ({ job, className, variant = "tint" }: JobCardProps) => {
         </Link>
       </h3>
 
-      <p className={cn("mb-3 text-muted", "line-clamp-3")} id={descId}>
+      <p className={cn('mb-3 text-muted', 'line-clamp-3')} id={descId}>
         {description}
       </p>
 

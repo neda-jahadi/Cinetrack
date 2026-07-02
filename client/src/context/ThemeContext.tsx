@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
+import { createContext, useContext, useState, type ReactNode } from 'react';
 
 type ThemeContextType = {
   isInDarkMode: boolean;
@@ -29,7 +29,7 @@ export const useTheme = (): ThemeContextType => {
   const context = useContext(ThemeContext);
 
   if (!context) {
-    throw new Error("useTheme must be used within an ThemeProvider");
+    throw new Error('useTheme must be used within an ThemeProvider');
   }
 
   return context;

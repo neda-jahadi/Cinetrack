@@ -1,9 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
-import { fetchMunicipalities, fetchRegions } from "./locationApi";
+import { useQuery } from '@tanstack/react-query';
+import { fetchMunicipalities, fetchRegions } from './locationApi';
 
 export function useMunicipalities() {
-  const getMunicipalitiesQuery =  useQuery({
-    queryKey: ["municipalities"] ,
+  const getMunicipalitiesQuery = useQuery({
+    queryKey: ['municipalities'],
     queryFn: () => fetchMunicipalities(),
     staleTime: Infinity,
     gcTime: Infinity,
@@ -13,8 +13,8 @@ export function useMunicipalities() {
 }
 
 export function useRegions() {
-  const getRegionsQuery =  useQuery({
-    queryKey: ["regions"] ,
+  const getRegionsQuery = useQuery({
+    queryKey: ['regions'],
     queryFn: () => fetchRegions(),
     staleTime: Infinity,
     gcTime: Infinity,

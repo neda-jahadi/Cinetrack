@@ -1,45 +1,45 @@
-import { createBrowserRouter } from "react-router-dom";
-import RootLayout from "../layout/RootLayout";
-import { lazy } from "react";
-import BrowseJobsPage from "../pages/BrowseJobsPage";
-import ProfilePage from "../pages/ProfilePage";
-import BusinessAccountPage from "../pages/BusinessAccountPage";
-import RegisterCompanyPage from "../pages/RegisterCompanyPage";
-import RequireAuth from "./RequireAuth";
-import GuestOnly from "./GuestOnly";
-import RequireCompany from "./RequireCompany";
-import { AdminDashboardPage } from "@/pages/AdminDashboardPage";
-import RequireAdmin from "./RequireAdmin";
-const HomePage = lazy(() => import("../pages/HomePage"));
-const JobDetailsPage = lazy(() => import("../pages/JobDetailsPage"));
-const NotFound = lazy(() => import("../components/sections/Job/NotFound"));
-const EditJobPage = lazy(() => import("../pages/EditJobPage"));
-const AddJobPage = lazy(() => import("../pages/AddJobPage"));
-const LoginPage = lazy(() => import("../pages/LoginPage"));
-const RegisterPage = lazy(() => import("../pages/RegisterPage"));
+import { createBrowserRouter } from 'react-router-dom';
+import RootLayout from '../layout/RootLayout';
+import { lazy } from 'react';
+import BrowseJobsPage from '../pages/BrowseJobsPage';
+import ProfilePage from '../pages/ProfilePage';
+import BusinessAccountPage from '../pages/BusinessAccountPage';
+import RegisterCompanyPage from '../pages/RegisterCompanyPage';
+import RequireAuth from './RequireAuth';
+import GuestOnly from './GuestOnly';
+import RequireCompany from './RequireCompany';
+import { AdminDashboardPage } from '@/pages/AdminDashboardPage';
+import RequireAdmin from './RequireAdmin';
+const HomePage = lazy(() => import('../pages/HomePage'));
+const JobDetailsPage = lazy(() => import('../pages/JobDetailsPage'));
+const NotFound = lazy(() => import('../components/sections/Job/NotFound'));
+const EditJobPage = lazy(() => import('../pages/EditJobPage'));
+const AddJobPage = lazy(() => import('../pages/AddJobPage'));
+const LoginPage = lazy(() => import('../pages/LoginPage'));
+const RegisterPage = lazy(() => import('../pages/RegisterPage'));
 
 export const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <RootLayout />,
-    handle: { crumb: () => ({ to: "/", label: "Home" }) },
+    handle: { crumb: () => ({ to: '/', label: 'Home' }) },
     children: [
       { index: true, element: <HomePage /> },
       {
         element: <GuestOnly />,
         children: [
           {
-            path: "login",
+            path: 'login',
             element: <LoginPage />,
           },
           {
-            path: "signup",
+            path: 'signup',
             element: <RegisterPage />,
           },
           {
-            path: "/business/signup",
+            path: '/business/signup',
             element: <RegisterPage />,
-            handle: { crumb: () => ({ label: "Signup" }) },
+            handle: { crumb: () => ({ label: 'Signup' }) },
           },
         ],
       },
@@ -47,14 +47,14 @@ export const router = createBrowserRouter([
         element: <RequireCompany />,
         children: [
           {
-            path: "jobs/edit-job/:id",
+            path: 'jobs/edit-job/:id',
             element: <EditJobPage />,
-            handle: { crumb: () => ({ label: "Edit" }) },
+            handle: { crumb: () => ({ label: 'Edit' }) },
           },
           {
-            path: "jobs/add-job",
+            path: 'jobs/add-job',
             element: <AddJobPage />,
-            handle: { crumb: () => ({ label: "Add Job" }) },
+            handle: { crumb: () => ({ label: 'Add Job' }) },
           },
         ],
       },
@@ -62,14 +62,14 @@ export const router = createBrowserRouter([
         element: <RequireAuth />,
         children: [
           {
-            path: "profile",
+            path: 'profile',
             element: <ProfilePage />,
-            handle: { crumb: () => ({ label: "Profile" }) },
+            handle: { crumb: () => ({ label: 'Profile' }) },
           },
           {
-            path: "business/register-company",
+            path: 'business/register-company',
             element: <RegisterCompanyPage />,
-            handle: { crumb: () => ({ label: "Create Company" }) },
+            handle: { crumb: () => ({ label: 'Create Company' }) },
           },
         ],
       },
@@ -77,34 +77,34 @@ export const router = createBrowserRouter([
         element: <RequireAdmin />,
         children: [
           {
-            path: "admin-dashboard",
+            path: 'admin-dashboard',
             element: <AdminDashboardPage />,
-            handle: { crumb: () => ({ label: "Admin Dashboard" }) },
+            handle: { crumb: () => ({ label: 'Admin Dashboard' }) },
           },
         ],
       },
       {
-        path: "jobs",
-        handle: { crumb: () => ({ to: "/jobs", label: "Jobs" }) },
+        path: 'jobs',
+        handle: { crumb: () => ({ to: '/jobs', label: 'Jobs' }) },
         children: [
           { index: true, element: <BrowseJobsPage /> },
 
           {
-            path: ":id",
+            path: ':id',
             element: <JobDetailsPage />,
             errorElement: <NotFound />,
-            handle: { crumb: () => ({ label: "Job" }) },
+            handle: { crumb: () => ({ label: 'Job' }) },
           },
         ],
       },
       {
-        path: "business",
+        path: 'business',
         element: <BusinessAccountPage />,
         handle: {
-          crumb: () => ({ to: "/business", label: "Business Account" }),
+          crumb: () => ({ to: '/business', label: 'Business Account' }),
         },
       },
-      { path: "*", element: <NotFound /> },
+      { path: '*', element: <NotFound /> },
     ],
   },
 ]);

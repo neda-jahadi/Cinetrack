@@ -1,16 +1,16 @@
-import { useForm, type SubmitHandler } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useId } from "react";
+import { useForm, type SubmitHandler } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useId } from 'react';
 import {
   registerCompanySchema,
   type RegisterCompanyFormFields,
-} from "../../validation/registerCompany";
-import FormField from "../ui/FormField";
-import Input from "../ui/Input";
-import { useNavigate } from "react-router";
-import { userRegisterCompany } from "../../features/company/companyQuery";
-import type { MunicipalityApiResponse } from "@/types/locationTypes";
-import { Button } from "../ui/Button";
+} from '../../validation/registerCompany';
+import FormField from '../ui/FormField';
+import Input from '../ui/Input';
+import { useNavigate } from 'react-router';
+import { userRegisterCompany } from '../../features/company/companyQuery';
+import type { MunicipalityApiResponse } from '@/types/locationTypes';
+import { Button } from '../ui/Button';
 
 type RegisterCompanyFormProps = {
   onSuccessRedirect: string;
@@ -32,11 +32,11 @@ const RegisterCompanyForm = ({
   } = useForm<RegisterCompanyFormFields>({
     resolver: zodResolver(registerCompanySchema),
     defaultValues: {
-      name: "",
-      description: "",
-      contactEmail: "",
-      contactPhone: "",
-      municipalityId: "",
+      name: '',
+      description: '',
+      contactEmail: '',
+      contactPhone: '',
+      municipalityId: '',
     },
   });
 
@@ -57,9 +57,9 @@ const RegisterCompanyForm = ({
         navigate(onSuccessRedirect);
       },
       onError: (error: any) => {
-        setError("root", {
-          type: "server",
-          message: error.message || "Failed to Register Company ",
+        setError('root', {
+          type: 'server',
+          message: error.message || 'Failed to Register Company ',
         });
       },
     });
@@ -73,16 +73,16 @@ const RegisterCompanyForm = ({
         <div className="mb-4">
           <FormField id="name" label="Name" required>
             <Input
-              {...register("name")}
+              {...register('name')}
               id="name"
               required
               invalid={!!errors.name}
-              aria-describedby={errors.name ? errId("name") : undefined}
+              aria-describedby={errors.name ? errId('name') : undefined}
               placeholder="Company Name"
             />
             {errors.name && (
               <p
-                id={errId("name")}
+                id={errId('name')}
                 aria-live="polite"
                 aria-hidden="false"
                 className="text-danger"
@@ -96,18 +96,18 @@ const RegisterCompanyForm = ({
         <div className="mb-4">
           <FormField id="description" label="description" required>
             <Input
-              {...register("description")}
+              {...register('description')}
               id="description"
               required
               invalid={!!errors.description}
               aria-describedby={
-                errors.description ? errId("description") : undefined
+                errors.description ? errId('description') : undefined
               }
               placeholder="Description of your company"
             />
             {errors.description && (
               <p
-                id={errId("description")}
+                id={errId('description')}
                 aria-live="polite"
                 aria-hidden="false"
                 className="text-danger"
@@ -121,20 +121,20 @@ const RegisterCompanyForm = ({
         <div className="mb-4">
           <FormField id="contactEmail" label="Contact Email" required>
             <Input
-              {...register("contactEmail")}
+              {...register('contactEmail')}
               id="contactEmail"
               required
               type="email"
               autoComplete="email"
               invalid={!!errors.contactEmail}
               aria-describedby={
-                errors.contactEmail ? errId("contactEmail") : undefined
+                errors.contactEmail ? errId('contactEmail') : undefined
               }
               placeholder="example@email.com"
             />
             {errors.contactEmail && (
               <p
-                id={errId("contactEmail")}
+                id={errId('contactEmail')}
                 aria-live="polite"
                 aria-hidden="false"
                 className="text-danger"
@@ -148,19 +148,19 @@ const RegisterCompanyForm = ({
         <div className="mb-4">
           <FormField id="contactPhone" label="Contact Phone" required>
             <Input
-              {...register("contactPhone")}
+              {...register('contactPhone')}
               id="contactPhone"
               required
               type="tel"
               invalid={!!errors.contactPhone}
               aria-describedby={
-                errors.contactPhone ? errId("contactPhone") : undefined
+                errors.contactPhone ? errId('contactPhone') : undefined
               }
               placeholder="Contact Phone"
             />
             {errors.contactPhone && (
               <p
-                id={errId("contactPhone")}
+                id={errId('contactPhone')}
                 aria-live="polite"
                 aria-hidden="false"
                 className="text-danger"
@@ -174,14 +174,14 @@ const RegisterCompanyForm = ({
         <div className="mb-4">
           <FormField id="municipalityId" label="Municipality" required>
             <select
-              {...register("municipalityId")}
+              {...register('municipalityId')}
               id="municipalityId"
               required
               aria-invalid={!!errors.municipalityId}
               aria-describedby={
-                errors.municipalityId ? errId("municipalityId") : undefined
+                errors.municipalityId ? errId('municipalityId') : undefined
               }
-              className={`border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand ${errors.municipalityId && "border-danger focus:ring-danger"}`}
+              className={`border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand ${errors.municipalityId && 'border-danger focus:ring-danger'}`}
             >
               <option value="">Select Municipality</option>
               {municipalities.map((municipality) => (
@@ -192,7 +192,7 @@ const RegisterCompanyForm = ({
             </select>
             {errors.municipalityId && (
               <p
-                id={errId("municipalityId")}
+                id={errId('municipalityId')}
                 aria-live="polite"
                 aria-hidden="false"
                 className="text-danger"
@@ -211,7 +211,7 @@ const RegisterCompanyForm = ({
             role="alert"
             className="text-danger text-sm min-2 text-center mt-2"
           >
-            {errors.root?.message ?? ""}
+            {errors.root?.message ?? ''}
           </p>
         </div>
       </form>

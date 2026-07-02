@@ -1,35 +1,35 @@
-import { useSearchParams } from "react-router-dom";
-import JobPreview from "../components/sections/Job/JobPreview";
-import Container from "../components/ui/Container";
-import Spinner from "../components/ui/Spinner";
-import { useJobs } from "../features/jobs/jobData";
-import NotFound from "@/components/sections/Job/NotFound";
-import PaginationComponent from "@/components/navigation/pagination/PaginationComponent";
+import { useSearchParams } from 'react-router-dom';
+import JobPreview from '../components/sections/Job/JobPreview';
+import Container from '../components/ui/Container';
+import Spinner from '../components/ui/Spinner';
+import { useJobs } from '../features/jobs/jobData';
+import NotFound from '@/components/sections/Job/NotFound';
+import PaginationComponent from '@/components/navigation/pagination/PaginationComponent';
 import {
   useMunicipalities,
   useRegions,
-} from "@/features/locations/locationQuery";
-import { MultiSelectDropDown } from "@/components/ui/multiselect-dropdown";
+} from '@/features/locations/locationQuery';
+import { MultiSelectDropDown } from '@/components/ui/multiselect-dropdown';
 import {
   JOB_TYPES,
   JOB_TYPES_LABELS,
   WORK_MODE,
   WORK_MODE_LABELS,
-} from "@/constants/job";
-import { Autocomplete } from "@/components/ui/autocomplete/autocomplete";
-import SearchJobTitle from "@/components/sections/Job/SearchJobTitle";
-import { Button } from "@/components/ui/button";
-import FormField from "@/components/ui/FormField";
+} from '@/constants/job';
+import { Autocomplete } from '@/components/ui/autocomplete/autocomplete';
+import SearchJobTitle from '@/components/sections/Job/SearchJobTitle';
+import { Button } from '@/components/ui/button';
+import FormField from '@/components/ui/FormField';
 
 const BrowseJobsPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const page = Number(searchParams.get("page") || 1);
-  const title = searchParams.get("title") || "";
-  const types = searchParams.getAll("type");
-  const modes = searchParams.getAll("mode");
-  const region = searchParams.get("region") || "";
-  const location = searchParams.get("location") || "";
+  const page = Number(searchParams.get('page') || 1);
+  const title = searchParams.get('title') || '';
+  const types = searchParams.getAll('type');
+  const modes = searchParams.getAll('mode');
+  const region = searchParams.get('region') || '';
+  const location = searchParams.get('location') || '';
 
   const { data, isLoading, isError } = useJobs({
     page,
@@ -73,7 +73,7 @@ const BrowseJobsPage = () => {
 
     values.forEach((value) => params.append(key, value));
 
-    params.set("page", "1");
+    params.set('page', '1');
     setSearchParams(params);
   };
 
@@ -84,7 +84,7 @@ const BrowseJobsPage = () => {
     } else {
       params.delete(key);
     }
-    params.set("page", "1");
+    params.set('page', '1');
     setSearchParams(params);
   };
 
@@ -97,14 +97,14 @@ const BrowseJobsPage = () => {
             <SearchJobTitle
               title={title}
               handleUpdateSearchParams={(value) =>
-                setSingleParamValue("title", value)
+                setSingleParamValue('title', value)
               }
             />
             <Autocomplete
               options={locationOptions}
               value={location}
               placeholder="Location..."
-              onChange={(value) => setSingleParamValue("location", value)}
+              onChange={(value) => setSingleParamValue('location', value)}
             />
           </div>
           <div className="flex gap-2">
@@ -121,7 +121,7 @@ const BrowseJobsPage = () => {
                 }))}
                 selected={modes}
                 onSelectChange={(values) =>
-                  setMultiParamValue("mode", values as string[])
+                  setMultiParamValue('mode', values as string[])
                 }
               />
             </div>
@@ -138,7 +138,7 @@ const BrowseJobsPage = () => {
                 }))}
                 selected={types}
                 onSelectChange={(values) =>
-                  setMultiParamValue("type", values as string[])
+                  setMultiParamValue('type', values as string[])
                 }
               />
             </div>
@@ -158,7 +158,7 @@ const BrowseJobsPage = () => {
           <Container>
             <PaginationComponent
               pagination={pagination}
-              onPageChange={(value) => handleChangePage("page", value)}
+              onPageChange={(value) => handleChangePage('page', value)}
             />
           </Container>
         </section>

@@ -1,16 +1,16 @@
 const Labels = {
-  "name": "Name",
-  "description": "Description",
-  "regionId": "Region",
-  "municipalityId": "Municipality",
-  "wordMode": "Work Mode",
-  "contactEmail": "Contact Email",
-  "contactPhone": "Contact Phone"
-}
+  name: "Name",
+  description: "Description",
+  regionId: "Region",
+  municipalityId: "Municipality",
+  wordMode: "Work Mode",
+  contactEmail: "Contact Email",
+  contactPhone: "Contact Phone",
+};
 
 export const validateRequest = (schema) => (req, res, next) => {
   const result = schema.safeParse(req.body);
-  
+
   if (!result.success) {
     const firstError = result.error.issues[0];
     const fieldName = firstError.path[0];

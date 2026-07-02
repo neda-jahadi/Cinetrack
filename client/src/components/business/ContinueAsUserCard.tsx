@@ -1,8 +1,8 @@
-import { useNavigate } from "react-router";
-import { useLogout } from "../../features/auth/authQueries";
-import Container from "../ui/Container";
-import ButtonLink from "../ui/ButtonLink";
-import { Button } from "../ui/Button";
+import { useNavigate } from 'react-router';
+import { useLogout } from '../../features/auth/authQueries';
+import Container from '../ui/Container';
+import ButtonLink from '../ui/ButtonLink';
+import { Button } from '../ui/Button';
 
 const ContinueAsUserCard = ({ name }: { name: string }) => {
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ const ContinueAsUserCard = ({ name }: { name: string }) => {
   const handleAnotherAccount = (type?: string) => {
     logoutMutation.mutate(undefined, {
       onSuccess: () => {
-        const url = type ? `/business/${type}` : "";
+        const url = type ? `/business/${type}` : '';
         navigate(url);
       },
     });
@@ -51,7 +51,7 @@ const ContinueAsUserCard = ({ name }: { name: string }) => {
         <Button
           variant="default"
           className="flex flex-col"
-          onClick={() => handleAnotherAccount("signup")}
+          onClick={() => handleAnotherAccount('signup')}
         >
           Create a new business account
           <span className=" mt-2 block">

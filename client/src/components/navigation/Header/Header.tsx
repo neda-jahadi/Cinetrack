@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom";
-import siteLogo from "../../../assets/images/siteLogo.svg";
-import NavBar from "../NavBar/NavBar";
-import Container from "../../ui/Container";
-import { useAuth } from "../../../context/AuthContext";
-import { navItems } from "../../../config/nav.config";
+import { Link } from 'react-router-dom';
+import siteLogo from '../../../assets/images/siteLogo.svg';
+import NavBar from '../NavBar/NavBar';
+import Container from '../../ui/Container';
+import { useAuth } from '../../../context/AuthContext';
+import { navItems } from '../../../config/nav.config';
 
 const Header = () => {
   const { isAuthenticated, user } = useAuth();

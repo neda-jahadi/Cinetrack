@@ -1,6 +1,6 @@
-import { Outlet } from "react-router-dom";
-import Header from "../components/navigation/Header/Header";
-import { ToastContainer } from "react-toastify";
+import { Outlet } from 'react-router-dom';
+import Header from '../components/navigation/Header/Header';
+import { ToastContainer } from 'react-toastify';
 
 const RootLayout = () => {
   return (

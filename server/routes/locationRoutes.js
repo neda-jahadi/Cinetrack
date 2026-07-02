@@ -1,5 +1,8 @@
-import express from 'express';
-import { getAllMunicipalities, getAllRegions } from '../controllers/locationControllers.js';
+import express from "express";
+import {
+  getAllMunicipalities,
+  getAllRegions,
+} from "../controllers/locationControllers.js";
 
 const router = express.Router();
 

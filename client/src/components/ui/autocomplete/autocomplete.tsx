@@ -1,5 +1,5 @@
-import * as React from "react";
-import { cn } from "@/lib/utils";
+import * as React from 'react';
+import { cn } from '@/lib/utils';
 import {
   Command,
   CommandEmpty,
@@ -7,7 +7,7 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/ui/command";
+} from '@/components/ui/command';
 
 export type Option = {
   value: string;
@@ -25,16 +25,16 @@ type AutocompleteProps = {
 export function Autocomplete({
   options,
   value,
-  placeholder = "Search...",
+  placeholder = 'Search...',
   className,
   onChange,
 }: AutocompleteProps) {
   const [isOpen, setIsOpen] = React.useState(false);
-  const [inputValue, setInputValue] = React.useState("");
+  const [inputValue, setInputValue] = React.useState('');
 
   React.useEffect(() => {
     const selectedOption = options.find((opt) => opt.value === value);
-    setInputValue(selectedOption ? selectedOption.label : "");
+    setInputValue(selectedOption ? selectedOption.label : '');
   }, [value, options]);
 
   const filteredOptions = React.useMemo(() => {
@@ -56,7 +56,7 @@ export function Autocomplete({
 
   return (
     <div
-      className={cn("relative w-full", className)}
+      className={cn('relative w-full', className)}
       onBlur={(e) => {
         if (!e.currentTarget.contains(e.relatedTarget as Node)) {
           setIsOpen(false);
@@ -65,8 +65,8 @@ export function Autocomplete({
     >
       <Command
         className={cn(
-          "rounded border overflow-visible",
-          "focus-within:ring-brand focus-within:border-brand",
+          'rounded border overflow-visible',
+          'focus-within:ring-brand focus-within:border-brand',
         )}
         shouldFilter={false}
       >
@@ -76,14 +76,14 @@ export function Autocomplete({
           onValueChange={(val) => {
             setInputValue(val);
             setIsOpen(true);
-            if (val === "") onChange(""); // Instantly reset filter state if they clear field
+            if (val === '') onChange(''); // Instantly reset filter state if they clear field
           }}
           onFocus={() => setIsOpen(inputValue.trim().length > 0)}
         />
         <CommandList
           className={cn(
-            "absolute top-full left-0 z-50 mt-1 w-full rounded border bg-popover shadow-md",
-            shouldShowList ? "block" : "hidden",
+            'absolute top-full left-0 z-50 mt-1 w-full rounded border bg-popover shadow-md',
+            shouldShowList ? 'block' : 'hidden',
           )}
         >
           {filteredOptions.length === 0 ? (

@@ -1,6 +1,6 @@
-import { createContext, useContext, type ReactNode } from "react";
-import { useMe } from "../features/auth/authQueries";
-import type { AuthCompany, AuthUser, UserRole } from "../types/authtypes";
+import { createContext, useContext, type ReactNode } from 'react';
+import { useMe } from '../features/auth/authQueries';
+import type { AuthCompany, AuthUser, UserRole } from '../types/authtypes';
 
 type AuthContextType = {
   user: AuthUser | null;
@@ -33,10 +33,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         isLoading,
         isAuthenticated: !!user && !isError,
         role: user?.role,
-        isAdmin: user?.role === "ADMIN",
-        isCompany: user?.role === "COMPANY",
+        isAdmin: user?.role === 'ADMIN',
+        isCompany: user?.role === 'COMPANY',
         isApprovedCompany:
-          user?.role === "COMPANY" && company?.status === "APPROVED",
+          user?.role === 'COMPANY' && company?.status === 'APPROVED',
       }}
     >
       {children}
@@ -48,7 +48,7 @@ export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
 
   if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error('useAuth must be used within an AuthProvider');
   }
 
   return context;

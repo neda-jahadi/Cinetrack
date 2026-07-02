@@ -1,19 +1,19 @@
-import { useNavigate } from "react-router-dom";
-import { useAddJob } from "../../features/jobs/jobData";
-import { useId } from "react";
-import { useForm, type SubmitHandler } from "react-hook-form";
-import { jobSchema, type JobFormFields } from "../../validation/job";
-import { zodResolver } from "@hookform/resolvers/zod";
-import FormField from "../ui/FormField";
+import { useNavigate } from 'react-router-dom';
+import { useAddJob } from '../../features/jobs/jobData';
+import { useId } from 'react';
+import { useForm, type SubmitHandler } from 'react-hook-form';
+import { jobSchema, type JobFormFields } from '../../validation/job';
+import { zodResolver } from '@hookform/resolvers/zod';
+import FormField from '../ui/FormField';
 import {
   JOB_TYPES,
   JOB_TYPES_LABELS,
   WORK_MODE,
   WORK_MODE_LABELS,
-} from "../../constants/job";
-import Input from "../ui/Input";
-import type { MunicipalityApiResponse } from "@/types/locationTypes";
-import { Button } from "../ui/Button";
+} from '../../constants/job';
+import Input from '../ui/Input';
+import type { MunicipalityApiResponse } from '@/types/locationTypes';
+import { Button } from '../ui/Button';
 
 type JobFormProps = {
   municipalities: MunicipalityApiResponse[];
@@ -46,12 +46,12 @@ const JobForm = ({ municipalities }: JobFormProps) => {
 
     addJobMutation.mutate(payload, {
       onSuccess: () => {
-        navigate("/jobs");
+        navigate('/jobs');
       },
       onError: (error: any) => {
-        setError("root", {
-          type: "server",
-          message: error.message || "Failed to create job",
+        setError('root', {
+          type: 'server',
+          message: error.message || 'Failed to create job',
         });
       },
     });
@@ -64,18 +64,18 @@ const JobForm = ({ municipalities }: JobFormProps) => {
     <div>
       <form onSubmit={handleSubmit(onSubmitJobForm)} noValidate>
         <p role="alert" className="text-danger text-sm min-h-1.5 mb-4">
-          {errors.root?.message ?? ""}
+          {errors.root?.message ?? ''}
         </p>
 
         <div className="mb-4">
           <FormField id="type" label="Job Type" required>
             <select
-              {...register("type")}
+              {...register('type')}
               id="type"
               required
               aria-invalid={!!errors.type}
-              aria-describedby={errors.type ? errId("type") : undefined}
-              className={`border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand ${errors.type && "border-danger focus:ring-danger"}`}
+              aria-describedby={errors.type ? errId('type') : undefined}
+              className={`border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand ${errors.type && 'border-danger focus:ring-danger'}`}
             >
               <option value="">Select job type</option>
               {JOB_TYPES.map((type) => (
@@ -86,7 +86,7 @@ const JobForm = ({ municipalities }: JobFormProps) => {
             </select>
             {errors.type && (
               <p
-                id={errId("type")}
+                id={errId('type')}
                 aria-live="polite"
                 aria-hidden="false"
                 className="text-danger"
@@ -99,12 +99,12 @@ const JobForm = ({ municipalities }: JobFormProps) => {
         <div className="mb-4">
           <FormField id="workMode" label="Work Mode" required>
             <select
-              {...register("workMode")}
+              {...register('workMode')}
               id="workMode"
               required
               aria-invalid={!!errors.workMode}
-              aria-describedby={errors.workMode ? errId("workMode") : undefined}
-              className={`border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand ${errors.workMode && "border-danger focus:ring-danger"}`}
+              aria-describedby={errors.workMode ? errId('workMode') : undefined}
+              className={`border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand ${errors.workMode && 'border-danger focus:ring-danger'}`}
             >
               <option value="">Select work mode</option>
               {WORK_MODE.map((mode) => (
@@ -115,7 +115,7 @@ const JobForm = ({ municipalities }: JobFormProps) => {
             </select>
             {errors.workMode && (
               <p
-                id={errId("workMode")}
+                id={errId('workMode')}
                 aria-live="polite"
                 aria-hidden="false"
                 className="text-danger"
@@ -129,16 +129,16 @@ const JobForm = ({ municipalities }: JobFormProps) => {
         <div className="mb-4">
           <FormField id="title" label="Job Listing Name" required>
             <Input
-              {...register("title")}
+              {...register('title')}
               id="title"
               required
               invalid={!!errors.title}
-              aria-describedby={errors.title ? errId("title") : undefined}
+              aria-describedby={errors.title ? errId('title') : undefined}
               placeholder="e.g. Senior Frontend Developer"
             />
             {errors.title && (
               <p
-                id={errId("title")}
+                id={errId('title')}
                 aria-live="polite"
                 aria-hidden="false"
                 className="text-danger"
@@ -151,20 +151,20 @@ const JobForm = ({ municipalities }: JobFormProps) => {
         <div className="mb-4">
           <FormField id="description" label="Description" required>
             <textarea
-              {...register("description")}
+              {...register('description')}
               id="description"
               required
               aria-invalid={!!errors.description}
               aria-describedby={
-                errors.description ? errId("description") : undefined
+                errors.description ? errId('description') : undefined
               }
-              className={`border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand ${errors.description && "border-danger focus:ring-danger"}`}
+              className={`border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand ${errors.description && 'border-danger focus:ring-danger'}`}
               rows={4}
               placeholder="Add any job duties, expectations, requirements, etc"
             ></textarea>
             {errors.description && (
               <p
-                id={errId("description")}
+                id={errId('description')}
                 aria-live="polite"
                 aria-hidden="false"
                 className="text-danger"
@@ -178,18 +178,18 @@ const JobForm = ({ municipalities }: JobFormProps) => {
         <div className="mb-4">
           <FormField id="salary" label="Salary" required>
             <textarea
-              {...register("salary")}
+              {...register('salary')}
               id="salary"
               required
               aria-invalid={!!errors.salary}
-              aria-describedby={errors.salary ? errId("salary") : undefined}
-              className={`border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand ${errors.salary && "border-danger focus:ring-danger"}`}
+              aria-describedby={errors.salary ? errId('salary') : undefined}
+              className={`border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand ${errors.salary && 'border-danger focus:ring-danger'}`}
               rows={4}
               placeholder="Add expected salary for the job"
             ></textarea>
             {errors.salary && (
               <p
-                id={errId("salary")}
+                id={errId('salary')}
                 aria-live="polite"
                 aria-hidden="false"
                 className="text-danger"
@@ -203,14 +203,14 @@ const JobForm = ({ municipalities }: JobFormProps) => {
         <div className="mb-4">
           <FormField id="municipalityId" label="Municipality" required>
             <select
-              {...register("municipalityId")}
+              {...register('municipalityId')}
               id="municipalityId"
               required
               aria-invalid={!!errors.municipalityId}
               aria-describedby={
-                errors.municipalityId ? errId("municipalityId") : undefined
+                errors.municipalityId ? errId('municipalityId') : undefined
               }
-              className={`border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand ${errors.municipalityId && "border-danger focus:ring-danger"}`}
+              className={`border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand ${errors.municipalityId && 'border-danger focus:ring-danger'}`}
             >
               <option value="">Select Municipality</option>
               {municipalities.map((municipality) => (
@@ -221,7 +221,7 @@ const JobForm = ({ municipalities }: JobFormProps) => {
             </select>
             {errors.municipalityId && (
               <p
-                id={errId("municipalityId")}
+                id={errId('municipalityId')}
                 aria-live="polite"
                 aria-hidden="false"
                 className="text-danger"
@@ -234,7 +234,7 @@ const JobForm = ({ municipalities }: JobFormProps) => {
 
         <div>
           <Button disabled={isSubmitting} className="w-full" type="submit">
-            {isSaving ? "Saving ..." : "Add Job"}
+            {isSaving ? 'Saving ...' : 'Add Job'}
           </Button>
           {errors.root && <p className="text-danger">{errors.root.message}</p>}
         </div>

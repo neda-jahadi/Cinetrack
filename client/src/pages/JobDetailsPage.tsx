@@ -1,16 +1,16 @@
-import { Link, useParams } from "react-router-dom";
-import Container from "../components/ui/Container";
-import { FaArrowLeftLong } from "react-icons/fa6";
-import Card from "../components/ui/Card";
-import { FaMapMarker } from "react-icons/fa";
-import ButtonLink from "../components/ui/ButtonLink";
-import { useDeleteJob, useJob } from "../features/jobs/jobData";
-import NotFound from "../components/sections/Job/NotFound";
-import Spinner from "../components/ui/Spinner";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import { JOB_TYPES_LABELS, WORK_MODE_LABELS } from "@/constants/job";
-import { Button } from "@/components/ui/button";
+import { Link, useParams } from 'react-router-dom';
+import Container from '../components/ui/Container';
+import { FaArrowLeftLong } from 'react-icons/fa6';
+import Card from '../components/ui/Card';
+import { FaMapMarker } from 'react-icons/fa';
+import ButtonLink from '../components/ui/ButtonLink';
+import { useDeleteJob, useJob } from '../features/jobs/jobData';
+import NotFound from '../components/sections/Job/NotFound';
+import Spinner from '../components/ui/Spinner';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { JOB_TYPES_LABELS, WORK_MODE_LABELS } from '@/constants/job';
+import { Button } from '@/components/ui/button';
 
 const JobDetailsPage = () => {
   const { isApprovedCompany, user } = useAuth();
@@ -38,11 +38,11 @@ const JobDetailsPage = () => {
   }
 
   const handleDeleteSingleJob = () => {
-    const ok = window.confirm("Are you sure you want to delete this job?");
+    const ok = window.confirm('Are you sure you want to delete this job?');
     if (!ok) return;
     deleteJobMutation.mutate(id, {
       onSuccess: () => {
-        navigate("/jobs");
+        navigate('/jobs');
       },
     });
   };
@@ -72,7 +72,7 @@ const JobDetailsPage = () => {
             <article>
               <Card className="bg-white text-center md:text-left">
                 <div className="text-gray-500 mb-4">
-                  {JOB_TYPES_LABELS[job.type]} -{" "}
+                  {JOB_TYPES_LABELS[job.type]} -{' '}
                   {WORK_MODE_LABELS[job.workMode]}
                 </div>
                 <h1 className="text-3xl font-bold mb-4">{job.title}</h1>
@@ -141,7 +141,7 @@ const JobDetailsPage = () => {
                     disabled={deleteJobMutation.isPending}
                     onClick={() => handleDeleteSingleJob()}
                   >
-                    {deleteJobMutation.isPending ? "Deleting ..." : "Delete"}
+                    {deleteJobMutation.isPending ? 'Deleting ...' : 'Delete'}
                   </Button>
                   <div></div>
                   {deleteJobMutation.isError && (

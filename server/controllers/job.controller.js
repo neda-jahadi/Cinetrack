@@ -2,13 +2,12 @@ import { JobType, WorkMode } from "@prisma/client";
 import { prisma } from "../configs/prisma.js";
 import { toArray } from "../helpers/helpers.js";
 
-
 export const getJobs = async (req, res) => {
   try {
     const { title, location } = req.query;
     const types = toArray(req.query.type);
     const modes = toArray(req.query.mode);
-    console.log('re query is', req.query);
+    console.log("re query is", req.query);
     const rawPage = Number(req.query.page) || 1;
     const rawLimit = Number(req.query.limit) || 9;
     const sortKey = req.query.sort || "recent";
@@ -39,11 +38,11 @@ export const getJobs = async (req, res) => {
         locationWhere = { municipalityId: Number(id) };
       } else {
         return res.status(400).json({
-          success: false, message: "Invalid location type",
+          success: false,
+          message: "Invalid location type",
         });
       }
     }
-    
 
     const where = {
       ...(title && {
@@ -151,16 +150,19 @@ export const createSingleJob = async (req, res) => {
   try {
     const company = req.company;
 
-    const { title, type, description, salary, workMode, municipalityId } = req.body;
+    const { title, type, description, salary, workMode, municipalityId } =
+      req.body;
 
     const municipality = await prisma.municipality.findUnique({
       where: {
-        id: municipalityId
-      }
-    })
+        id: municipalityId,
+      },
+    });
 
     if (!municipality) {
-      return res.status(400).json({ success: "false", message: "Invalid municipality"})
+      return res
+        .status(400)
+        .json({ success: "false", message: "Invalid municipality" });
     }
 
     const job = await prisma.job.create({
@@ -172,13 +174,13 @@ export const createSingleJob = async (req, res) => {
         companyId: company.id,
         workMode,
         regionId: Number(municipality.regionId),
-        municipalityId: Number(municipalityId)
-      }, 
+        municipalityId: Number(municipalityId),
+      },
       include: {
         company: true,
         region: true,
-        municipality: true
-      }
+        municipality: true,
+      },
     });
 
     return res.status(201).json({
@@ -187,11 +189,11 @@ export const createSingleJob = async (req, res) => {
       data: job,
     });
   } catch (error) {
-      console.error("Create job error:", error);
-      return res.status(500).json({
-        success: false,
-        message: "Failed to create job",
-      });
+    console.error("Create job error:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to create job",
+    });
   }
 };
 
@@ -210,22 +212,26 @@ export const updateSingleJob = async (req, res) => {
       });
     }
 
-    if (existingJob.companyId !== req.company.id ) {
+    if (existingJob.companyId !== req.company.id) {
       return res.status(403).json({
-        success: false, message: "you are not allowed to updet this job"
-      })
+        success: false,
+        message: "you are not allowed to updet this job",
+      });
     }
 
-    const { title, type, description, salary, workMode, municipalityId } = req.body;
+    const { title, type, description, salary, workMode, municipalityId } =
+      req.body;
 
     const municipality = await prisma.municipality.findUnique({
       where: {
-        id: municipalityId
-      }
-    })
+        id: municipalityId,
+      },
+    });
 
     if (!municipality) {
-      return res.status(400).json({ success: "false", message: "Invalid municipality"})
+      return res
+        .status(400)
+        .json({ success: "false", message: "Invalid municipality" });
     }
 
     const updatedJob = await prisma.job.update({
@@ -237,13 +243,13 @@ export const updateSingleJob = async (req, res) => {
         salary,
         workMode,
         regionId: Number(municipality.regionId),
-        municipalityId: Number(municipalityId)
-      }, 
+        municipalityId: Number(municipalityId),
+      },
       include: {
         company: true,
         municipality: true,
-        region: true
-      }
+        region: true,
+      },
     });
 
     return res.status(200).json({

@@ -1,27 +1,27 @@
-import * as React from "react";
-import { Check, ChevronsUpDown } from "lucide-react";
+import * as React from 'react';
+import { Check, ChevronsUpDown } from 'lucide-react';
 
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 import {
   Command,
   CommandGroup,
   CommandInput,
   CommandItem,
-} from "@/components/ui/command";
+} from '@/components/ui/command';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
-import { ScrollArea } from "./scroll-area";
+} from '@/components/ui/popover';
+import { ScrollArea } from './scroll-area';
 
 export type ComboboxOptions = {
   value: string;
   label: string;
 };
 
-type Mode = "single" | "multiple";
+type Mode = 'single' | 'multiple';
 
 interface ComboboxProps {
   mode?: Mode;
@@ -41,18 +41,18 @@ export function Combobox({
   placeholder,
   searchable = false,
   searchplaceholder,
-  mode = "single",
+  mode = 'single',
   onChange,
 }: ComboboxProps) {
   const [open, setOpen] = React.useState(false);
-  const [query, setQuery] = React.useState<string>("");
+  const [query, setQuery] = React.useState<string>('');
 
   return (
-    <div className={cn("block", className)}>
+    <div className={cn('block', className)}>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
-            key={"combobox-trigger"}
+            key={'combobox-trigger'}
             type="button"
             variant="outline"
             role="combobox"
@@ -62,14 +62,14 @@ export function Combobox({
             {selected && selected.length > 0 ? (
               <div className="relative mr-auto flex flex-grow flex-wrap items-center overflow-hidden">
                 <span>
-                  {mode === "multiple" && Array.isArray(selected)
-                    ? selected.length + " options selected"
-                    : mode === "single" &&
+                  {mode === 'multiple' && Array.isArray(selected)
+                    ? selected.length + ' options selected'
+                    : mode === 'single' &&
                       options.find((item) => item.value === selected)?.label}
                 </span>
               </div>
             ) : (
-              (placeholder ?? "Select Item...")
+              (placeholder ?? 'Select Item...')
             )}
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
@@ -84,7 +84,7 @@ export function Combobox({
           >
             {searchable && (
               <CommandInput
-                placeholder={searchplaceholder ?? "Search..."}
+                placeholder={searchplaceholder ?? 'Search...'}
                 value={query}
                 onValueChange={(value: string) => setQuery(value)}
               />
@@ -98,7 +98,7 @@ export function Combobox({
                       value={option.label}
                       onSelect={() => {
                         if (onChange) {
-                          if (mode === "multiple" && Array.isArray(selected)) {
+                          if (mode === 'multiple' && Array.isArray(selected)) {
                             onChange(
                               selected.includes(option.value)
                                 ? selected.filter(
@@ -108,7 +108,7 @@ export function Combobox({
                             );
                           } else {
                             onChange(
-                              selected === option.value ? "" : option.value,
+                              selected === option.value ? '' : option.value,
                             );
                           }
                         }
@@ -116,14 +116,14 @@ export function Combobox({
                     >
                       <Check
                         className={cn(
-                          "mr-2 h-4 w-4",
-                          mode === "multiple" && Array.isArray(selected)
+                          'mr-2 h-4 w-4',
+                          mode === 'multiple' && Array.isArray(selected)
                             ? selected.includes(option.value)
-                              ? "opacity-100"
-                              : "opacity-0"
+                              ? 'opacity-100'
+                              : 'opacity-0'
                             : selected === option.value
-                              ? "opacity-100"
-                              : "opacity-0",
+                              ? 'opacity-100'
+                              : 'opacity-0',
                         )}
                       />
                       {option.label}

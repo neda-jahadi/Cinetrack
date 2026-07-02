@@ -1,4 +1,4 @@
-import express from 'express';
+import express from "express";
 import dotenv from "dotenv";
 import path from "path";
 import cors from "cors";
@@ -36,10 +36,10 @@ app.use(
 
 app.use("/api/auth", AuthRoutes);
 app.use("/api/jobs", JobRoutes);
-app.use("/api/watchlist", watchlistRoutes)
-app.use("/api/movies", movieRoutes)
-app.use("/api/companies", companyRoutes)
-app.use("/api/locations", locationRoutes)
+app.use("/api/watchlist", watchlistRoutes);
+app.use("/api/movies", movieRoutes);
+app.use("/api/companies", companyRoutes);
+app.use("/api/locations", locationRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

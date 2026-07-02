@@ -1,45 +1,45 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getMe, login, logout, register } from "./authApi";
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { getMe, login, logout, register } from './authApi';
 
 export const useMe = () => {
   const getMeQuery = useQuery({
-    queryKey: ["me"],
+    queryKey: ['me'],
     queryFn: getMe,
-    retry: false
+    retry: false,
   });
   return getMeQuery;
 };
 
 export const useLogin = () => {
-    const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
-    return useMutation({
-        mutationFn: login,
-        onSuccess: () => {
-            queryClient.invalidateQueries( { queryKey: ["me"]})
-        }
-    })
-}
+  return useMutation({
+    mutationFn: login,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['me'] });
+    },
+  });
+};
 
 export const useRegister = () => {
-    const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
-    return useMutation({
-        mutationFn: register,
-        onSuccess: () => {
-            queryClient.invalidateQueries( { queryKey: ["me"]})
-        }
-    })
-}
+  return useMutation({
+    mutationFn: register,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['me'] });
+    },
+  });
+};
 
 export const useLogout = () => {
-    const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
-    return useMutation({
-        mutationFn: logout,
-        onSuccess: () => {
-            queryClient.setQueryData(["me"], null);
-            queryClient.invalidateQueries( { queryKey: ["me"]})
-        }
-    })
-}
+  return useMutation({
+    mutationFn: logout,
+    onSuccess: () => {
+      queryClient.setQueryData(['me'], null);
+      queryClient.invalidateQueries({ queryKey: ['me'] });
+    },
+  });
+};

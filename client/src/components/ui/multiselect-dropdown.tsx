@@ -1,12 +1,12 @@
-import { ChevronDown } from "lucide-react"; // Senior change: Single chevron is standard for dropdowns
+import { ChevronDown } from 'lucide-react'; // Senior change: Single chevron is standard for dropdowns
 
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox"; // Clean checkbox components
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox'; // Clean checkbox components
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
+} from '@/components/ui/popover';
 
 type Option = {
   label: string;
@@ -48,7 +48,7 @@ export function MultiSelectDropDown({
         >
           <span>
             {selected.length === 0
-              ? "Select ..."
+              ? 'Select ...'
               : `${selected.length} selected`}
           </span>
           <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />

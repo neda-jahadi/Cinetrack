@@ -2,12 +2,11 @@ import { z } from "zod";
 
 const addToWatchlistSchema = z.object({
   movieId: z.coerce.number().int(),
-  status: z
-    .enum(["PLANNED", "WATCHING", "COMPLETED", "DROPPED"], {
-      error: () => ({
-        message: "Status must be one of: PLANNED, WATCHING, COMPLETED, DROPPED",
-      }),
+  status: z.enum(["PLANNED", "WATCHING", "COMPLETED", "DROPPED"], {
+    error: () => ({
+      message: "Status must be one of: PLANNED, WATCHING, COMPLETED, DROPPED",
     }),
+  }),
   rating: z.coerce
     .number()
     .int("Rating must be an integer")
@@ -17,12 +16,11 @@ const addToWatchlistSchema = z.object({
 });
 
 const updateWatchlistSchema = z.object({
-  status: z
-    .enum(["PLANNED", "WATCHING", "COMPLETED", "DROPPED"], {
-      error: () => ({
-        message: "Status must be one of: PLANNED, WATCHING, COMPLETED, DROPPED",
-      }),
+  status: z.enum(["PLANNED", "WATCHING", "COMPLETED", "DROPPED"], {
+    error: () => ({
+      message: "Status must be one of: PLANNED, WATCHING, COMPLETED, DROPPED",
     }),
+  }),
   rating: z.coerce
     .number()
     .int("Rating must be an integer")

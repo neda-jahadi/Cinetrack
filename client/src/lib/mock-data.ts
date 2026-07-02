@@ -2,13 +2,13 @@ export type User = {
   id: string;
   name: string;
   email: string;
-  role: "admin" | "user" | "manager";
-  status: "active" | "inactive";
+  role: 'admin' | 'user' | 'manager';
+  status: 'active' | 'inactive';
   createdAt: string;
 };
 
-const roles = ["admin", "user", "manager"] as const;
-const statuses = ["active", "inactive"] as const;
+const roles = ['admin', 'user', 'manager'] as const;
+const statuses = ['active', 'inactive'] as const;
 
 export const generateUsers = (count: number): User[] => {
   return Array.from({ length: count }, (_, i) => {
@@ -21,7 +21,7 @@ export const generateUsers = (count: number): User[] => {
       role: roles[Math.floor(Math.random() * roles.length)],
       status: statuses[Math.floor(Math.random() * statuses.length)],
       createdAt: new Date(
-        Date.now() - Math.random() * 10000000000
+        Date.now() - Math.random() * 10000000000,
       ).toISOString(),
     };
   });

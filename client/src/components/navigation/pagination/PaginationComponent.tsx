@@ -6,8 +6,8 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination";
-import type { PaginationType } from "@/types/jobTypes";
+} from '@/components/ui/pagination';
+import type { PaginationType } from '@/types/jobTypes';
 
 type PaginationComponentProps = {
   pagination?: PaginationType;
@@ -29,7 +29,7 @@ const PaginationComponent = ({
   };
 
   // Build page range: show first, last, neighbors and ellipses
-  const pages: (number | "ellipsis")[] = [];
+  const pages: (number | 'ellipsis')[] = [];
 
   if (totalPages <= 7) {
     for (let i = 1; i <= totalPages; i++) pages.push(i);
@@ -39,11 +39,11 @@ const PaginationComponent = ({
     const left = Math.max(2, currentPage - 1);
     const right = Math.min(totalPages - 1, currentPage + 1);
 
-    if (left > 2) pages.push("ellipsis");
+    if (left > 2) pages.push('ellipsis');
 
     for (let i = left; i <= right; i++) pages.push(i);
 
-    if (right < totalPages - 1) pages.push("ellipsis");
+    if (right < totalPages - 1) pages.push('ellipsis');
 
     pages.push(totalPages);
   }
@@ -63,7 +63,7 @@ const PaginationComponent = ({
         </PaginationItem>
 
         {pages.map((p, idx) =>
-          p === "ellipsis" ? (
+          p === 'ellipsis' ? (
             <PaginationItem key={`ell-${idx}`}>
               <PaginationEllipsis />
             </PaginationItem>

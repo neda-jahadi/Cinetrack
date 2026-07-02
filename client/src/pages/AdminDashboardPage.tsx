@@ -1,4 +1,4 @@
-import { MoreHorizontalIcon } from "lucide-react";
+import { MoreHorizontalIcon } from 'lucide-react';
 
 import {
   DropdownMenu,
@@ -6,7 +6,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
 import {
   Table,
   TableBody,
@@ -14,12 +14,12 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { useAllCompanies } from "@/features/company/companyQuery";
-import Spinner from "@/components/ui/Spinner";
-import NotFound from "@/components/sections/Job/NotFound";
-import type { Company } from "@/types/companyTypes";
-import { Button } from "@/components/ui/Button";
+} from '@/components/ui/table';
+import { useAllCompanies } from '@/features/company/companyQuery';
+import Spinner from '@/components/ui/Spinner';
+import NotFound from '@/components/sections/Job/NotFound';
+import type { Company } from '@/types/companyTypes';
+import { Button } from '@/components/ui/Button';
 
 export function AdminDashboardPage() {
   const { data: companies, isLoading, isError } = useAllCompanies();
@@ -53,17 +53,17 @@ export function AdminDashboardPage() {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                  {company.status === "PENDING" && (
+                  {company.status === 'PENDING' && (
                     <>
                       <DropdownMenuItem>Approve</DropdownMenuItem>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem>Reject</DropdownMenuItem>
                     </>
                   )}
-                  {company.status === "APPROVED" && (
+                  {company.status === 'APPROVED' && (
                     <DropdownMenuItem>Revoke Approval</DropdownMenuItem>
                   )}
-                  {company.status === "REJECTED" && (
+                  {company.status === 'REJECTED' && (
                     <DropdownMenuItem>Approved</DropdownMenuItem>
                   )}
                 </DropdownMenuContent>

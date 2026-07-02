@@ -1,12 +1,12 @@
-import { useForm, type SubmitHandler } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useId } from "react";
-import { useNavigate } from "react-router-dom";
-import { useLogin } from "../../features/auth/authQueries";
-import FormField from "../ui/FormField";
-import Input from "../ui/Input";
-import { loginSchema, type LoginFormFields } from "../../validation/login";
-import { Button } from "../ui/Button";
+import { useForm, type SubmitHandler } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useId } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useLogin } from '../../features/auth/authQueries';
+import FormField from '../ui/FormField';
+import Input from '../ui/Input';
+import { loginSchema, type LoginFormFields } from '../../validation/login';
+import { Button } from '../ui/Button';
 
 type LoginFormProps = {
   onSuccessRedirect: string;
@@ -38,9 +38,9 @@ const LoginForm = ({ onSuccessRedirect }: LoginFormProps) => {
       },
       onError: (error: any) => {
         console.log(error.message);
-        setError("root", {
-          type: "server",
-          message: error.message || "Failed to log in ",
+        setError('root', {
+          type: 'server',
+          message: error.message || 'Failed to log in ',
         });
       },
     });
@@ -54,16 +54,16 @@ const LoginForm = ({ onSuccessRedirect }: LoginFormProps) => {
         <div className="mb-4">
           <FormField id="email" label="Email" required>
             <Input
-              {...register("email")}
+              {...register('email')}
               id="email"
               required
               invalid={!!errors.email}
-              aria-describedby={errors.email ? errId("email") : undefined}
+              aria-describedby={errors.email ? errId('email') : undefined}
               placeholder="test@email.com"
             />
             {errors.email && (
               <p
-                id={errId("email")}
+                id={errId('email')}
                 aria-live="polite"
                 aria-hidden="false"
                 className="text-danger"
@@ -77,17 +77,17 @@ const LoginForm = ({ onSuccessRedirect }: LoginFormProps) => {
         <div className="mb-4">
           <FormField id="password" label="Password" required>
             <Input
-              {...register("password")}
+              {...register('password')}
               id="password"
               required
               type="password"
               invalid={!!errors.password}
-              aria-describedby={errors.password ? errId("password") : undefined}
+              aria-describedby={errors.password ? errId('password') : undefined}
               placeholder="8 charachters"
             />
             {errors.password && (
               <p
-                id={errId("password")}
+                id={errId('password')}
                 aria-live="polite"
                 aria-hidden="false"
                 className="text-danger"

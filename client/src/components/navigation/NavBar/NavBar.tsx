@@ -1,9 +1,9 @@
-import { NavLink } from "react-router-dom";
-import { cn } from "../../../lib/cn";
-import { useTheme } from "../../../context/ThemeContext";
-import { CiLight } from "react-icons/ci";
-import { MdDarkMode } from "react-icons/md";
-import { Button } from "@/components/ui/button";
+import { NavLink } from 'react-router-dom';
+import { cn } from '../../../lib/cn';
+import { useTheme } from '../../../context/ThemeContext';
+import { CiLight } from 'react-icons/ci';
+import { MdDarkMode } from 'react-icons/md';
+import { Button } from '@/components/ui/button';
 
 type NavItem = {
   label: string;
@@ -21,9 +21,9 @@ const NavBar = ({ items }: { items: NavItem[] }) => {
             to={navItem.to}
             className={({ isActive }) =>
               cn(
-                "rounded-md px-3 py-2 text-sm font-medium transition",
-                "text-white hover:bg-gray-900",
-                isActive && "bg-black",
+                'rounded-md px-3 py-2 text-sm font-medium transition',
+                'text-white hover:bg-gray-900',
+                isActive && 'bg-black',
               )
             }
           >

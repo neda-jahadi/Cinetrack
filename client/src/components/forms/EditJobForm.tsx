@@ -1,20 +1,20 @@
-import { useEffect, useId } from "react";
-import { useForm, type SubmitHandler } from "react-hook-form";
-import FormField from "../ui/FormField";
+import { useEffect, useId } from 'react';
+import { useForm, type SubmitHandler } from 'react-hook-form';
+import FormField from '../ui/FormField';
 import {
   JOB_TYPES,
   JOB_TYPES_LABELS,
   WORK_MODE,
   WORK_MODE_LABELS,
-} from "@/constants/job";
-import Input from "../ui/Input";
-import { jobSchema, type JobFormFields } from "@/validation/job";
-import { useNavigate } from "react-router-dom";
-import { useEditJob } from "@/features/jobs/jobData";
-import { zodResolver } from "@hookform/resolvers/zod";
-import type { SingleJob } from "@/types/jobTypes";
-import type { MunicipalityApiResponse } from "@/types/locationTypes";
-import { Button } from "../ui/Button";
+} from '@/constants/job';
+import Input from '../ui/Input';
+import { jobSchema, type JobFormFields } from '@/validation/job';
+import { useNavigate } from 'react-router-dom';
+import { useEditJob } from '@/features/jobs/jobData';
+import { zodResolver } from '@hookform/resolvers/zod';
+import type { SingleJob } from '@/types/jobTypes';
+import type { MunicipalityApiResponse } from '@/types/locationTypes';
+import { Button } from '../ui/Button';
 
 type EditJobProps = {
   job: SingleJob | undefined;
@@ -36,14 +36,14 @@ const EditJobForm = ({ job, municipalities, id }: EditJobProps) => {
   } = useForm<JobFormFields>({
     resolver: zodResolver(jobSchema),
     defaultValues: {
-      type: "Full_Time",
-      title: "",
-      description: "",
-      salary: "",
-      workMode: "ONSITE",
-      municipalityId: "",
+      type: 'Full_Time',
+      title: '',
+      description: '',
+      salary: '',
+      workMode: 'ONSITE',
+      municipalityId: '',
     },
-    mode: "onBlur",
+    mode: 'onBlur',
   });
 
   useEffect(() => {
@@ -51,12 +51,12 @@ const EditJobForm = ({ job, municipalities, id }: EditJobProps) => {
 
     reset(
       {
-        type: job.type ?? "",
-        workMode: job.workMode ?? "",
-        title: job.title ?? "",
-        description: job.description ?? "",
-        salary: job.salary ?? "",
-        municipalityId: String(job.municipalityId) ?? "",
+        type: job.type ?? '',
+        workMode: job.workMode ?? '',
+        title: job.title ?? '',
+        description: job.description ?? '',
+        salary: job.salary ?? '',
+        municipalityId: String(job.municipalityId) ?? '',
       },
       {
         keepDirtyValues: true,
@@ -84,9 +84,9 @@ const EditJobForm = ({ job, municipalities, id }: EditJobProps) => {
         navigate(`/jobs/${id}`);
       },
       onError: (error: any) => {
-        setError("root", {
-          type: "server",
-          message: error.message || "Failed to edit the job",
+        setError('root', {
+          type: 'server',
+          message: error.message || 'Failed to edit the job',
         });
       },
     });
@@ -105,18 +105,18 @@ const EditJobForm = ({ job, municipalities, id }: EditJobProps) => {
                 Edit the Job
               </h2>
               <p role="alert" className="text-danger text-sm min-h-1.5 mb-4">
-                {errors.root?.message ?? ""}
+                {errors.root?.message ?? ''}
               </p>
 
               <div className="mb-4">
                 <FormField id="type" label="Job Type" required>
                   <select
-                    {...register("type")}
+                    {...register('type')}
                     id="type"
                     required
                     aria-invalid={!!errors.type}
-                    aria-describedby={errors.type ? errId("type") : undefined}
-                    className={`border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand ${errors.type && "border-danger focus:ring-danger"}`}
+                    aria-describedby={errors.type ? errId('type') : undefined}
+                    className={`border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand ${errors.type && 'border-danger focus:ring-danger'}`}
                   >
                     <option value="">Select job type</option>
                     {JOB_TYPES.map((type) => (
@@ -127,7 +127,7 @@ const EditJobForm = ({ job, municipalities, id }: EditJobProps) => {
                   </select>
                   {errors.type && (
                     <p
-                      id={errId("type")}
+                      id={errId('type')}
                       aria-live="polite"
                       aria-hidden="false"
                       className="text-danger"
@@ -141,14 +141,14 @@ const EditJobForm = ({ job, municipalities, id }: EditJobProps) => {
               <div className="mb-4">
                 <FormField id="workMode" label="Work Mode" required>
                   <select
-                    {...register("workMode")}
+                    {...register('workMode')}
                     id="workMode"
                     required
                     aria-invalid={!!errors.workMode}
                     aria-describedby={
-                      errors.workMode ? errId("workMode") : undefined
+                      errors.workMode ? errId('workMode') : undefined
                     }
-                    className={`border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand ${errors.workMode && "border-danger focus:ring-danger"}`}
+                    className={`border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand ${errors.workMode && 'border-danger focus:ring-danger'}`}
                   >
                     <option value="">Select work mode</option>
                     {WORK_MODE.map((mode) => (
@@ -159,7 +159,7 @@ const EditJobForm = ({ job, municipalities, id }: EditJobProps) => {
                   </select>
                   {errors.workMode && (
                     <p
-                      id={errId("workMode")}
+                      id={errId('workMode')}
                       aria-live="polite"
                       aria-hidden="false"
                       className="text-danger"
@@ -173,16 +173,16 @@ const EditJobForm = ({ job, municipalities, id }: EditJobProps) => {
               <div className="mb-4">
                 <FormField id="title" label="Job Listing Name" required>
                   <Input
-                    {...register("title")}
+                    {...register('title')}
                     id="title"
                     required
                     invalid={!!errors.title}
-                    aria-describedby={errors.title ? errId("title") : undefined}
+                    aria-describedby={errors.title ? errId('title') : undefined}
                     placeholder="e.g. Senior Frontend Developer"
                   />
                   {errors.title && (
                     <p
-                      id={errId("title")}
+                      id={errId('title')}
                       aria-live="polite"
                       aria-hidden="false"
                       className="text-danger"
@@ -195,20 +195,20 @@ const EditJobForm = ({ job, municipalities, id }: EditJobProps) => {
               <div className="mb-4">
                 <FormField id="description" label="Description" required>
                   <textarea
-                    {...register("description")}
+                    {...register('description')}
                     id="description"
                     required
                     aria-invalid={!!errors.description}
                     aria-describedby={
-                      errors.description ? errId("description") : undefined
+                      errors.description ? errId('description') : undefined
                     }
-                    className={`border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand ${errors.description && "border-danger focus:ring-danger"}`}
+                    className={`border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand ${errors.description && 'border-danger focus:ring-danger'}`}
                     rows={4}
                     placeholder="Add any job duties, expectations, requirements, etc"
                   ></textarea>
                   {errors.description && (
                     <p
-                      id={errId("description")}
+                      id={errId('description')}
                       aria-live="polite"
                       aria-hidden="false"
                       className="text-danger"
@@ -222,20 +222,20 @@ const EditJobForm = ({ job, municipalities, id }: EditJobProps) => {
               <div className="mb-4">
                 <FormField id="salary" label="Salary" required>
                   <textarea
-                    {...register("salary")}
+                    {...register('salary')}
                     id="salary"
                     required
                     aria-invalid={!!errors.salary}
                     aria-describedby={
-                      errors.salary ? errId("salary") : undefined
+                      errors.salary ? errId('salary') : undefined
                     }
-                    className={`border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand ${errors.salary && "border-danger focus:ring-danger"}`}
+                    className={`border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand ${errors.salary && 'border-danger focus:ring-danger'}`}
                     rows={4}
                     placeholder="Add expected salary for the job"
                   ></textarea>
                   {errors.salary && (
                     <p
-                      id={errId("salary")}
+                      id={errId('salary')}
                       aria-live="polite"
                       aria-hidden="false"
                       className="text-danger"
@@ -249,16 +249,16 @@ const EditJobForm = ({ job, municipalities, id }: EditJobProps) => {
               <div className="mb-4">
                 <FormField id="municipalityId" label="Municipality" required>
                   <select
-                    {...register("municipalityId")}
+                    {...register('municipalityId')}
                     id="municipalityId"
                     required
                     aria-invalid={!!errors.municipalityId}
                     aria-describedby={
                       errors.municipalityId
-                        ? errId("municipalityId")
+                        ? errId('municipalityId')
                         : undefined
                     }
-                    className={`border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand ${errors.municipalityId && "border-danger focus:ring-danger"}`}
+                    className={`border rounded w-full py-2 px-3 focus:outline-none focus:ring-2 focus:ring-brand ${errors.municipalityId && 'border-danger focus:ring-danger'}`}
                   >
                     <option value="">Select Municipality</option>
                     {municipalities.map((municipality) => (
@@ -269,7 +269,7 @@ const EditJobForm = ({ job, municipalities, id }: EditJobProps) => {
                   </select>
                   {errors.municipalityId && (
                     <p
-                      id={errId("municipalityId")}
+                      id={errId('municipalityId')}
                       aria-live="polite"
                       aria-hidden="false"
                       className="text-danger"
@@ -286,7 +286,7 @@ const EditJobForm = ({ job, municipalities, id }: EditJobProps) => {
                   className="w-full"
                   type="submit"
                 >
-                  {isSaving ? "Saving ..." : "Edit Job"}
+                  {isSaving ? 'Saving ...' : 'Edit Job'}
                 </Button>
                 {errors.root && (
                   <p className="text-danger">{errors.root.message}</p>

@@ -1,10 +1,10 @@
-import { Navigate } from "react-router-dom";
-import RegisterCompanyForm from "../components/forms/RegisterCompanyForm";
-import Container from "../components/ui/Container";
-import { useAuth } from "../context/AuthContext";
-import Spinner from "@/components/ui/Spinner";
-import NotFound from "@/components/sections/Job/NotFound";
-import { useMunicipalities } from "@/features/locations/locationQuery";
+import { Navigate } from 'react-router-dom';
+import RegisterCompanyForm from '../components/forms/RegisterCompanyForm';
+import Container from '../components/ui/Container';
+import { useAuth } from '../context/AuthContext';
+import Spinner from '@/components/ui/Spinner';
+import NotFound from '@/components/sections/Job/NotFound';
+import { useMunicipalities } from '@/features/locations/locationQuery';
 
 const RegisterCompanyPage = () => {
   const { company, isApprovedCompany } = useAuth();
@@ -17,7 +17,7 @@ const RegisterCompanyPage = () => {
     return <Navigate to="/profile" replace />;
   }
 
-  if (company && company.status !== "APPROVED") {
+  if (company && company.status !== 'APPROVED') {
     return <Navigate to="/business" replace />;
   }
 

@@ -1,37 +1,37 @@
 export const navItems = [
   {
-    label: "Home",
-    to: "/",
+    label: 'Home',
+    to: '/',
   },
   {
-    label: "Careers",
-    to: "/jobs",
+    label: 'Careers',
+    to: '/jobs',
   },
   {
-    label: "Add Job",
-    to: "/Jobs/add-job",
+    label: 'Add Job',
+    to: '/Jobs/add-job',
     requiresAuth: true,
-    roles: ["COMPANY"]
+    roles: ['COMPANY'],
   },
   {
-    label: "Admin Dashboard",
-    to: "/admin-dashboard",
+    label: 'Admin Dashboard',
+    to: '/admin-dashboard',
     requiresAuth: true,
-    roles: ["ADMIN"],
+    roles: ['ADMIN'],
   },
   {
-    label: "Profile",
-    to: "/profile",
+    label: 'Profile',
+    to: '/profile',
     requiresAuth: true,
   },
   {
-    label: "Login",
-    to: "/login",
+    label: 'Login',
+    to: '/login',
     onlyGuest: true,
   },
   {
-    label: "Create Business Account",
-    to: "/business",
-    hideForRoles: ["COMPANY"]
-  }
+    label: 'Create Business Account',
+    to: '/business',
+    hideForRoles: ['COMPANY'],
+  },
 ];

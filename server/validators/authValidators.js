@@ -7,11 +7,7 @@ export const registerSchema = z.object({
     .min(2, "Name must be at least 2 characters")
     .max(50, "Name must be max 50 characters"),
 
-  email: z
-    .string()
-    .trim()
-    .email("Invalid email address")
-    .toLowerCase(),
+  email: z.string().trim().email("Invalid email address").toLowerCase(),
 
   password: z
     .string()
@@ -20,13 +16,7 @@ export const registerSchema = z.object({
 });
 
 export const loginSchema = z.object({
-  email: z
-    .string()
-    .trim()
-    .email("Invalid email address")
-    .toLowerCase(),
+  email: z.string().trim().email("Invalid email address").toLowerCase(),
 
-  password: z
-    .string()
-    .min(1, "Password is required"),
+  password: z.string().min(1, "Password is required"),
 });

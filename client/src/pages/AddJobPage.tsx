@@ -1,7 +1,7 @@
-import { useMunicipalities } from "@/features/locations/locationQuery";
-import JobForm from "../components/forms/JobForm";
-import Spinner from "@/components/ui/Spinner";
-import NotFound from "@/components/sections/Job/NotFound";
+import { useMunicipalities } from '@/features/locations/locationQuery';
+import JobForm from '../components/forms/JobForm';
+import Spinner from '@/components/ui/Spinner';
+import NotFound from '@/components/sections/Job/NotFound';
 
 const AddJobPage = () => {
   const { data: municipalities, isLoading, isError } = useMunicipalities();
