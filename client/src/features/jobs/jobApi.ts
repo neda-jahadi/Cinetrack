@@ -1,5 +1,5 @@
 import { api } from "../../lib/api";
-import type { CreateJobInput, Job, PaginationType, SingleJob } from "../../types/jobTypes";
+import type { CreateJobInput, Job, JobParams, PaginationType, SingleJob } from "../../types/jobTypes";
 
 type ApiResponse<T> = {
   success: boolean;
@@ -15,14 +15,6 @@ type UpdateJobInput = {
 type ApiDeleteResponse = {
   success: boolean;
   message: string;
-}
-
-type JobParams = {
-    limit?: number;
-    page?: number;
-    title?: string;
-    types?: string[];
-    modes?: string[];
 }
 
 type JobsApiResponse<T> = {
@@ -65,16 +57,16 @@ export const deleteJob = async (id: string): Promise<boolean> => {
 
 // Get all jobs
 export const fetchJobs = async (params?: JobParams) => {
-  const qs = new URLSearchParams();
-  if (params?.limit) qs.set("limit", String(params.limit));
-  if (params?.page) qs.set("page", String(params.page));
-  if (params?.title) qs.set("title", params.title);
-    params?.types?.forEach((type) => qs.append("type", type));
-  params?.modes?.forEach((mode) => qs.append("mode", mode));
-
-  const url = qs.toString() ? `/api/jobs?${qs}` : "/api/jobs";
   try {
-    const res = await api.get<JobsApiResponse<SingleJob[]>>(url);
+    const res = await api.get<JobsApiResponse<SingleJob[]>>("/api/jobs", { params: {
+      page: params?.page,
+      limit: params?.limit,
+      title: params?.title,
+      region: params?.region,
+      type: params?.types,
+      mode: params?.modes,
+      location: params?.location
+    } });
     return {
       data: res.data.data,
       pagination: res.data.pagination,

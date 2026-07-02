@@ -19,3 +19,20 @@ export const getAllMunicipalities = async (reg, res) => {
         });
     }
 }
+
+export const getAllRegions = async (reg, res) => {
+    try {
+        const regions = await prisma.region.findMany({
+            orderBy: {
+                name: "asc"
+            }
+        })
+
+        return res.status(200).json({ success: true, data: regions, message: "Got all regions successfully"})
+    } catch(error) {
+        return res.status(500).json({
+            success: false,
+            message: "Failed to get regions",
+        });
+    }
+}

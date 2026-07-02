@@ -26,7 +26,7 @@ export const JOB_TYPES_LABELS = {
 } as const;
 
 export const WORK_MODE_LABELS = {
-  ONSITE: "On-site",
+  ONSITE: "On Site",
   HYBRID: "Hybrid",
   REMOTE: "Remote",
 } as const;

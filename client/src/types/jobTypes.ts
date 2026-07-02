@@ -43,3 +43,13 @@ export type CreateJobInput = {
   workMode: WorkMode;
   municipalityId: number;
 };
+
+export type JobParams = {
+    limit?: number;
+    page?: number;
+    title?: string;
+    types?: string[];
+    modes?: string[];
+    region?: string;
+    location?: string;
+}

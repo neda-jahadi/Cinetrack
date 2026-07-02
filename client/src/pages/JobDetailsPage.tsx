@@ -3,7 +3,6 @@ import Container from "../components/ui/Container";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import Card from "../components/ui/Card";
 import { FaMapMarker } from "react-icons/fa";
-import { Button } from "../components/ui/Button";
 import ButtonLink from "../components/ui/ButtonLink";
 import { useDeleteJob, useJob } from "../features/jobs/jobData";
 import NotFound from "../components/sections/Job/NotFound";
@@ -11,6 +10,7 @@ import Spinner from "../components/ui/Spinner";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { JOB_TYPES_LABELS, WORK_MODE_LABELS } from "@/constants/job";
+import { Button } from "@/components/ui/button";
 
 const JobDetailsPage = () => {
   const { isApprovedCompany, user } = useAuth();
@@ -76,7 +76,7 @@ const JobDetailsPage = () => {
                   {WORK_MODE_LABELS[job.workMode]}
                 </div>
                 <h1 className="text-3xl font-bold mb-4">{job.title}</h1>
-                <p className="text-accent mt-5 mb-3 pt-2 border-t border-border inline-flex items-center">
+                <p className="text-danger mt-5 mb-3 pt-2 border-t border-border inline-flex items-center">
                   <FaMapMarker aria-hidden="true" className="mr-2 h-4 w-4" />
                   <span className="sr-only">Location</span>
                   {job.region.name} - {job.municipality.name}

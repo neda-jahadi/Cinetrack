@@ -5,8 +5,22 @@ import Spinner from "../components/ui/Spinner";
 import { useJobs } from "../features/jobs/jobData";
 import NotFound from "@/components/sections/Job/NotFound";
 import PaginationComponent from "@/components/navigation/pagination/PaginationComponent";
-import SearchField from "@/components/navigation/searchBar/SearchField";
-import FilterField from "@/components/navigation/searchBar/FilterFields";
+import {
+  useMunicipalities,
+  useRegions,
+} from "@/features/locations/locationQuery";
+import { MultiSelectDropDown } from "@/components/ui/multiselect-dropdown";
+import {
+  JOB_TYPES,
+  JOB_TYPES_LABELS,
+  WORK_MODE,
+  WORK_MODE_LABELS,
+} from "@/constants/job";
+import { Autocomplete } from "@/components/ui/autocomplete/autocomplete";
+import SearchJobTitle from "@/components/sections/Job/SearchJobTitle";
+import { Button } from "@/components/ui/button";
+import FormField from "@/components/ui/FormField";
+
 const BrowseJobsPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -14,32 +28,56 @@ const BrowseJobsPage = () => {
   const title = searchParams.get("title") || "";
   const types = searchParams.getAll("type");
   const modes = searchParams.getAll("mode");
-  // console.log("Search Params:", { page, title, types, modes });
+  const region = searchParams.get("region") || "";
+  const location = searchParams.get("location") || "";
 
-  const { data, isLoading, isError } = useJobs({ page, types, modes, title });
+  const { data, isLoading, isError } = useJobs({
+    page,
+    types,
+    modes,
+    title,
+    region,
+    location,
+  });
+  const { data: regionsData, isLoading: regionsLoading } = useRegions();
+  const { data: municipalitiesData, isLoading: municipalitiesLoading } =
+    useMunicipalities();
+
   const jobs = data ? data.data : [];
   const pagination = data?.pagination;
+  const regions = regionsData ? regionsData : [];
+  const municipalities = municipalitiesData ? municipalitiesData : [];
 
-  const handleChangePage = (newPage: number) => {
+  const locationOptions = [
+    ...regions.map((region) => ({
+      value: `region-${region.id}`,
+      label: region.name,
+    })),
+
+    ...municipalities.map((municipality) => ({
+      value: `municipality-${municipality.id}`,
+      label: `${municipality.name} (${municipality.region.name})`,
+    })),
+  ];
+
+  const handleChangePage = (key: string, newPage: number) => {
     const params = new URLSearchParams(searchParams);
-    params.set("page", String(newPage));
+    params.set(key, String(newPage));
     setSearchParams(params);
   };
 
-  const toggleParamValue = (key: string, value: string) => {
+  const setMultiParamValue = (key: string, values: string[]) => {
     const params = new URLSearchParams(searchParams);
-    const currentValues = params.getAll(key);
+
     params.delete(key);
 
-    const newValues = currentValues.includes(value)
-      ? currentValues.filter((v) => v !== value)
-      : [...currentValues, value];
-    newValues.forEach((v) => params.append(key, v));
+    values.forEach((value) => params.append(key, value));
+
     params.set("page", "1");
     setSearchParams(params);
   };
 
-  const setParamValue = (key: string, value: string) => {
+  const setSingleParamValue = (key: string, value: string) => {
     const params = new URLSearchParams(searchParams);
     if (value.trim()) {
       params.set(key, value);
@@ -55,17 +93,56 @@ const BrowseJobsPage = () => {
       <section>
         <Container>
           <h1 className="text-3xl font-bold mb-7 text-center">Browse Jobs</h1>
-          <SearchField
-            title={title}
-            handleUpdateSearchParams={(key, value) => setParamValue(key, value)}
-          />
-          <FilterField
-            types={types}
-            modes={modes}
-            handleUpdateSearchParams={(key, value) =>
-              toggleParamValue(key, value)
-            }
-          />
+          <div className="flex sm:flex-col md:flex-col lg:flex-row gap-2 mb-4">
+            <SearchJobTitle
+              title={title}
+              handleUpdateSearchParams={(value) =>
+                setSingleParamValue("title", value)
+              }
+            />
+            <Autocomplete
+              options={locationOptions}
+              value={location}
+              placeholder="Location..."
+              onChange={(value) => setSingleParamValue("location", value)}
+            />
+          </div>
+          <div className="flex gap-2">
+            <div>
+              <label id="work-mode-filter" className="block">
+                Select Work Mode
+              </label>
+              <MultiSelectDropDown
+                id="work-mode-filter"
+                placeholder="Select Work mode"
+                options={WORK_MODE.map((type) => ({
+                  label: WORK_MODE_LABELS[type],
+                  value: type,
+                }))}
+                selected={modes}
+                onSelectChange={(values) =>
+                  setMultiParamValue("mode", values as string[])
+                }
+              />
+            </div>
+            <div>
+              <label id="job-type-filter" className="block">
+                Select Job type
+              </label>
+              <MultiSelectDropDown
+                id="job-type-filter"
+                placeholder="Select Job Type"
+                options={JOB_TYPES.map((type) => ({
+                  label: JOB_TYPES_LABELS[type],
+                  value: type,
+                }))}
+                selected={types}
+                onSelectChange={(values) =>
+                  setMultiParamValue("type", values as string[])
+                }
+              />
+            </div>
+          </div>
         </Container>
       </section>
       <section className="px-4 py-12">
@@ -81,7 +158,7 @@ const BrowseJobsPage = () => {
           <Container>
             <PaginationComponent
               pagination={pagination}
-              onPageChange={handleChangePage}
+              onPageChange={(value) => handleChangePage("page", value)}
             />
           </Container>
         </section>

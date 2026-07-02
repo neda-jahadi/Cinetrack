@@ -5,9 +5,10 @@ import { toArray } from "../helpers/helpers.js";
 
 export const getJobs = async (req, res) => {
   try {
-    const { title } = req.query;
+    const { title, location } = req.query;
     const types = toArray(req.query.type);
     const modes = toArray(req.query.mode);
+    console.log('re query is', req.query);
     const rawPage = Number(req.query.page) || 1;
     const rawLimit = Number(req.query.limit) || 9;
     const sortKey = req.query.sort || "recent";
@@ -27,6 +28,23 @@ export const getJobs = async (req, res) => {
       });
     }
 
+    let locationWhere = {};
+
+    if (location) {
+      const [type, id] = location.split("-");
+
+      if (type === "region") {
+        locationWhere = { regionId: Number(id) };
+      } else if (type === "municipality") {
+        locationWhere = { municipalityId: Number(id) };
+      } else {
+        return res.status(400).json({
+          success: false, message: "Invalid location type",
+        });
+      }
+    }
+    
+
     const where = {
       ...(title && {
         title: {
@@ -34,6 +52,7 @@ export const getJobs = async (req, res) => {
           mode: "insensitive",
         },
       }),
+      ...locationWhere,
 
       ...(types.length > 0 && {
         type: {

@@ -1,5 +1,5 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import type { SingleJob } from "../../types/jobTypes";
+import type { JobParams, SingleJob } from "../../types/jobTypes";
 import { toast } from 'react-toastify';
 import { deleteJob, editJob, fetchJobs, postJob } from "./jobApi";
 
@@ -10,13 +10,6 @@ type ApiResponse<T> = {
 };
 
 
-type JobParams = {
-    limit?: number;
-    page?: number;
-    title?: string;
-    types?: string[];
-    modes?: string[];
-}
 
 // ✅ One place for keys
 const jobKeys = {
