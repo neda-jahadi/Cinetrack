@@ -3,7 +3,7 @@ import RegisterCompanyForm from '../features/company/forms/RegisterCompanyForm';
 import Container from '../components/layouts/Container';
 import { useAuth } from '../context/useAuth';
 import Spinner from '@/components/ui/Spinner';
-import NotFound from '@/components/layouts/NotFound';
+import NotFound from '@/pages/NotFound';
 import { useMunicipalities } from '@/features/locations/api/locationQuery';
 
 const RegisterCompanyPage = () => {

@@ -1,5 +1,5 @@
 import { FaExclamationTriangle } from 'react-icons/fa';
-import ButtonLink from '../ui/ButtonLink';
+import ButtonLink from '../components/ui/ButtonLink';
 
 const NotFound = () => {
   return (

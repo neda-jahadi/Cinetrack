@@ -17,7 +17,7 @@ import {
 } from '@/components/ui/table';
 import { useAllCompanies } from '@/features/company/api/companyQuery';
 import Spinner from '@/components/ui/Spinner';
-import NotFound from '@/components/layouts/NotFound';
+import NotFound from '@/pages/NotFound';
 import type { Company } from '@/features/company/types/companyTypes';
 import { Button } from '@/components/ui/button/button';
 

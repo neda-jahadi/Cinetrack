@@ -1,4 +1,4 @@
-import Hero from '../components/layouts/Hero';
+import Hero from '../components/sections/Hero';
 import CtaCard from '../features/home/components/CtaCard';
 import JobPreview from '@/features/jobs/components/JobPreview';
 import Container from '../components/layouts/Container';

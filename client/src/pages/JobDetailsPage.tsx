@@ -5,7 +5,7 @@ import Card from '../components/ui/Card';
 import { FaMapMarker } from 'react-icons/fa';
 import ButtonLink from '../components/ui/ButtonLink';
 import { useDeleteJob, useJob } from '../features/jobs/api/jobData';
-import NotFound from '../components/layouts/NotFound';
+import NotFound from './NotFound';
 import Spinner from '../components/ui/Spinner';
 import { useNavigate } from 'react-router-dom';
 import {

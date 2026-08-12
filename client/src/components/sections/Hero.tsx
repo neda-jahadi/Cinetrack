@@ -1,4 +1,4 @@
-import Container from './Container';
+import Container from '../layouts/Container';
 type HeroProps = {
   title: string;
   subtitle?: string;

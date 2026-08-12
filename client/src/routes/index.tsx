@@ -12,7 +12,7 @@ import { AdminDashboardPage } from '@/pages/AdminDashboardPage';
 import RequireAdmin from './RequireAdmin';
 const HomePage = lazy(() => import('../pages/HomePage'));
 const JobDetailsPage = lazy(() => import('../pages/JobDetailsPage'));
-const NotFound = lazy(() => import('../components/layouts/NotFound'));
+const NotFound = lazy(() => import('../pages/NotFound'));
 const EditJobPage = lazy(() => import('../pages/EditJobPage'));
 const AddJobPage = lazy(() => import('../pages/AddJobPage'));
 const LoginPage = lazy(() => import('../pages/LoginPage'));
