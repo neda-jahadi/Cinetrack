@@ -1,23 +1,23 @@
 import { useSearchParams } from 'react-router-dom';
-import JobPreview from '../components/sections/Job/JobPreview';
-import Container from '../components/ui/Container';
+import JobPreview from '@/features/jobs/components/JobPreview';
+import Container from '../components/layouts/Container';
 import Spinner from '../components/ui/Spinner';
-import { useJobs } from '../features/jobs/jobData';
-import NotFound from '@/components/sections/Job/NotFound';
-import PaginationComponent from '@/components/navigation/pagination/PaginationComponent';
+import { useJobs } from '../features/jobs/api/jobData';
+import NotFound from '@/components/layouts/NotFound';
+import PaginationComponent from '@/components/navigation/AppPagination';
 import {
   useMunicipalities,
   useRegions,
-} from '@/features/locations/locationQuery';
+} from '@/features/locations/api/locationQuery';
 import { MultiSelectDropDown } from '@/components/ui/multiselect-dropdown';
 import {
   JOB_TYPES,
   JOB_TYPES_LABELS,
   WORK_MODE,
   WORK_MODE_LABELS,
-} from '@/constants/job';
+} from '@/features/jobs/constants/job';
 import { Autocomplete } from '@/components/ui/autocomplete/autocomplete';
-import SearchJobTitle from '@/components/sections/Job/SearchJobTitle';
+import SearchJobTitle from '@/features/jobs/components/SearchJobTitle';
 import { useCallback } from 'react';
 
 const BrowseJobsPage = () => {

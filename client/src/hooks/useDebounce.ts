@@ -1,15 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 
-export default function useDebounce<T>(value: T, delay: number) {
-  const [debounced, setDebounced] = useState(value);
+export const useDebounce = (value: string, delay = 800) => {
+  const [debouncedValue, setDebouncedValue] = useState(value);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebounced(value);
+    const id = setTimeout(() => {
+      setDebouncedValue(value);
     }, delay);
 
-    return () => clearTimeout(timer);
+    return () => clearTimeout(id);
   }, [value, delay]);
 
-  return debounced;
-}
+  return debouncedValue;
+};
+
+// Wait until user stops typing for X ms, then update

@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import Container from '../components/ui/Container';
+import Container from '../components/layouts/Container';
 import Spinner from '../components/ui/Spinner';
-import { useLogout } from '../features/auth/authQueries';
+import { useLogout } from '@/features/auth/api/authQueries';
 import ButtonLink from '@/components/ui/ButtonLink';
 import { Button } from '@/components/ui/button/button';
 import { useAuth } from '../context/useAuth';

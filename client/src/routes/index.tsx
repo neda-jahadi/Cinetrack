@@ -1,5 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
-import RootLayout from '../layout/RootLayout';
+import RootLayout from '../components/layouts/RootLayout';
 import { lazy } from 'react';
 import BrowseJobsPage from '../pages/BrowseJobsPage';
 import ProfilePage from '../pages/ProfilePage';
@@ -12,7 +12,7 @@ import { AdminDashboardPage } from '@/pages/AdminDashboardPage';
 import RequireAdmin from './RequireAdmin';
 const HomePage = lazy(() => import('../pages/HomePage'));
 const JobDetailsPage = lazy(() => import('../pages/JobDetailsPage'));
-const NotFound = lazy(() => import('../components/sections/Job/NotFound'));
+const NotFound = lazy(() => import('../components/layouts/NotFound'));
 const EditJobPage = lazy(() => import('../pages/EditJobPage'));
 const AddJobPage = lazy(() => import('../pages/AddJobPage'));
 const LoginPage = lazy(() => import('../pages/LoginPage'));

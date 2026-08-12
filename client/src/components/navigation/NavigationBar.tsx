@@ -1,0 +1,43 @@
+import { NavLink } from 'react-router-dom';
+import { cn } from '../../lib/utils';
+import { useTheme } from '../../context/useTheme';
+import { CiLight } from 'react-icons/ci';
+import { MdDarkMode } from 'react-icons/md';
+import { Button } from '../ui/button/button';
+
+type NavItem = {
+  label: string;
+  to: string;
+};
+
+const NavigationBar = ({ items }: { items: NavItem[] }) => {
+  const { isInDarkMode, toggleTheme } = useTheme();
+
+  return (
+    <ul className="flex items-center gap-2">
+      {items.map((navItem) => (
+        <li key={navItem.label}>
+          <NavLink
+            to={navItem.to}
+            className={({ isActive }) =>
+              cn(
+                'rounded-md px-3 py-2 text-sm font-medium transition',
+                'text-white hover:bg-gray-900',
+                isActive && 'bg-black',
+              )
+            }
+          >
+            {navItem.label}
+          </NavLink>
+        </li>
+      ))}
+      <li>
+        <Button onClick={() => toggleTheme()}>
+          {isInDarkMode ? <CiLight /> : <MdDarkMode />}
+        </Button>
+      </li>
+    </ul>
+  );
+};
+
+export default NavigationBar;

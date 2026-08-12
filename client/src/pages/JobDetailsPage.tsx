@@ -1,14 +1,17 @@
 import { Link, useParams } from 'react-router-dom';
-import Container from '../components/ui/Container';
+import Container from '../components/layouts/Container';
 import { FaArrowLeftLong } from 'react-icons/fa6';
 import Card from '../components/ui/Card';
 import { FaMapMarker } from 'react-icons/fa';
 import ButtonLink from '../components/ui/ButtonLink';
-import { useDeleteJob, useJob } from '../features/jobs/jobData';
-import NotFound from '../components/sections/Job/NotFound';
+import { useDeleteJob, useJob } from '../features/jobs/api/jobData';
+import NotFound from '../components/layouts/NotFound';
 import Spinner from '../components/ui/Spinner';
 import { useNavigate } from 'react-router-dom';
-import { JOB_TYPES_LABELS, WORK_MODE_LABELS } from '@/constants/job';
+import {
+  JOB_TYPES_LABELS,
+  WORK_MODE_LABELS,
+} from '@/features/jobs/constants/job';
 import { Button } from '@/components/ui/button/button';
 import { useAuth } from '../context/useAuth';
 

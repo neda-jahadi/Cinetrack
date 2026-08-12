@@ -1,16 +1,14 @@
-import Hero from '../components/sections/Hero';
-import CtaCard from '../components/sections/HomeCTAs/CtaCard';
-import JobPreview from '../components/sections/Job/JobPreview';
-import Container from '../components/ui/Container';
+import Hero from '../components/layouts/Hero';
+import CtaCard from '../features/home/components/CtaCard';
+import JobPreview from '@/features/jobs/components/JobPreview';
+import Container from '../components/layouts/Container';
 import ButtonLink from '../components/ui/ButtonLink';
-import { useJobs } from '../features/jobs/jobData';
+import { useJobs } from '../features/jobs/api/jobData';
 import Spinner from '../components/ui/Spinner';
-import { JOB_SORT } from '../features/jobs/constants';
 
 const HomePage = () => {
   const { data, isLoading, isError } = useJobs({
     limit: 3,
-    sort: JOB_SORT.RECENT,
   });
   const jobs = data?.data ?? [];
 

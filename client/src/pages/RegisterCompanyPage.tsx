@@ -1,10 +1,10 @@
 import { Navigate } from 'react-router-dom';
-import RegisterCompanyForm from '../components/forms/RegisterCompanyForm';
-import Container from '../components/ui/Container';
+import RegisterCompanyForm from '../features/company/forms/RegisterCompanyForm';
+import Container from '../components/layouts/Container';
 import { useAuth } from '../context/useAuth';
 import Spinner from '@/components/ui/Spinner';
-import NotFound from '@/components/sections/Job/NotFound';
-import { useMunicipalities } from '@/features/locations/locationQuery';
+import NotFound from '@/components/layouts/NotFound';
+import { useMunicipalities } from '@/features/locations/api/locationQuery';
 
 const RegisterCompanyPage = () => {
   const { company, isApprovedCompany } = useAuth();

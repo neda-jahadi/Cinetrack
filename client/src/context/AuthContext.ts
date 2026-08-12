@@ -1,5 +1,9 @@
 import { createContext } from 'react';
-import type { AuthCompany, AuthUser, UserRole } from '../types/authtypes';
+import type {
+  AuthCompany,
+  AuthUser,
+  UserRole,
+} from '../features/auth/types/authtypes';
 
 export type AuthContextType = {
   user: AuthUser | null;

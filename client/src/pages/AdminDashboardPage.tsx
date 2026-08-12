@@ -15,10 +15,10 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { useAllCompanies } from '@/features/company/companyQuery';
+import { useAllCompanies } from '@/features/company/api/companyQuery';
 import Spinner from '@/components/ui/Spinner';
-import NotFound from '@/components/sections/Job/NotFound';
-import type { Company } from '@/types/companyTypes';
+import NotFound from '@/components/layouts/NotFound';
+import type { Company } from '@/features/company/types/companyTypes';
 import { Button } from '@/components/ui/button/button';
 
 export function AdminDashboardPage() {

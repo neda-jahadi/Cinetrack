@@ -1,5 +1,5 @@
 import { type ReactNode } from 'react';
-import { useMe } from '../features/auth/authQueries';
+import { useMe } from '@/features/auth/api/authQueries';
 import { AuthContext } from './AuthContext';
 
 type AuthProviderProps = {

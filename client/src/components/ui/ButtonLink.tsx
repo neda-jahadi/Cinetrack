@@ -1,5 +1,5 @@
 import { Link, type LinkProps } from 'react-router-dom';
-import { cn } from '../../lib/cn';
+import { cn } from '../../lib/utils';
 
 type ButtonLinkVariant = 'primary' | 'secondary' | 'dark' | 'nude';
 

@@ -1,7 +1,7 @@
-import Hero from '../components/sections/Hero';
-import CtaCard from '../components/sections/HomeCTAs/CtaCard';
+import Hero from '../components/layouts/Hero';
+import CtaCard from '../features/home/components/CtaCard';
 import ButtonLink from '../components/ui/ButtonLink';
-import Container from '../components/ui/Container';
+import Container from '../components/layouts/Container';
 
 const HomePage = () => {
   return (
