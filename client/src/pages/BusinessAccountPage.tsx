@@ -1,11 +1,11 @@
 import { Navigate } from 'react-router-dom';
 import Container from '../components/ui/Container';
 import Spinner from '../components/ui/Spinner';
-import { useAuth } from '../context/AuthContext';
 import ButtonLink from '../components/ui/ButtonLink';
 import PendingCompanyNotice from '../components/business/PendingCompanyNotice';
 import ContinueAsUserCard from '../components/business/ContinueAsUserCard';
 import LoginForm from '../components/forms/LoginForm';
+import { useAuth } from '../context/useAuth';
 
 const BusinessAccountPage = () => {
   const {

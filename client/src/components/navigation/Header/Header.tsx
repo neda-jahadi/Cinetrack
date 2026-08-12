@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom';
 import siteLogo from '../../../assets/images/siteLogo.svg';
 import NavBar from '../NavBar/NavBar';
 import Container from '../../ui/Container';
-import { useAuth } from '../../../context/AuthContext';
 import { navItems } from '../../../config/nav.config';
+import { useAuth } from '../../../context/useAuth';
 
 const Header = () => {
   const { isAuthenticated, user } = useAuth();
@@ -28,7 +28,7 @@ const Header = () => {
   });
 
   return (
-    <header className="bg-brand border-b border-brand-500">
+    <header className="bg-primary">
       <Container className="flex h-20 items-center justify-between">
         <Link className="flex items-center mr-4" to="/">
           <img className="h-10 w-auto" src={siteLogo} alt="Sky Flow" />

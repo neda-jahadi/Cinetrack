@@ -18,8 +18,7 @@ import {
 } from '@/constants/job';
 import { Autocomplete } from '@/components/ui/autocomplete/autocomplete';
 import SearchJobTitle from '@/components/sections/Job/SearchJobTitle';
-import { Button } from '@/components/ui/button';
-import FormField from '@/components/ui/FormField';
+import { useCallback } from 'react';
 
 const BrowseJobsPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -39,9 +38,8 @@ const BrowseJobsPage = () => {
     region,
     location,
   });
-  const { data: regionsData, isLoading: regionsLoading } = useRegions();
-  const { data: municipalitiesData, isLoading: municipalitiesLoading } =
-    useMunicipalities();
+  const { data: regionsData } = useRegions();
+  const { data: municipalitiesData } = useMunicipalities();
 
   const jobs = data ? data.data : [];
   const pagination = data?.pagination;
@@ -77,28 +75,38 @@ const BrowseJobsPage = () => {
     setSearchParams(params);
   };
 
-  const setSingleParamValue = (key: string, value: string) => {
-    const params = new URLSearchParams(searchParams);
-    if (value.trim()) {
-      params.set(key, value);
-    } else {
-      params.delete(key);
-    }
-    params.set('page', '1');
-    setSearchParams(params);
-  };
+  const setSingleParamValue = useCallback(
+    (key: string, value: string) => {
+      const params = new URLSearchParams(searchParams);
+      const currentValue = searchParams.get(key) || '';
+      if (currentValue === value) return;
+      if (value.trim()) {
+        params.set(key, value);
+      } else {
+        params.delete(key);
+      }
+      params.set('page', '1');
+      setSearchParams(params);
+    },
+    [searchParams, setSearchParams],
+  );
+
+  const handleUpdateTitle = useCallback(
+    (value: string) => {
+      setSingleParamValue('title', value);
+    },
+    [setSingleParamValue],
+  );
 
   return (
     <>
       <section>
         <Container>
           <h1 className="text-3xl font-bold mb-7 text-center">Browse Jobs</h1>
-          <div className="flex sm:flex-col md:flex-col lg:flex-row gap-2 mb-4">
+          <div className="flex lg:flex-row gap-2 mb-4">
             <SearchJobTitle
               title={title}
-              handleUpdateSearchParams={(value) =>
-                setSingleParamValue('title', value)
-              }
+              handleUpdateSearchParams={handleUpdateTitle}
             />
             <Autocomplete
               options={locationOptions}
@@ -109,7 +117,7 @@ const BrowseJobsPage = () => {
           </div>
           <div className="flex gap-2">
             <div>
-              <label id="work-mode-filter" className="block">
+              <label id="work-mode-filter" className="block mb-2">
                 Select Work Mode
               </label>
               <MultiSelectDropDown
@@ -126,7 +134,7 @@ const BrowseJobsPage = () => {
               />
             </div>
             <div>
-              <label id="job-type-filter" className="block">
+              <label id="job-type-filter" className="block mb-2">
                 Select Job type
               </label>
               <MultiSelectDropDown
@@ -143,6 +151,7 @@ const BrowseJobsPage = () => {
               />
             </div>
           </div>
+          <div></div>
         </Container>
       </section>
       <section className="px-4 py-12">

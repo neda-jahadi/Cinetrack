@@ -14,7 +14,7 @@ import { useEditJob } from '@/features/jobs/jobData';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { SingleJob } from '@/types/jobTypes';
 import type { MunicipalityApiResponse } from '@/types/locationTypes';
-import { Button } from '../ui/Button';
+import { Button } from '../ui/button/button';
 
 type EditJobProps = {
   job: SingleJob | undefined;
@@ -56,13 +56,13 @@ const EditJobForm = ({ job, municipalities, id }: EditJobProps) => {
         title: job.title ?? '',
         description: job.description ?? '',
         salary: job.salary ?? '',
-        municipalityId: String(job.municipalityId) ?? '',
+        municipalityId: String(job.municipalityId ?? ''),
       },
       {
         keepDirtyValues: true,
       },
     );
-  }, [job?.id, reset]);
+  }, [job, reset]);
 
   const onSubmitJobForm: SubmitHandler<JobFormFields> = (data) => {
     const jobToEdit = {
@@ -83,10 +83,10 @@ const EditJobForm = ({ job, municipalities, id }: EditJobProps) => {
       onSuccess: () => {
         navigate(`/jobs/${id}`);
       },
-      onError: (error: any) => {
+      onError: (error: unknown) => {
         setError('root', {
           type: 'server',
-          message: error.message || 'Failed to edit the job',
+          message: (error as Error).message || 'Failed to edit the job',
         });
       },
     });

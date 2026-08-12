@@ -1,4 +1,6 @@
 import { api } from '../../lib/api';
+import axios from 'axios';
+
 import type {
   CompanyInput,
   AddCompanyResponse,
@@ -10,8 +12,13 @@ export const register = async (
   try {
     const res = await api.post('/api/companies', company);
     return res.data.data;
-  } catch (error: any) {
-    throw new Error(error.response?.data?.message || 'Company register failed');
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(
+        error.response?.data?.message || 'Company register failed',
+      );
+    }
+    throw new Error('Company register failed');
   }
 };
 
@@ -19,9 +26,12 @@ export const getAllCompanies = async () => {
   try {
     const res = await api.get('/api/companies/all');
     return res.data.data;
-  } catch (error: any) {
-    throw new Error(
-      error.response?.data?.message || 'Failed to fetch companies',
-    );
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(
+        error.response?.data?.message || 'Failed to fetch companies',
+      );
+    }
+    throw new Error('Failed to fetch companies');
   }
 };

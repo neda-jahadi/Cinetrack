@@ -1,12 +1,13 @@
 import { ChevronDown } from 'lucide-react'; // Senior change: Single chevron is standard for dropdowns
 
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox'; // Clean checkbox components
+import { Checkbox } from '@/components/ui/checkbox';
+import { Button } from '@/components/ui/button/button';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
+import { cn } from '@/lib/utils';
 
 type Option = {
   label: string;
@@ -42,35 +43,47 @@ export function MultiSelectDropDown({
     <Popover>
       <PopoverTrigger asChild>
         <Button
-          variant="outline"
-          aria-labelledby={id}
-          className="w-48 justify-between"
+          variant="field"
+          size="field"
+          aria-haspopup="listbox"
+          id={id}
+          className={cn(
+            'w-48 justify-between',
+            selected.length === 0 && 'text-muted-foreground',
+          )}
         >
           <span>
             {selected.length === 0
-              ? 'Select ...'
+              ? `${placeholder}`
               : `${selected.length} selected`}
           </span>
-          <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          <ChevronDown className="ml-2 size-4 shrink-0 text-muted-foreground" />
         </Button>
       </PopoverTrigger>
 
-      <PopoverContent className="w-48 p-3" align="start">
-        <div className="flex flex-col gap-3">
+      <PopoverContent
+        className="w-48 p-3 border-border bg-popover text-popover-foreground shadow-popover"
+        align="start"
+      >
+        <div role="listbox" aria-multiselectable="true">
           {options.map((option) => (
-            <div key={option.value} className="flex items-center space-x-2">
+            <label
+              key={option.value}
+              htmlFor={`filter-${option.value}`}
+              className={cn(
+                'flex cursor-pointer select-none items-center gap-3',
+                'rounded h-6 text-sm',
+                'hover:bg-accent hover:text-accent-foreground',
+                'focus-within:bg-accent focus-within:text-accent-foreground',
+              )}
+            >
               <Checkbox
                 id={`filter-${option.value}`}
                 checked={selected.includes(option.value)}
                 onCheckedChange={() => handleToggle(option.value)}
               />
-              <label
-                htmlFor={`filter-${option.value}`}
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer select-none w-full"
-              >
-                {option.label}
-              </label>
-            </div>
+              <span className="flex-1">{option.label}</span>
+            </label>
           ))}
         </div>
       </PopoverContent>

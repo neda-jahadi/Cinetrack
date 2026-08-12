@@ -1,0 +1,7 @@
+cd client || exit 1
+npm run lint
+npm run format:check
+
+cd ../server || exit 1
+npm run lint
+npm run format:check

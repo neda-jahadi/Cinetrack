@@ -6,7 +6,7 @@ import { useLogin } from '../../features/auth/authQueries';
 import FormField from '../ui/FormField';
 import Input from '../ui/Input';
 import { loginSchema, type LoginFormFields } from '../../validation/login';
-import { Button } from '../ui/Button';
+import { Button } from '../ui/button/button';
 
 type LoginFormProps = {
   onSuccessRedirect: string;
@@ -36,11 +36,10 @@ const LoginForm = ({ onSuccessRedirect }: LoginFormProps) => {
       onSuccess: () => {
         navigate(onSuccessRedirect);
       },
-      onError: (error: any) => {
-        console.log(error.message);
+      onError: (error: unknown) => {
         setError('root', {
           type: 'server',
-          message: error.message || 'Failed to log in ',
+          message: (error as Error).message || 'Failed to log in ',
         });
       },
     });

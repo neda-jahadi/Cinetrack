@@ -7,7 +7,7 @@ import {
 import { getAllCompanies, register } from './companyApi';
 import { toast } from 'react-toastify';
 
-export const userRegisterCompany = () => {
+export const useRegisterCompany = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: register,

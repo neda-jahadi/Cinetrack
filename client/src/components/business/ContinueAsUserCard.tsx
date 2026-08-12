@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router';
 import { useLogout } from '../../features/auth/authQueries';
 import Container from '../ui/Container';
 import ButtonLink from '../ui/ButtonLink';
-import { Button } from '../ui/Button';
+import { Button } from '../ui/button/button';
 
 const ContinueAsUserCard = ({ name }: { name: string }) => {
   const navigate = useNavigate();

@@ -1,8 +1,8 @@
 import { RouterProvider } from 'react-router-dom';
 import { router } from './routes';
-import { AuthProvider } from './context/AuthContext';
 import { Suspense } from 'react';
-import { ThemeProvider } from './context/ThemeContext';
+import { ThemeProvider } from './context/ThemeProvider';
+import { AuthProvider } from './context/AuthProvider';
 
 function App() {
   return (

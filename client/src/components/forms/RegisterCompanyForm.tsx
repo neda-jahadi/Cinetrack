@@ -8,9 +8,9 @@ import {
 import FormField from '../ui/FormField';
 import Input from '../ui/Input';
 import { useNavigate } from 'react-router';
-import { userRegisterCompany } from '../../features/company/companyQuery';
+import { useRegisterCompany } from '../../features/company/companyQuery';
 import type { MunicipalityApiResponse } from '@/types/locationTypes';
-import { Button } from '../ui/Button';
+import { Button } from '../ui/button/button';
 
 type RegisterCompanyFormProps = {
   onSuccessRedirect: string;
@@ -21,7 +21,7 @@ const RegisterCompanyForm = ({
   onSuccessRedirect,
   municipalities,
 }: RegisterCompanyFormProps) => {
-  const registerMutation = userRegisterCompany();
+  const registerMutation = useRegisterCompany();
   const formId = useId();
 
   const {
@@ -56,10 +56,10 @@ const RegisterCompanyForm = ({
       onSuccess: () => {
         navigate(onSuccessRedirect);
       },
-      onError: (error: any) => {
+      onError: (error: unknown) => {
         setError('root', {
           type: 'server',
-          message: error.message || 'Failed to Register Company ',
+          message: (error as Error).message || 'Failed to Register Company ',
         });
       },
     });

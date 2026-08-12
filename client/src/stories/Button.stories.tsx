@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { ComponentProps } from 'react';
 import { fn } from 'storybook/test';
-import Button from '../components/ui/Button';
+import { Button } from '@/components/ui/button/button';
 
 type StoryProps = ComponentProps<typeof Button>;
 

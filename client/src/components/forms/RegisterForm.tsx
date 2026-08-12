@@ -9,7 +9,7 @@ import FormField from '../ui/FormField';
 import Input from '../ui/Input';
 import { useRegister } from '../../features/auth/authQueries';
 import { useNavigate } from 'react-router';
-import { Button } from '../ui/Button';
+import { Button } from '../ui/button/button';
 
 type RegisterFormProps = {
   onSuccessRedirect: string;
@@ -46,10 +46,10 @@ const RegisterForm = ({ onSuccessRedirect }: RegisterFormProps) => {
       onSuccess: () => {
         navigate(onSuccessRedirect);
       },
-      onError: (error: any) => {
+      onError: (error: unknown) => {
         setError('root', {
           type: 'server',
-          message: error.message || 'Failed to Signup ',
+          message: (error as Error).message || 'Failed to Signup ',
         });
       },
     });

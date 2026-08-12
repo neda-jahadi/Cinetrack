@@ -1,9 +1,9 @@
 import { NavLink } from 'react-router-dom';
 import { cn } from '../../../lib/cn';
-import { useTheme } from '../../../context/ThemeContext';
+import { useTheme } from '../../../context/useTheme';
 import { CiLight } from 'react-icons/ci';
 import { MdDarkMode } from 'react-icons/md';
-import { Button } from '@/components/ui/button';
+import { Button } from '../../ui/button/button';
 
 type NavItem = {
   label: string;

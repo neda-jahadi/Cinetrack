@@ -8,9 +8,9 @@ import { useDeleteJob, useJob } from '../features/jobs/jobData';
 import NotFound from '../components/sections/Job/NotFound';
 import Spinner from '../components/ui/Spinner';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
 import { JOB_TYPES_LABELS, WORK_MODE_LABELS } from '@/constants/job';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/button/button';
+import { useAuth } from '../context/useAuth';
 
 const JobDetailsPage = () => {
   const { isApprovedCompany, user } = useAuth();

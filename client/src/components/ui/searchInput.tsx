@@ -1,33 +1,43 @@
-import { SearchIcon } from 'lucide-react';
+import { SearchIcon, X } from 'lucide-react';
 import Input from './Input';
 
 type SearchInputProps = {
-  searchValue: string;
-  handleSearch: (value: string) => void;
+  value: string;
+  handleChange: (value: string) => void;
   placeholder?: string;
-  ariaLabel?: string;
+  'aria-label'?: string;
 };
 
 const SearchInput = ({
-  searchValue,
-  handleSearch,
+  value,
+  handleChange,
   placeholder = 'Search...',
-  ariaLabel = 'Search',
+  'aria-label': ariaLabel = 'Search',
 }: SearchInputProps) => {
   return (
-    <div className="flex items-center rounded px-3 border border-input w-full focus-within:ring-2 focus-within:ring-brand focus-within:border-brand">
+    <div className="flex items-center rounded px-3 border border-input w-full focus-within:border-primary focus-within:ring-2 focus-within:ring-ring transition-colors">
       <SearchIcon
-        className="mr-2 h-4 w-4 shrink-0 opacity-50"
+        className="size-4 shrink-0 text-muted-foreground"
         aria-hidden="true"
       />
       <Input
-        type="search"
+        type="text"
         placeholder={placeholder}
         aria-label={ariaLabel}
-        value={searchValue}
+        value={value}
         variant="ghost"
-        onChange={(e) => handleSearch(e.target.value)}
+        onChange={(e) => handleChange(e.target.value)}
       />
+      {value && (
+        <button
+          type="button"
+          onClick={() => handleChange('')}
+          className="ml-2 text-gray-500 hover:text-gray-700 focus:outline-none"
+          aria-label="Clear search"
+        >
+          <X className="h-4 w-4" aria-hidden="true" />
+        </button>
+      )}
     </div>
   );
 };

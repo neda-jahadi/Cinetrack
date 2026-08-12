@@ -10,8 +10,11 @@ export const login = async (data: loginType) => {
   try {
     const res = await api.post('/api/auth/login', data);
     return res.data.data;
-  } catch (error: any) {
-    throw new Error(error.response?.data?.message || 'Login failed');
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data?.message || 'Login failed');
+    }
+    throw new Error('Login failed');
   }
 };
 
@@ -19,8 +22,11 @@ export const register = async (data: registerType) => {
   try {
     const res = await api.post('/api/auth/register', data);
     return res.data.data;
-  } catch (error: any) {
-    throw new Error(error.response?.data?.message || 'Register failed');
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data?.message || 'Register failed');
+    }
+    throw new Error('Register failed');
   }
 };
 

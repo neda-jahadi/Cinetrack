@@ -16,14 +16,14 @@ const SearchJobTitle = ({
 
   useEffect(() => {
     handleUpdateSearchParams(debaouncedSearchTitle);
-  }, [debaouncedSearchTitle]);
+  }, [debaouncedSearchTitle, handleUpdateSearchParams]);
 
   return (
     <SearchInput
-      searchValue={searchTitle}
-      handleSearch={setSearchTitle}
+      value={searchTitle}
+      handleChange={setSearchTitle}
       placeholder="Search by job title..."
-      ariaLabel="Search job titles"
+      aria-label="Search job titles"
     />
   );
 };

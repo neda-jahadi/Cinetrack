@@ -4,15 +4,9 @@ import {
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
-import type { JobParams, SingleJob } from '../../types/jobTypes';
+import type { JobParams } from '../../types/jobTypes';
 import { toast } from 'react-toastify';
-import { deleteJob, editJob, fetchJobs, postJob } from './jobApi';
-
-type ApiResponse<T> = {
-  success: boolean;
-  data: T;
-  message?: string;
-};
+import { deleteJob, editJob, fetchJobs, postJob, fetchJobById } from './jobApi';
 
 // ✅ One place for keys
 const jobKeys = {
@@ -20,17 +14,6 @@ const jobKeys = {
   list: (params: JobParams | undefined) => ['jobs', params ?? null] as const,
   detail: (id: string | undefined) => ['job', id ?? null] as const,
 };
-
-// ✅ One place for fetch + error parsing
-async function apiFetch<T>(url: string, init?: RequestInit): Promise<T> {
-  const res = await fetch(url, init);
-  const json = await res.json().catch(() => null);
-
-  if (!res.ok) {
-    throw new Error(json?.message || `Request failed (${res.status})`);
-  }
-  return json as T;
-}
 
 export function useJobs(params?: JobParams) {
   const getJobsQuery = useQuery({
@@ -42,14 +25,6 @@ export function useJobs(params?: JobParams) {
   });
   return getJobsQuery;
 }
-
-// Get single job
-const fetchJobById = async (id: string): Promise<SingleJob> => {
-  if (!id) throw new Response('Missing job id', { status: 400 });
-  const url = `/api/jobs/${id}`;
-  const json = await apiFetch<ApiResponse<SingleJob>>(url);
-  return json.data;
-};
 
 export function useJob(id?: string) {
   const getJobQuery = useQuery({

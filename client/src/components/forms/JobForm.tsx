@@ -13,7 +13,7 @@ import {
 } from '../../constants/job';
 import Input from '../ui/Input';
 import type { MunicipalityApiResponse } from '@/types/locationTypes';
-import { Button } from '../ui/Button';
+import { Button } from '../ui/button/button';
 
 type JobFormProps = {
   municipalities: MunicipalityApiResponse[];
@@ -48,10 +48,10 @@ const JobForm = ({ municipalities }: JobFormProps) => {
       onSuccess: () => {
         navigate('/jobs');
       },
-      onError: (error: any) => {
+      onError: (error: unknown) => {
         setError('root', {
           type: 'server',
-          message: error.message || 'Failed to create job',
+          message: (error as Error).message || 'Failed to create job',
         });
       },
     });

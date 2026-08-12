@@ -1,4 +1,6 @@
 import { api } from '../../lib/api';
+import axios from 'axios';
+
 import type {
   CreateJobInput,
   Job,
@@ -34,8 +36,11 @@ export const postJob = async (job: CreateJobInput): Promise<Job> => {
   try {
     const res = await api.post<ApiResponse<Job>>('/api/jobs', job);
     return res.data.data;
-  } catch (error: any) {
-    throw new Error(error.response?.data?.message || 'Failed to add a job');
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data?.message ?? 'Failed to add a job');
+    }
+    throw new Error('Failed to add a job');
   }
 };
 
@@ -46,8 +51,14 @@ export const editJob = async ({
   try {
     const res = await api.put<ApiResponse<Job>>(`/api/jobs/${id}`, jobToEdit);
     return res.data.data;
-  } catch (error: any) {
-    throw new Error(error.response?.data?.message || 'Failed to edit the job');
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(
+        error.response?.data?.message ?? 'Failed to edit the job',
+      );
+    }
+
+    throw new Error('Failed to edit the job');
   }
 };
 
@@ -55,8 +66,14 @@ export const deleteJob = async (id: string): Promise<boolean> => {
   try {
     const res = await api.delete<ApiDeleteResponse>(`/api/jobs/${id}`);
     return res.data.success;
-  } catch (error: any) {
-    throw new Error(error.response?.data?.message || 'Failed to edit the job');
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(
+        error.response?.data?.message ?? 'Failed to delete the job',
+      );
+    }
+
+    throw new Error('Failed to delete the job');
   }
 };
 
@@ -78,7 +95,25 @@ export const fetchJobs = async (params?: JobParams) => {
       data: res.data.data,
       pagination: res.data.pagination,
     };
-  } catch (error: any) {
-    throw new Error(error.response?.data?.message || 'Failed to fetch jobs');
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data?.message ?? 'Failed to fetch jobs');
+    }
+    throw new Error('Failed to fetch jobs');
+  }
+};
+
+// Get single job
+export const fetchJobById = async (id: string): Promise<SingleJob> => {
+  try {
+    const res = await api.get<ApiResponse<SingleJob>>(`/api/jobs/${id}`);
+    return res.data.data;
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(
+        error.response?.data?.message ?? 'Failed to fetch the job',
+      );
+    }
+    throw new Error('Failed to fetch the job');
   }
 };

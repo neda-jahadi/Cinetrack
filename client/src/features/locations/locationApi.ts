@@ -1,5 +1,6 @@
 import type { MunicipalityApiResponse, Region } from '@/types/locationTypes';
 import { api } from '../../lib/api';
+import axios from 'axios';
 
 export const fetchMunicipalities = async (): Promise<
   MunicipalityApiResponse[]
@@ -7,10 +8,13 @@ export const fetchMunicipalities = async (): Promise<
   try {
     const res = await api.get('/api/locations/municipalities');
     return res.data.data;
-  } catch (error: any) {
-    throw new Error(
-      error.response?.data?.message || 'Failed to get all municipalities',
-    );
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(
+        error.response?.data?.message || 'Failed to get all municipalities',
+      );
+    }
+    throw new Error('Failed to get all municipalities');
   }
 };
 
@@ -18,9 +22,12 @@ export const fetchRegions = async (): Promise<Region[]> => {
   try {
     const res = await api.get('/api/locations/regions');
     return res.data.data;
-  } catch (error: any) {
-    throw new Error(
-      error.response?.data?.message || 'Failed to get all regions',
-    );
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(
+        error.response?.data?.message || 'Failed to get all regions',
+      );
+    }
+    throw new Error('Failed to get all regions');
   }
 };

@@ -29,13 +29,12 @@ export function Autocomplete({
   className,
   onChange,
 }: AutocompleteProps) {
-  const [isOpen, setIsOpen] = React.useState(false);
-  const [inputValue, setInputValue] = React.useState('');
+  const selectedOption = options.find((opt) => opt.value === value);
 
-  React.useEffect(() => {
-    const selectedOption = options.find((opt) => opt.value === value);
-    setInputValue(selectedOption ? selectedOption.label : '');
-  }, [value, options]);
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [inputValue, setInputValue] = React.useState(
+    selectedOption ? selectedOption.label : '',
+  );
 
   const filteredOptions = React.useMemo(() => {
     const search = inputValue.trim().toLowerCase();
@@ -65,8 +64,9 @@ export function Autocomplete({
     >
       <Command
         className={cn(
-          'rounded border overflow-visible',
-          'focus-within:ring-brand focus-within:border-brand',
+          'h-auto rounded overflow-visible',
+          'border border-input bg-background',
+          'focus-within:border-primary focus-within:ring-2 focus-within:ring-ring',
         )}
         shouldFilter={false}
       >
@@ -82,12 +82,17 @@ export function Autocomplete({
         />
         <CommandList
           className={cn(
-            'absolute top-full left-0 z-50 mt-1 w-full rounded border bg-popover shadow-md',
+            'absolute top-full left-0 z-50 mt-1 w-full',
+            'rounded border border-border',
+            'bg-popover text-popover-foreground',
+            'shadow-popover',
             shouldShowList ? 'block' : 'hidden',
           )}
         >
           {filteredOptions.length === 0 ? (
-            <CommandEmpty>Inga resultat funning.</CommandEmpty>
+            <CommandEmpty className="text-muted-foreground p-3">
+              Inga resultat funna.
+            </CommandEmpty>
           ) : (
             <CommandGroup>
               {filteredOptions.map((option) => (

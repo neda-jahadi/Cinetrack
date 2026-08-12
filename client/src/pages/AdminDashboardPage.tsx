@@ -19,7 +19,7 @@ import { useAllCompanies } from '@/features/company/companyQuery';
 import Spinner from '@/components/ui/Spinner';
 import NotFound from '@/components/sections/Job/NotFound';
 import type { Company } from '@/types/companyTypes';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button/button';
 
 export function AdminDashboardPage() {
   const { data: companies, isLoading, isError } = useAllCompanies();
