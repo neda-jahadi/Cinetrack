@@ -38,7 +38,9 @@ export const authMiddleware = async (req, res, next) => {
 
     req.user = user;
     next();
-  } catch (err) {
+  } catch (error) {
+    console.error('Failed to verify token:', error);
+
     return res
       .status(401)
       .json({ success: false, message: 'Not authorized, token failed' });

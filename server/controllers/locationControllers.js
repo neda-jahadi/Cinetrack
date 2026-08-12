@@ -17,6 +17,8 @@ export const getAllMunicipalities = async (reg, res) => {
       message: 'Got all municipalities successfully',
     });
   } catch (error) {
+    console.error('Failed to get municipalities:', error);
+
     return res.status(500).json({
       success: false,
       message: 'Failed to get municipalities',
@@ -38,6 +40,8 @@ export const getAllRegions = async (reg, res) => {
       message: 'Got all regions successfully',
     });
   } catch (error) {
+    console.error('Failed to get regions:', error);
+
     return res.status(500).json({
       success: false,
       message: 'Failed to get regions',

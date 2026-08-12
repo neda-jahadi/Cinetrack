@@ -1,4 +1,3 @@
-import { JobType, WorkMode } from '@prisma/client';
 import { prisma } from '../configs/prisma.js';
 import { toArray } from '../helpers/helpers.js';
 

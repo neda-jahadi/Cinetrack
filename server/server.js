@@ -1,6 +1,5 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import path from 'path';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
@@ -17,8 +16,6 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-
-const __dirname = path.resolve();
 
 // Body parsing middleware
 app.use(express.json());
@@ -44,6 +41,6 @@ app.use('/api/locations', locationRoutes);
 app.use(notFound);
 app.use(errorHandler);
 
-const server = app.listen(PORT, '0.0.0.0', () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on port ${PORT}`);
 });

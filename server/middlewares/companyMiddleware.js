@@ -25,6 +25,8 @@ export const companyApprovedCheck = async (req, res, next) => {
 
     next();
   } catch (error) {
+    console.error('Failed to verify company status:', error);
+
     return res.status(500).json({
       error: 'Failed to verify company status',
     });

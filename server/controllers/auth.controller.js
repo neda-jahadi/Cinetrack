@@ -1,10 +1,5 @@
 import { prisma } from '../configs/prisma.js';
 import bcrypt from 'bcrypt';
-import {
-  signAccessToken,
-  signRefreshToken,
-  verifyRefreshToken,
-} from '../utils/tokens.js';
 import { generateToken } from '../utils/generateToken.js';
 
 // https://www.webfx.com/web-development/glossary/http-status-codes/
@@ -37,7 +32,7 @@ export const registerUser = async (req, res) => {
     });
 
     // Generate JWT Token
-    const token = generateToken(user.id, res);
+    generateToken(user.id, res);
 
     return res.status(201).json({
       success: true,
@@ -83,7 +78,7 @@ export const loginUser = async (req, res) => {
     }
 
     // Generate JWT Token
-    const token = generateToken(user.id, res);
+    generateToken(user.id, res);
 
     res.status(200).json({
       success: true,
@@ -97,7 +92,6 @@ export const loginUser = async (req, res) => {
         },
         company: user.company ? { status: user.company.status } : null,
       },
-      token,
     });
   } catch (error) {
     console.error('User login error:', error);
