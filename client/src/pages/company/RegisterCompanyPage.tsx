@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom';
-import RegisterCompanyForm from '../features/company/forms/RegisterCompanyForm';
-import Container from '../components/layouts/Container';
-import { useAuth } from '../context/useAuth';
+import RegisterCompanyForm from '../../features/company/forms/RegisterCompanyForm';
+import Container from '../../components/layouts/Container';
+import { useAuth } from '../../context/useAuth';
 import Spinner from '@/components/ui/Spinner';
 import NotFound from '@/pages/NotFound';
 import { useMunicipalities } from '@/features/locations/api/locationQuery';

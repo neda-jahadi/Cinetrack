@@ -1,8 +1,8 @@
 import { useSearchParams } from 'react-router-dom';
 import JobPreview from '@/features/jobs/components/JobPreview';
-import Container from '../components/layouts/Container';
-import Spinner from '../components/ui/Spinner';
-import { useJobs } from '../features/jobs/api/jobData';
+import Container from '../../components/layouts/Container';
+import Spinner from '../../components/ui/Spinner';
+import { useJobs } from '../../features/jobs/api/jobData';
 import NotFound from '@/pages/NotFound';
 import PaginationComponent from '@/components/navigation/AppPagination';
 import {

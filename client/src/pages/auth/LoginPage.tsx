@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import LoginForm from '../features/auth/forms/LoginForm';
+import LoginForm from '../../features/auth/forms/LoginForm';
 
 const LoginPage = () => {
   return (

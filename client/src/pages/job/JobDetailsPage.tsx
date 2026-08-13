@@ -1,19 +1,19 @@
 import { Link, useParams } from 'react-router-dom';
-import Container from '../components/layouts/Container';
+import Container from '../../components/layouts/Container';
 import { FaArrowLeftLong } from 'react-icons/fa6';
-import Card from '../components/ui/Card';
+import Card from '../../components/ui/Card';
 import { FaMapMarker } from 'react-icons/fa';
-import ButtonLink from '../components/ui/ButtonLink';
-import { useDeleteJob, useJob } from '../features/jobs/api/jobData';
-import NotFound from './NotFound';
-import Spinner from '../components/ui/Spinner';
+import ButtonLink from '../../components/ui/ButtonLink';
+import { useDeleteJob, useJob } from '../../features/jobs/api/jobData';
+import NotFound from '../NotFound';
+import Spinner from '../../components/ui/Spinner';
 import { useNavigate } from 'react-router-dom';
 import {
   JOB_TYPES_LABELS,
   WORK_MODE_LABELS,
 } from '@/features/jobs/constants/job';
 import { Button } from '@/components/ui/button/button';
-import { useAuth } from '../context/useAuth';
+import { useAuth } from '../../context/useAuth';
 
 const JobDetailsPage = () => {
   const { isApprovedCompany, user } = useAuth();

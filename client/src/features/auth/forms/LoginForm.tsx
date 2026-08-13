@@ -65,7 +65,7 @@ const LoginForm = ({ onSuccessRedirect }: LoginFormProps) => {
                 id={errId('email')}
                 aria-live="polite"
                 aria-hidden="false"
-                className="text-danger"
+                className="text-destructive"
               >
                 {errors.email.message}
               </p>
@@ -89,7 +89,7 @@ const LoginForm = ({ onSuccessRedirect }: LoginFormProps) => {
                 id={errId('password')}
                 aria-live="polite"
                 aria-hidden="false"
-                className="text-danger"
+                className="text-destructive"
               >
                 {errors.password.message}
               </p>
@@ -102,7 +102,7 @@ const LoginForm = ({ onSuccessRedirect }: LoginFormProps) => {
             Login
           </Button>
           {errors.root && (
-            <p className="text-danger text-center mt-2">
+            <p className="text-destructive text-center mt-2">
               {errors.root.message}
             </p>
           )}

@@ -6,47 +6,54 @@
   /* ---------------------------------
      Brand / main actions
   ---------------------------------- */
-  --color-primary: theme(colors.indigo.700);
-  --color-primary-hover: theme(colors.indigo.800);
-  --color-primary-light: theme(colors.indigo.100);
-  --color-primary-foreground: theme(colors.white);
+  --color-primary: #3f514b;
+  --color-primary-hover: #32423d;
+  --color-primary-light: #e4e9e6;
+  --color-primary-foreground: #ffffff;
+
+  /* ---------------------------------
+     Secondary actions
+  ---------------------------------- */
+  --color-secondary: #e4e9e6;
+  --color-secondary-hover: #d8e0dc;
+  --color-secondary-foreground: #2f3e39;
 
   /* ---------------------------------
      Text
   ---------------------------------- */
-  --color-foreground: theme(colors.indigo.950);
-  --color-muted-foreground: theme(colors.gray.600);
+  --color-foreground: #202a27;
+  --color-muted-foreground: #66716d;
 
   /* ---------------------------------
      Page and surfaces
   ---------------------------------- */
-  --color-background: theme(colors.white);
+  --color-background: #faf9f6;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f1f3f0;
 
-  --color-surface: theme(colors.white);
-  --color-surface-muted: theme(colors.indigo.50);
-
-  --color-card: theme(colors.white);
+  --color-card: #ffffff;
   --color-card-foreground: var(--color-foreground);
 
-  --color-popover: theme(colors.white);
+  --color-popover: #ffffff;
   --color-popover-foreground: var(--color-foreground);
 
   /* ---------------------------------
      Interaction
   ---------------------------------- */
-  --color-accent: theme(colors.gray.100);
+  --color-border: #d9dfdc;
+  --color-input: #cfd6d2;
+
+  --color-accent: #eef2ef;
   --color-accent-foreground: var(--color-foreground);
 
-  --color-border: theme(colors.gray.200);
-  --color-input: theme(colors.gray.300);
-  --color-ring: theme(colors.indigo.600);
+  --color-ring: #52675f;
 
   /* ---------------------------------
      Danger / destructive
   ---------------------------------- */
-  --color-danger: theme(colors.red.600);
-  --color-danger-hover: theme(colors.red.700);
-  --color-danger-foreground: theme(colors.white);
+  --color-destructive: theme(colors.red.600);
+  --color-destructive-hover: theme(colors.red.700);
+  --color-destructive-foreground: theme(colors.white);
 
   /* ---------------------------------
      Success
@@ -72,8 +79,8 @@
   /* ---------------------------------
      Disabled
   ---------------------------------- */
-  --color-disabled: theme(colors.gray.100);
-  --color-disabled-foreground: theme(colors.gray.500);
+  --color-disabled: #eef1ef;
+  --color-disabled-foreground: #8a948f;
 
   /* ---------------------------------
      Typography
@@ -102,55 +109,35 @@
   }
 
   body {
-    background-color: var(--color-background);
-    color: var(--color-foreground);
+    @apply bg-background text-base leading-7 text-foreground;
   }
 }
 
 @layer components {
   .field-container {
-    @apply flex w-full items-center rounded-md border border-input bg-background px-3;
+    @apply flex w-full items-center rounded-md border border-input bg-surface px-3;
     @apply transition-colors;
     @apply focus-within:border-primary;
     @apply focus-within:ring-2 focus-within:ring-ring;
   }
-  .hero-title {
-    @apply text-4xl font-extrabold tracking-tight sm:text-5xl;
-  }
 
-  .hero-subtitle {
-    @apply text-base leading-7 text-white/90 sm:text-lg md:text-xl;
+  .page-title {
+    @apply text-3xl font-bold tracking-tight text-foreground;
   }
 
   .section-title {
-    @apply mb-7 text-2xl font-bold tracking-tight text-foreground sm:text-3xl;
-  }
-
-  .section-subtitle {
-    @apply text-sm leading-6 text-muted-foreground sm:text-base;
+    @apply text-2xl font-semibold tracking-tight text-foreground;
   }
 
   .card-title {
     @apply text-lg font-semibold tracking-tight text-card-foreground;
   }
 
-  .card-text {
-    @apply text-sm leading-6 text-muted-foreground;
-  }
-
-  .body-text {
-    @apply text-base leading-7 text-foreground;
-  }
-
   .small-text {
     @apply text-sm leading-6 text-muted-foreground;
   }
 
-  .eyebrow {
-    @apply text-sm font-semibold uppercase tracking-[0.18em] text-primary;
-  }
-
-  .input {
-    @apply text-foreground placeholder:text-muted-foreground;
+  .label-text {
+    @apply text-sm font-medium text-foreground;
   }
 }

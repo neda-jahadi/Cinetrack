@@ -1,10 +1,10 @@
-import Hero from '../components/sections/Hero';
-import CtaCard from '../features/home/components/CtaCard';
+import Hero from '../../components/sections/Hero';
+import CtaCard from '../../features/home/components/CtaCard';
 import JobPreview from '@/features/jobs/components/JobPreview';
-import Container from '../components/layouts/Container';
-import ButtonLink from '../components/ui/ButtonLink';
-import { useJobs } from '../features/jobs/api/jobData';
-import Spinner from '../components/ui/Spinner';
+import Container from '../../components/layouts/Container';
+import ButtonLink from '../../components/ui/ButtonLink';
+import { useJobs } from '../../features/jobs/api/jobData';
+import Spinner from '../../components/ui/Spinner';
 
 const HomePage = () => {
   const { data, isLoading, isError } = useJobs({

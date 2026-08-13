@@ -1,7 +1,7 @@
-import { useJob } from '../features/jobs/api/jobData';
+import { useJob } from '../../features/jobs/api/jobData';
 import { useParams } from 'react-router-dom';
-import Spinner from '../components/ui/Spinner';
-import NotFound from './NotFound';
+import Spinner from '../../components/ui/Spinner';
+import NotFound from '../NotFound';
 
 import { useMunicipalities } from '@/features/locations/api/locationQuery';
 import EditJobForm from '@/features/jobs/forms/EditJobForm';

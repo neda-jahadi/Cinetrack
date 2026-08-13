@@ -1,11 +1,11 @@
 import { Navigate } from 'react-router-dom';
-import Container from '../components/layouts/Container';
-import Spinner from '../components/ui/Spinner';
-import ButtonLink from '../components/ui/ButtonLink';
-import PendingCompanyNotice from '../features/company/components/PendingCompanyNotice';
-import ContinueAsUserCard from '../features/company/components/ContinueAsUserCard';
-import LoginForm from '../features/auth/forms/LoginForm';
-import { useAuth } from '../context/useAuth';
+import Container from '../../components/layouts/Container';
+import Spinner from '../../components/ui/Spinner';
+import ButtonLink from '../../components/ui/ButtonLink';
+import PendingCompanyNotice from '../../features/company/components/PendingCompanyNotice';
+import ContinueAsUserCard from '../../features/company/components/ContinueAsUserCard';
+import LoginForm from '../../features/auth/forms/LoginForm';
+import { useAuth } from '../../context/useAuth';
 
 const BusinessAccountPage = () => {
   const {

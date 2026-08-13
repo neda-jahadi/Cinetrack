@@ -1,22 +1,22 @@
 import { createBrowserRouter } from 'react-router-dom';
 import RootLayout from '../components/layouts/RootLayout';
 import { lazy } from 'react';
-import BrowseJobsPage from '../pages/BrowseJobsPage';
+import BrowseJobsPage from '../pages/job/BrowseJobsPage';
 import ProfilePage from '../pages/ProfilePage';
-import BusinessAccountPage from '../pages/BusinessAccountPage';
-import RegisterCompanyPage from '../pages/RegisterCompanyPage';
+import BusinessAccountPage from '../pages/company/BusinessAccountPage';
+import RegisterCompanyPage from '../pages/company/RegisterCompanyPage';
 import RequireAuth from './RequireAuth';
 import GuestOnly from './GuestOnly';
 import RequireCompany from './RequireCompany';
 import { AdminDashboardPage } from '@/pages/AdminDashboardPage';
 import RequireAdmin from './RequireAdmin';
 const HomePage = lazy(() => import('../pages/HomePage'));
-const JobDetailsPage = lazy(() => import('../pages/JobDetailsPage'));
+const JobDetailsPage = lazy(() => import('../pages/job/JobDetailsPage'));
 const NotFound = lazy(() => import('../pages/NotFound'));
-const EditJobPage = lazy(() => import('../pages/EditJobPage'));
-const AddJobPage = lazy(() => import('../pages/AddJobPage'));
-const LoginPage = lazy(() => import('../pages/LoginPage'));
-const RegisterPage = lazy(() => import('../pages/RegisterPage'));
+const EditJobPage = lazy(() => import('../pages/job/EditJobPage'));
+const AddJobPage = lazy(() => import('../pages/job/AddJobPage'));
+const LoginPage = lazy(() => import('../pages/auth/LoginPage'));
+const RegisterPage = lazy(() => import('../pages/auth/RegisterPage'));
 
 export const router = createBrowserRouter([
   {
