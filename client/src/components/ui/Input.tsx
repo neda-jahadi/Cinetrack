@@ -46,7 +46,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
           // Used inside composite controls such as SearchInput
           variant === 'ghost' && [
-            'border-0 bg-transparent px-0',
+            'border-0 bg-transparent',
             'focus:border-transparent',
             'focus-visible:ring-0',
           ],

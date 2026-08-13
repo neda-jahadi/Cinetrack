@@ -15,7 +15,7 @@ const SearchInput = ({
   'aria-label': ariaLabel = 'Search',
 }: SearchInputProps) => {
   return (
-    <div className="flex items-center rounded px-3 border border-input w-full focus-within:border-primary focus-within:ring-2 focus-within:ring-ring transition-colors">
+    <div className="field-container flex items-center px-3">
       <SearchIcon
         className="size-4 shrink-0 text-muted-foreground"
         aria-hidden="true"

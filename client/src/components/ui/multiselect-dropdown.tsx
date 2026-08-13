@@ -71,8 +71,8 @@ export function MultiSelectDropDown({
               key={option.value}
               htmlFor={`filter-${option.value}`}
               className={cn(
-                'flex cursor-pointer select-none items-center gap-3',
-                'rounded h-6 text-sm',
+                'flex cursor-pointer select-none items-center gap-2 px-2',
+                'rounded h-9 text-sm',
                 'hover:bg-accent hover:text-accent-foreground',
                 'focus-within:bg-accent focus-within:text-accent-foreground',
               )}

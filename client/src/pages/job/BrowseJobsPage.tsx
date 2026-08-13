@@ -102,7 +102,7 @@ const BrowseJobsPage = () => {
     <>
       <section>
         <Container>
-          <h1 className="text-3xl font-bold mb-7 text-center">Browse Jobs</h1>
+          <h1 className="page-title mb-7 text-center">Browse Jobs</h1>
           <div className="flex lg:flex-row gap-2 mb-4">
             <SearchJobTitle
               title={title}
@@ -117,12 +117,12 @@ const BrowseJobsPage = () => {
           </div>
           <div className="flex gap-2">
             <div>
-              <label id="work-mode-filter" className="block mb-2">
+              <label id="work-mode-filter" className="block mb-2 label-text">
                 Select Work Mode
               </label>
               <MultiSelectDropDown
                 id="work-mode-filter"
-                placeholder="Select Work mode"
+                placeholder="Work mode"
                 options={WORK_MODE.map((type) => ({
                   label: WORK_MODE_LABELS[type],
                   value: type,
@@ -134,12 +134,12 @@ const BrowseJobsPage = () => {
               />
             </div>
             <div>
-              <label id="job-type-filter" className="block mb-2">
+              <label id="job-type-filter" className="block mb-2 label-text">
                 Select Job type
               </label>
               <MultiSelectDropDown
                 id="job-type-filter"
-                placeholder="Select Job Type"
+                placeholder="Job Type"
                 options={JOB_TYPES.map((type) => ({
                   label: JOB_TYPES_LABELS[type],
                   value: type,

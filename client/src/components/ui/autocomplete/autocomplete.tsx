@@ -55,21 +55,14 @@ export function Autocomplete({
 
   return (
     <div
-      className={cn('relative w-full', className)}
+      className={cn('relative w-full field-container', className)}
       onBlur={(e) => {
         if (!e.currentTarget.contains(e.relatedTarget as Node)) {
           setIsOpen(false);
         }
       }}
     >
-      <Command
-        className={cn(
-          'h-auto rounded overflow-visible',
-          'border border-input bg-background',
-          'focus-within:border-primary focus-within:ring-2 focus-within:ring-ring',
-        )}
-        shouldFilter={false}
-      >
+      <Command shouldFilter={false}>
         <CommandInput
           placeholder={placeholder}
           value={inputValue}
@@ -90,7 +83,7 @@ export function Autocomplete({
           )}
         >
           {filteredOptions.length === 0 ? (
-            <CommandEmpty className="text-muted-foreground p-3">
+            <CommandEmpty className="text-muted-foreground px-3 h-11 flex items-center">
               Inga resultat funna.
             </CommandEmpty>
           ) : (

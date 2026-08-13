@@ -17,10 +17,7 @@ const FormField = ({
 }: FormFieldProps) => {
   return (
     <div>
-      <label
-        htmlFor={id}
-        className={cn('block text-gray-700 font-bold mb-2', className)}
-      >
+      <label htmlFor={id} className={cn('block label-text mb-2', className)}>
         {label}
         {required && (
           <>

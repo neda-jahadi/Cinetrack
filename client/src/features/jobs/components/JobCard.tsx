@@ -1,18 +1,18 @@
-import { Link } from 'react-router-dom';
-import { cn } from '../../../lib/utils';
 import { useId } from 'react';
+import { Link } from 'react-router-dom';
 import { FaMapMarker } from 'react-icons/fa';
+
+import { cn } from '@/lib/utils';
 import type { SingleJob } from '../types/jobTypes';
 import { JOB_TYPES_LABELS, WORK_MODE_LABELS } from '../constants/job';
 
 type JobCardProps = {
   job: SingleJob;
   className?: string;
-  variant?: 'light' | 'tint';
+  variant?: 'default' | 'muted';
 };
 
-const JobCard = ({ job, className, variant = 'tint' }: JobCardProps) => {
-  const cardClasses = variant === 'tint' ? 'bg-white' : 'bg-gray-50';
+const JobCard = ({ job, className, variant = 'default' }: JobCardProps) => {
   const detailsPath = `/jobs/${job.id}`;
   const descId = useId();
   const description = job.description?.trim() ?? '';
@@ -20,37 +20,75 @@ const JobCard = ({ job, className, variant = 'tint' }: JobCardProps) => {
   return (
     <article
       className={cn(
-        'h-full rounded-xl p-6 shadow-sm ring-1 ring-black/5',
-        cardClasses,
+        'group flex h-full flex-col rounded-md border border-border p-6',
+        'transition-[border-color,box-shadow] duration-200',
+        'hover:border-primary/30 hover:shadow-card',
+
+        variant === 'default' && 'bg-card',
+        variant === 'muted' && 'bg-surface-muted',
+
         className,
       )}
     >
-      <p className="text-sm font-medium text-muted">
-        {JOB_TYPES_LABELS[job.type]}
-      </p>
-      <p className="text-sm font-medium text-muted">
-        {WORK_MODE_LABELS[job.workMode]}
-      </p>
-      <h3 className="mt-2 text-xl font-bold">
+      {/* Job metadata */}
+      <div className="mb-3 flex flex-wrap gap-2">
+        <span className="rounded-full bg-primary-light px-2.5 py-1 text-xs font-medium text-primary">
+          {JOB_TYPES_LABELS[job.type]}
+        </span>
+
+        <span className="rounded-full bg-accent px-2.5 py-1 text-xs font-medium text-accent-foreground">
+          {WORK_MODE_LABELS[job.workMode]}
+        </span>
+      </div>
+
+      {/* Job title */}
+      <h3 className="card-title">
         <Link
           to={detailsPath}
-          className="focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600 focus-visible:ring-offset-2 rounden-sm hover:underline focus-visible:underline"
+          aria-describedby={descId}
+          className={cn(
+            'rounded-sm transition-colors',
+            'hover:text-primary',
+            'focus-visible:outline-none',
+            'focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+          )}
         >
           {job.title}
         </Link>
       </h3>
 
-      <p className={cn('mb-3 text-muted', 'line-clamp-3')} id={descId}>
+      {/* Description */}
+      <p
+        id={descId}
+        className="mt-1 line-clamp-3 text-sm leading-6 text-foreground"
+      >
         {description}
       </p>
 
-      <p className="text-indigo-500 mb-2">{job.salary}</p>
-      <p className="text-indigo-500 mb-2">{job.company.name}</p>
-      <p className="text-danger mt-5 mb-3 pt-2 border-t border-border inline-flex items-center">
-        <FaMapMarker aria-hidden="true" className="mr-2 h-4 w-4" />
-        <span className="sr-only">Location</span>
-        {job.region.name}-{job.municipality.name}
-      </p>
+      {/* Salary / company */}
+      <div className="mt-4 space-y-1">
+        <p className="font-medium text-primary">{job.salary}</p>
+
+        <p className="text-sm text-muted-foreground">{job.company.name}</p>
+      </div>
+
+      {/* Location */}
+      <div className="mt-auto pt-5">
+        <div className="border-t border-border pt-4">
+          <p className="flex items-center gap-2 text-sm text-foreground">
+            <FaMapMarker
+              aria-hidden="true"
+              className="size-4 shrink-0 text-primary"
+            />
+
+            <span className="sr-only">Location:</span>
+
+            <span>
+              {job.region.name} – {job.municipality.name}
+            </span>
+          </p>
+        </div>
+      </div>
     </article>
   );
 };

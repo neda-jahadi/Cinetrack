@@ -69,6 +69,7 @@ const AppPagination = ({ pagination, onPageChange }: AppPaginationProps) => {
               <PaginationLink
                 href="#"
                 isActive={p === currentPage}
+                className="flex items-center justify-center"
                 onClick={(e: React.MouseEvent) => handleClick(e, Number(p))}
               >
                 {p}
