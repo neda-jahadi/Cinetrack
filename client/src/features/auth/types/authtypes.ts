@@ -14,6 +14,12 @@ export type registerType = {
 export type UserRole = 'USER' | 'COMPANY' | 'ADMIN';
 
 export type AuthCompany = {
+  name: string;
+  description: string;
+  contactEmail: string;
+  contactPhone: string;
+  region: string;
+  municipality: string;
   status: CompanyStatus;
 };
 

@@ -5,9 +5,11 @@ import { useLogout } from '@/features/auth/api/authQueries';
 import ButtonLink from '@/components/ui/ButtonLink';
 import { Button } from '@/components/ui/button/button';
 import { useAuth } from '../context/useAuth';
+import Section from '@/components/layouts/Section';
+import Card from '@/components/ui/Card';
 
 const ProfilePage = () => {
-  const { user, isLoading, isAdmin } = useAuth();
+  const { user, isLoading, isAdmin, company } = useAuth();
 
   const navigate = useNavigate();
 
@@ -23,20 +25,63 @@ const ProfilePage = () => {
   if (isLoading) return <Spinner loading={isLoading} />;
 
   return (
-    <section className="py-12">
-      <Container>
-        <h1 className="hero-title">Welcome {user?.name}</h1>
-        <p>You have a {user?.role} role</p>
-      </Container>
-      <Container className="flex gap-3">
-        {isAdmin && (
-          <ButtonLink to="/admin-dashboard" variant="dark">
-            Dashboard
-          </ButtonLink>
-        )}
-        <Button onClick={() => handleLogout()}>Logout</Button>
-      </Container>
-    </section>
+    <div>
+      <Section>
+        <Container className="flex flex-col gap-2">
+          <h1 className="page-title">{user?.name}</h1>
+          <p>{user?.role}</p>
+          <p>{user?.email}</p>
+          <p>Member since: 2020-02-10</p>
+        </Container>
+      </Section>
+      <Section>
+        <Container>
+          <div>
+            {isAdmin && (
+              <ButtonLink to="/admin-dashboard">Go to Dashboard</ButtonLink>
+            )}
+            {company && (
+              <div className="flex flex-col gap-4">
+                <Card>
+                  <div>
+                    <h2 className="card-title">About</h2>
+                    <p>{company.status}</p>
+                    <p>{company.description}</p>
+                  </div>
+                  <div>
+                    <h2 className="card-title">Contact</h2>
+                    <p>{company.contactEmail}</p>
+                    <p>{company.contactPhone}</p>
+                  </div>
+                  <div>
+                    <h2 className="card-title">Location</h2>
+                    <p>
+                      {company.region} - {company.municipality}
+                    </p>
+                  </div>
+                </Card>
+                <div>
+                  <h2 className="section-title text-center">Your Jobs</h2>
+                  <div>
+                    <p>Here shows jobs for related company</p>
+                  </div>
+                </div>
+              </div>
+            )}
+            {!company && (
+              <div>
+                <h2>Looking for next oppurtunity?</h2>
+                <ButtonLink to="/jobs">Browse Jobs</ButtonLink>
+              </div>
+            )}
+          </div>
+          <div className="mt-10 border-t border-primary-light pt-6">
+            <Button onClick={() => handleLogout()}>Logout</Button>
+          </div>
+          <div></div>
+        </Container>
+      </Section>
+    </div>
   );
 };
 

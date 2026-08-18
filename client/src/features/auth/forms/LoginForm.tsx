@@ -98,7 +98,11 @@ const LoginForm = ({ onSuccessRedirect }: LoginFormProps) => {
         </div>
 
         <div>
-          <Button disabled={isSubmitting} className="w-full" type="submit">
+          <Button
+            disabled={isSubmitting}
+            className="w-full justify-center"
+            type="submit"
+          >
             Login
           </Button>
           {errors.root && (

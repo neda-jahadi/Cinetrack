@@ -6,6 +6,7 @@ import PendingCompanyNotice from '../../features/company/components/PendingCompa
 import ContinueAsUserCard from '../../features/company/components/ContinueAsUserCard';
 import LoginForm from '../../features/auth/forms/LoginForm';
 import { useAuth } from '../../context/useAuth';
+import Section from '@/components/layouts/Section';
 
 const BusinessAccountPage = () => {
   const {
@@ -32,7 +33,7 @@ const BusinessAccountPage = () => {
   }
 
   return (
-    <section>
+    <Section>
       <Container size="narrow">
         <div className="text-center">
           <h1 className="section-title"> Create a business account</h1>
@@ -42,19 +43,14 @@ const BusinessAccountPage = () => {
           </p>
           <p>
             Don't have an account yet?
-            <ButtonLink
-              to="/business/signup"
-              variant="nude"
-              size="sm"
-              className="hover:underline"
-            >
+            <ButtonLink to="/business/signup" size="sm" variant="link">
               Sign up now
             </ButtonLink>
           </p>
         </div>
         <LoginForm onSuccessRedirect="/business/register-company" />
       </Container>
-    </section>
+    </Section>
   );
 };
 
