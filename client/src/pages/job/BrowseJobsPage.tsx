@@ -19,6 +19,7 @@ import {
 import { Autocomplete } from '@/components/ui/autocomplete/autocomplete';
 import SearchJobTitle from '@/features/jobs/components/SearchJobTitle';
 import { useCallback } from 'react';
+import Section from '@/components/layouts/Section';
 
 const BrowseJobsPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -27,7 +28,6 @@ const BrowseJobsPage = () => {
   const title = searchParams.get('title') || '';
   const types = searchParams.getAll('type');
   const modes = searchParams.getAll('mode');
-  const region = searchParams.get('region') || '';
   const location = searchParams.get('location') || '';
 
   const { data, isLoading, isError } = useJobs({
@@ -35,7 +35,6 @@ const BrowseJobsPage = () => {
     types,
     modes,
     title,
-    region,
     location,
   });
   const { data: regionsData } = useRegions();
@@ -100,7 +99,7 @@ const BrowseJobsPage = () => {
 
   return (
     <>
-      <section>
+      <Section>
         <Container>
           <h1 className="page-title mb-7 text-center">Browse Jobs</h1>
           <div className="flex lg:flex-row gap-2 mb-4">
@@ -153,24 +152,24 @@ const BrowseJobsPage = () => {
           </div>
           <div></div>
         </Container>
-      </section>
-      <section className="px-4 py-12">
+      </Section>
+      <Section>
         <Container>
           {isLoading && <Spinner loading={true} />}
           {isError && <NotFound />}
           {!isError && !isLoading && <JobPreview jobs={jobs} />}
         </Container>
-      </section>
+      </Section>
 
       {pagination && pagination.totalPages > 1 && (
-        <section>
+        <Section>
           <Container>
             <PaginationComponent
               pagination={pagination}
               onPageChange={(value) => handleChangePage('page', value)}
             />
           </Container>
-        </section>
+        </Section>
       )}
     </>
   );

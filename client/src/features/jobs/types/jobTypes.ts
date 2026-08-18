@@ -51,6 +51,5 @@ export type JobParams = {
   title?: string;
   types?: string[];
   modes?: string[];
-  region?: string;
   location?: string;
 };

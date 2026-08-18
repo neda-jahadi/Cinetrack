@@ -28,7 +28,7 @@ const Header = () => {
   });
 
   return (
-    <header className="bg-primary">
+    <header className="bg-primary text-primary-foreground">
       <Container className="flex h-20 items-center justify-between">
         <Link className="flex items-center mr-4" to="/">
           <img className="h-10 w-auto" src={siteLogo} alt="Sky Flow" />

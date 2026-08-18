@@ -21,9 +21,10 @@ const NavigationBar = ({ items }: { items: NavItem[] }) => {
             to={navItem.to}
             className={({ isActive }) =>
               cn(
-                'rounded-md px-3 py-2 text-sm font-medium transition',
-                'text-white hover:bg-gray-900',
-                isActive && 'bg-black',
+                'rounded-md px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-light focus-visible:ring-offset-2 focus-visible:ring-offset-primary',
+                isActive
+                  ? 'bg-primary-light text-primary'
+                  : 'text-primary-foreground/80 hover:bg-white/10 hover:text-primary-foreground',
               )
             }
           >

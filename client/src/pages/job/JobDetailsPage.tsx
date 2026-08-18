@@ -69,93 +69,79 @@ const JobDetailsPage = () => {
         </Container>
       </section>
 
-      <section className="bg-surface-muted py-12">
-        <Container>
-          <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-6">
-            <article>
-              <Card className="bg-white text-center md:text-left">
-                <div className="text-gray-500 mb-4">
-                  {JOB_TYPES_LABELS[job.type]} -{' '}
-                  {WORK_MODE_LABELS[job.workMode]}
-                </div>
-                <h1 className="text-3xl font-bold mb-4">{job.title}</h1>
-                <p className="text-danger mt-5 mb-3 pt-2 border-t border-border inline-flex items-center">
-                  <FaMapMarker aria-hidden="true" className="mr-2 h-4 w-4" />
-                  <span className="sr-only">Location</span>
-                  {job.region.name} - {job.municipality.name}
-                </p>
-              </Card>
+      <Container>
+        <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-6">
+          <article>
+            <div>
+              {JOB_TYPES_LABELS[job.type]} - {WORK_MODE_LABELS[job.workMode]}
+            </div>
+            <h1 className="page-title">{job.title}</h1>
+            <p className="text-danger mt-5 mb-3 pt-2 border-t border-border inline-flex items-center">
+              <FaMapMarker aria-hidden="true" className="mr-2 h-4 w-4" />
+              <span className="sr-only">Location</span>
+              {job.region.name} - {job.municipality.name}
+            </p>
 
+            <h3 className="card-title">Job Description</h3>
+
+            <p className="mb-4">{job.description}</p>
+
+            <h3 className="card-title">Salary</h3>
+
+            <p className="mb-4">{job.salary}</p>
+          </article>
+
+          <aside aria-label="Company and actions">
+            <Card>
+              <h2 className="section-title">Company Info</h2>
+
+              <p>{job.company.name}</p>
+
+              <p className="my-2">{job.company.description}</p>
+
+              <hr className="my-4" />
+
+              <h3 className="card-title">Contact Email:</h3>
+
+              <a
+                href={`mailto:${job.company.contactEmail}`}
+                className="mt-1 block rounded bg-indigo-100 p-2 font-bold underline-offset-2 hover:underline focus-visible:ring-2 focus-visible:ring-indigo-600 focus-visible:ring-offset-2"
+              >
+                {job.company.contactEmail}
+              </a>
+
+              <h3 className="card-title">Contact Phone:</h3>
+
+              <a
+                href={`tel:${job.company.contactPhone}`}
+                className="mt-1 block rounded bg-indigo-100 p-2 font-bold underline-offset-2 hover:underline focus-visible:ring-2 focus-visible:ring-indigo-600 focus-visible:ring-offset-2"
+              >
+                {job.company.contactPhone}
+              </a>
+            </Card>
+            {canManageJob && (
               <Card className="bg-white mt-6">
-                <h2 className="text-indigo-800 text-lg font-bold mb-6">
-                  Job Description
-                </h2>
-
-                <p className="mb-4">{job.description}</p>
-
-                <h3 className="text-indigo-800 text-lg font-bold mb-2">
-                  Salary
-                </h3>
-
-                <p className="mb-4">{job.salary}</p>
-              </Card>
-            </article>
-
-            <aside aria-label="Company and actions">
-              <Card className="bg-white">
-                <h2 className="text-xl font-bold mb-6">Company Info</h2>
-
-                <h3 className="text-2xl">{job.company.name}</h3>
-
-                <p className="my-2">{job.company.description}</p>
-
-                <hr className="my-4" />
-
-                <h3 className="text-xl">Contact Email:</h3>
-
-                <a
-                  href={`mailto:${job.company.contactEmail}`}
-                  className="mt-1 block rounded bg-indigo-100 p-2 font-bold underline-offset-2 hover:underline focus-visible:ring-2 focus-visible:ring-indigo-600 focus-visible:ring-offset-2"
+                <h2 className="text-xl font-bold mb-6">Manage the Job</h2>
+                <ButtonLink to={`/jobs/edit-job/${job.id}`} className="w-full">
+                  Edit Job
+                </ButtonLink>
+                <Button
+                  variant="destructive"
+                  className="w-full rounded-full my-2"
+                  disabled={deleteJobMutation.isPending}
+                  onClick={() => handleDeleteSingleJob()}
                 >
-                  {job.company.contactEmail}
-                </a>
-
-                <h3 className="text-xl mt-4">Contact Phone:</h3>
-
-                <a
-                  href={`tel:${job.company.contactPhone}`}
-                  className="mt-1 block rounded bg-indigo-100 p-2 font-bold underline-offset-2 hover:underline focus-visible:ring-2 focus-visible:ring-indigo-600 focus-visible:ring-offset-2"
-                >
-                  {job.company.contactPhone}
-                </a>
+                  {deleteJobMutation.isPending ? 'Deleting ...' : 'Delete'}
+                </Button>
+                <div></div>
+                {deleteJobMutation.isError && (
+                  <p>{(deleteJobMutation.error as Error).message}</p>
+                )}
               </Card>
-              {canManageJob && (
-                <Card className="bg-white mt-6">
-                  <h2 className="text-xl font-bold mb-6">Manage the Job</h2>
-                  <ButtonLink
-                    to={`/jobs/edit-job/${job.id}`}
-                    className="w-full"
-                  >
-                    Edit Job
-                  </ButtonLink>
-                  <Button
-                    variant="destructive"
-                    className="w-full rounded-full my-2"
-                    disabled={deleteJobMutation.isPending}
-                    onClick={() => handleDeleteSingleJob()}
-                  >
-                    {deleteJobMutation.isPending ? 'Deleting ...' : 'Delete'}
-                  </Button>
-                  <div></div>
-                  {deleteJobMutation.isError && (
-                    <p>{(deleteJobMutation.error as Error).message}</p>
-                  )}
-                </Card>
-              )}
-            </aside>
-          </div>
-        </Container>
-      </section>
+            )}
+          </aside>
+        </div>
+      </Container>
     </>
   );
 };

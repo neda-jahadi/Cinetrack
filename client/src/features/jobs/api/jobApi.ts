@@ -85,7 +85,6 @@ export const fetchJobs = async (params?: JobParams) => {
         page: params?.page,
         limit: params?.limit,
         title: params?.title,
-        region: params?.region,
         type: params?.types,
         mode: params?.modes,
         location: params?.location,

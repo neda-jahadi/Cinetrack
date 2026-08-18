@@ -10,6 +10,7 @@ import GuestOnly from './GuestOnly';
 import RequireCompany from './RequireCompany';
 import { AdminDashboardPage } from '@/pages/AdminDashboardPage';
 import RequireAdmin from './RequireAdmin';
+import ErrorPage from '@/pages/ErrorPage';
 const HomePage = lazy(() => import('../pages/HomePage'));
 const JobDetailsPage = lazy(() => import('../pages/job/JobDetailsPage'));
 const NotFound = lazy(() => import('../pages/NotFound'));
@@ -22,6 +23,7 @@ export const router = createBrowserRouter([
   {
     path: '/',
     element: <RootLayout />,
+    errorElement: <ErrorPage />,
     handle: { crumb: () => ({ to: '/', label: 'Home' }) },
     children: [
       { index: true, element: <HomePage /> },
@@ -37,7 +39,7 @@ export const router = createBrowserRouter([
             element: <RegisterPage />,
           },
           {
-            path: '/business/signup',
+            path: 'business/signup',
             element: <RegisterPage />,
             handle: { crumb: () => ({ label: 'Signup' }) },
           },

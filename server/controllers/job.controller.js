@@ -6,7 +6,6 @@ export const getJobs = async (req, res) => {
     const { title, location } = req.query;
     const types = toArray(req.query.type);
     const modes = toArray(req.query.mode);
-    console.log('re query is', req.query);
     const rawPage = Number(req.query.page) || 1;
     const rawLimit = Number(req.query.limit) || 9;
     const sortKey = req.query.sort || 'recent';

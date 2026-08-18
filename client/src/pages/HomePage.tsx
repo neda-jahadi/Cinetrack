@@ -1,79 +1,124 @@
-import Hero from '../components/sections/Hero';
-import CtaCard from '../features/home/components/CtaCard';
 import ButtonLink from '../components/ui/ButtonLink';
 import Container from '../components/layouts/Container';
+import Section from '@/components/layouts/Section';
+import { useJobs } from '@/features/jobs/api/jobData';
+import Spinner from '@/components/ui/Spinner';
+import NotFound from './NotFound';
+import JobPreview from '@/features/jobs/components/JobPreview';
+import Card from '@/components/ui/Card';
+import Footer from '@/components/layouts/Footer';
 
 const HomePage = () => {
+  const { data, isLoading, isError } = useJobs({ limit: 3 });
+  const jobs = data ? data.data : [];
+
   return (
     <>
-      <Hero
-        title="Enhance every trip with smart booking extras"
-        subtitle="Add baggage, choose seats, stay flexible, and protect your trip in one simple flow."
-      >
-        <div className="mt-30">
-          <ButtonLink
-            to="/manage-bookings"
-            aria-label="Manage Booking"
-            variant="dark"
-            className=""
-          >
-            Manage Bookings
-          </ButtonLink>
-          <ButtonLink
-            to="/explore-features"
-            aria-label="Explore Features"
-            variant="secondary"
-            className="ml-4"
-          >
-            Explore Features
-          </ButtonLink>
-        </div>
-      </Hero>
-      <section className="bg-brand">
-        <Container className="grid grid-cols-2 gap-2">
-          <CtaCard
-            title="Add baggage"
-            description="Choose the baggage option that fits your trip"
-            to="/"
-            ctaLabel="Add baggage"
-            variant="light"
-          />
-          <CtaCard
-            title="Pick your seat"
-            description="Upgrade comfort with standard, preferred, or extra legroom seats"
-            to="/"
-            ctaLabel="Pick your seat"
-            variant="light"
-          />
-          <CtaCard
-            title="Stay flexible"
-            description="Add flexible ticket options for peace of mind"
-            to="/"
-            ctaLabel="Stay flexible"
-            variant="light"
-          />
-          <CtaCard
-            title="Travel protected"
-            description="Choose insurance coverage that suits your journey."
-            to="/"
-            ctaLabel="Travel protected"
-            variant="light"
-          />
+      <Section>
+        <Container className="flex flex-col gap-10">
+          <div className="flex flex-col gap-4">
+            <h1 className="page-title">Find work that fits you</h1>
+            <p className="card-title">
+              Discover opportunities that match your skills, location and way of
+              working
+            </p>
+          </div>
         </Container>
-      </section>
-      <section className="text-center">
-        <Container>
-          <h2 className="section-title">Ready to personalize your trip?</h2>
+      </Section>
+      <Section variant="muted">
+        <Container className="flex flex-col gap-10">
+          <div className="text-center flex flex-col gap-2 ">
+            <h2 className="section-title">Latest Opportunities</h2>
+            <p>Fresh opportunities from companies looking for talent</p>
+          </div>
+          <div>
+            {isLoading && <Spinner loading={true} />}
+            {isError && <NotFound />}
+            {!isError && !isLoading && <JobPreview jobs={jobs} />}
+          </div>
           <ButtonLink
-            to="/manage-bookings"
-            aria-label="Manage Bookings"
-            variant="dark"
-            className="mt-6"
+            to="/jobs"
+            aria-label="View all jobs"
+            className="self-center"
           >
-            Manage Bookings
+            View all jobs
           </ButtonLink>
         </Container>
-      </section>
+      </Section>
+      <Section>
+        <Container className="flex flex-col gap-10">
+          <div className="text-center flex flex-col gap-2 ">
+            <h2 className="section-title">Looking to hire?</h2>
+            <p>Post your job and find the right talent for your company</p>
+          </div>
+          <ButtonLink
+            to="/business/register-company"
+            aria-label="Register your company"
+            className="self-center"
+          >
+            Register your company
+          </ButtonLink>
+        </Container>
+      </Section>
+      <Section>
+        <Container className="flex flex-col gap-10">
+          <div className="text-center flex flex-col gap-2 ">
+            <h2 className="section-title">How it works</h2>
+            <p>
+              Find out how our platform can help you find work or hire talent
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Card className="flex flex-col gap-4 text-center">
+              <h3 className="card-title">For Job Seekers</h3>
+              <p>
+                Create a profile, browse job listings, and apply for positions
+                that match your skills and interests.
+              </p>
+            </Card>
+            <Card className="flex flex-col gap-4 text-center">
+              <h3 className="card-title">For Employers</h3>
+              <p>
+                Post job openings, review applications, and connect with
+                qualified candidates to fill your positions.
+              </p>
+            </Card>
+            <Card className="flex flex-col gap-4 text-center">
+              <h3 className="card-title">For Everyone</h3>
+              <p>
+                Our platform is designed to make the job search and hiring
+                process easier and more efficient for everyone involved.
+              </p>
+            </Card>
+          </div>
+        </Container>
+      </Section>
+
+      <Section variant="muted">
+        <Container className="flex flex-col gap-10">
+          <div className="text-center flex flex-col gap-2 ">
+            <h2 className="section-title">Get Started</h2>
+            <p>Sign up today and start finding work or hiring talent</p>
+          </div>
+          <div className="flex flex-col md:flex-row gap-4 justify-center">
+            <ButtonLink
+              to="/signup"
+              aria-label="Sign up as a job seeker"
+              className="self-center"
+            >
+              Sign up as a job seeker
+            </ButtonLink>
+            <ButtonLink
+              to="/business/register-company"
+              aria-label="Register your company"
+              className="self-center"
+            >
+              Register your company
+            </ButtonLink>
+          </div>
+        </Container>
+      </Section>
+      <Footer />
     </>
   );
 };
