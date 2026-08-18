@@ -126,7 +126,17 @@ export const getMe = async (req, res) => {
           email: user.email,
           role: user.role,
         },
-        company: user.company ? { status: user.company.status } : null,
+        company: user.company
+          ? {
+              name: user.company.name,
+              description: user.company.description,
+              contactEmail: user.company.contactEmail,
+              contactPhone: user.company.contactPhone,
+              status: user.company.status,
+              region: user.company.region.name,
+              municipality: user.company.municipality.name,
+            }
+          : null,
       },
     });
   } catch (error) {
