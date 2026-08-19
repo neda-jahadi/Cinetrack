@@ -38,7 +38,12 @@ const ProfilePage = () => {
         <Container>
           <div>
             {isAdmin && (
-              <ButtonLink to="/admin-dashboard">Go to Dashboard</ButtonLink>
+              <div>
+                <p>Manage companies awaiting approval and platform content.</p>
+                <ButtonLink to="/admin-dashboard">
+                  Open Admin Dashboard
+                </ButtonLink>
+              </div>
             )}
             {company && (
               <div className="flex flex-col gap-4">

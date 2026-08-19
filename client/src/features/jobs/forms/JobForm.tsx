@@ -14,6 +14,7 @@ import {
 import Input from '@/components/ui/Input';
 import type { MunicipalityApiResponse } from '@/features/locations/types/locationTypes';
 import { Button } from '@/components/ui/button/button';
+import { Field, FieldError, FieldLabel } from '@/components/ui/field';
 
 type JobFormProps = {
   municipalities: MunicipalityApiResponse[];
@@ -127,7 +128,14 @@ const JobForm = ({ municipalities }: JobFormProps) => {
         </div>
 
         <div className="mb-4">
-          <FormField id="title" label="Job Listing Name" required>
+          <Field data-invalid={!!errors.title}>
+            <FieldLabel htmlFor="title">
+              Job
+              <span aria-hidden="true" className="text-destructive">
+                *
+              </span>
+              <span className="sr-only">(required)</span>
+            </FieldLabel>
             <Input
               {...register('title')}
               id="title"
@@ -137,16 +145,9 @@ const JobForm = ({ municipalities }: JobFormProps) => {
               placeholder="e.g. Senior Frontend Developer"
             />
             {errors.title && (
-              <p
-                id={errId('title')}
-                aria-live="polite"
-                aria-hidden="false"
-                className="text-danger"
-              >
-                {errors.title.message}
-              </p>
+              <FieldError id={errId('title')} errors={[errors.title]} />
             )}
-          </FormField>
+          </Field>
         </div>
         <div className="mb-4">
           <FormField id="description" label="Description" required>
