@@ -1,4 +1,6 @@
 {
+  "name": "nextrole",
+  "private": true,
   "devDependencies": {
     "husky": "^9.1.7"
   },

@@ -9,7 +9,7 @@ const Footer = () => {
     <footer className="bg-primary text-primary-foreground">
       <Container className="py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <p>CineTrack</p>
+          <p>NextRole</p>
           <nav aria-label="Job seeker links">
             <h2 className="section-title">Job Seekers</h2>
             <ul>
@@ -43,7 +43,7 @@ const Footer = () => {
         </div>
 
         <div className="mt-10 border-t border-primary-foreground/15 pt-6 flex justify-between">
-          <p className="text-sm text-primary-foreground/70">© 2026 CineTrack</p>
+          <p className="text-sm text-primary-foreground/70">© 2026 NextRole</p>
           <p className="text-sm text-primary-foreground/70">GitHub</p>
         </div>
       </Container>

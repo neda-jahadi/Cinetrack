@@ -38,8 +38,8 @@ const BusinessAccountPage = () => {
         <div className="text-center">
           <h1 className="section-title"> Create a business account</h1>
           <p>
-            Enter here to access CineTrack Ads Manager, Business Center and
-            CineTrack One.
+            Enter here to access NextRole Ads Manager, Business Center and
+            NextRole One.
           </p>
           <p>
             Don't have an account yet?

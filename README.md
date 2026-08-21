@@ -1,6 +1,6 @@
-# CineTrack
+# NextRole
 
-CineTrack is a full-stack job search application built with **React, TypeScript, Node.js, Express, Prisma, and PostgreSQL**.
+Nextrole is a full-stack job search application built with **React, TypeScript, Node.js, Express, Prisma, and PostgreSQL**.
 
 The project is designed as a production-style application where users can search and filter jobs, manage authentication and profile information, and interact with a responsive and accessible user interface.
 
@@ -56,12 +56,12 @@ The project is designed as a production-style application where users can search
 
 ## 🏗 Architecture
 
-CineTrack is organized as a full-stack application with separate frontend and backend codebases:
+NextRole is organized as a full-stack application with separate frontend and backend codebases:
 
 ```text
-cinetrack/
-├── client/          # React + TypeScript frontend
-├── server/          # Node.js + Express backend
+nextrole/
+├── nextrole-client/          # React + TypeScript frontend
+├── nextrole-server/          # Node.js + Express backend
 ├── .husky/          # Git hooks and pre-commit checks
 ├── .vscode/         # Shared VS Code configuration
 ├── package.json     # Root development tooling
@@ -161,8 +161,8 @@ Pre-commit checks help catch linting and formatting issues before changes are co
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/neda-jahadi/Cinetrack.git
-cd Cinetrack
+git clone https://github.com/neda-jahadi/Nextrole.git
+cd Nextrole
 ```
 
 ### 2. Install root development dependencies
@@ -248,7 +248,7 @@ Open the local URL displayed by Vite in your browser.
 
 ## 📌 Current Development
 
-CineTrack is actively being developed. Current work includes expanding profile functionality, improving application features, testing, and preparing the application for deployment.
+Nextrole is actively being developed. Current work includes expanding profile functionality, improving application features, testing, and preparing the application for deployment.
 
 A live demo will be added once the application is deployed.
 
